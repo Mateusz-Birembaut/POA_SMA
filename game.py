@@ -2,6 +2,7 @@ import sys
 import pygame
 from pygame.locals import *
 
+from mouse import Mouse
 from labyrinth import Maze
 
 pygame.init()
@@ -17,7 +18,7 @@ screen = pygame.display.set_mode((width, height))
 
 labyrinthe = Maze(tile_x, tile_y)
 
-mouse_image = pygame.image.load("./res/mouse.png").convert_alpha()
+mouse = Mouse((tile_width,tile_height),pygame.Vector2(width/2,height/2))
 
 # Game loop
 while True:
@@ -32,7 +33,8 @@ while True:
 
     # Draw
     labyrinthe.draw(screen)
-    screen.blit(mouse_image, mouse_image.get_rect(center = screen.get_rect().center))
+    mouse.draw(screen)
+
 
     pygame.display.flip()
     fpsClock.tick(fps)
