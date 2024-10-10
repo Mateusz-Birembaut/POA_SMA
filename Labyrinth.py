@@ -1,16 +1,16 @@
 import pygame
-from mazelib import Maze as Mz
+from mazelib import Maze as Maze
 from mazelib.generate.Prims import Prims
 
 
-class Maze:
-    def __init__(self, width: int, height: int):
-        self.width = width * 2 + 1
-        self.height = height * 2 + 1
+class Labyrinth:
+    def __init__(self, size: tuple[int, int]):
+        self.width = size[0] * 2 + 1
+        self.height = size[1] * 2 + 1
         self.maze = []
 
-        m = Mz()
-        m.generator = Prims(width, height)  # fois 2 + 1
+        m = Maze()
+        m.generator = Prims(size[0], size[1])  # fois 2 + 1
         m.generate()
 
         m.generate_entrances()
