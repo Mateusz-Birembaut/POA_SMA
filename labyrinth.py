@@ -1,22 +1,30 @@
-from mazelib import Maze as mz
-from mazelib.generate.Prims import Prims
-from mazelib.solve.BacktrackingSolver import BacktrackingSolver
 import pygame
+from mazelib import Maze as Mz
+from mazelib.generate.Prims import Prims
+
 
 class Maze:
-    def __init__(self, size: tuple[int,int]):
-        self.width = size[0] * 2 + 1
-        self.height = size[1] * 2 + 1
+    def __init__(self, width: int, height: int):
+        self.width = width * 2 + 1
+        self.height = height * 2 + 1
+        self.maze = []
 
-        m = mz()
-        m.generator = Prims(size[0], size[1])  # fois 2 + 1
+        m = Mz()
+        m.generator = Prims(width, height)  # fois 2 + 1
         m.generate()
 
         m.generate_entrances()
         # m.solver = BacktrackingSolver()
         # m.solve()
 
-        self.maze = str(m)
+        line = ""
+        for char in str(m):
+            if char != '\n':
+                line += char
+            else:
+                self.maze.append(line)
+                line = ""
+        self.maze.append(line)
 
     def draw(self, screen: pygame.surface):
         # TODO mettre des marges au labyrinthe
@@ -26,14 +34,14 @@ class Maze:
 
         x, y = 0, 0
 
-        for tile in self.maze:
-            if tile == '#':
-                pygame.draw.rect(screen, (255, 255, 255), (x, y, tile_width, tile_height))
-            elif tile == ' ':
-                pygame.draw.rect(screen, (10, 10, 10), (x, y, tile_width, tile_height))
-            
-            x += tile_width - 1
+        for line in self.maze:
+            for tile in line:
+                if tile == '#':
+                    pygame.draw.rect(screen, "white", (x, y, tile_width, tile_height))
+                elif tile == ' ':
+                    pygame.draw.rect(screen, (10, 10, 10), (x, y, tile_width, tile_height))
 
-            if tile == '\n':
-                x = 0
-                y += tile_height - 1
+                x += tile_width
+
+            x = 0
+            y += tile_height
