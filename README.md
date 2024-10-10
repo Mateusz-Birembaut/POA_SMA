@@ -1,4 +1,4 @@
 # POA_SMA
 
 Document du projet
-https://docs.google.com/document/d/1oAG58d2lG84tolNvzRfyvfZJnc6LC3KCH7jf_G3e9VE/edit?usp=sharing
+[Google Doc](https://docs.google.com/document/d/1aaL9yuKQl_96hxvpKPH8pq4jWp_qLgxub-3K144HU2U/edit)
