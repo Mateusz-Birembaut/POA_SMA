@@ -19,7 +19,7 @@ class Entity:
         screen.blit(self.image, (self.tile_x * self.scene.tile_width_px, self.tile_y * self.scene.tile_height_px))
 
     def move(self, new_position: tuple[int, int]):
+        if new_position == (self.tile_x, self.tile_y): return
         if self.labyrinth.attempt_move(self.name, new_position):
             self.tile_x = max(0, min(new_position[0], self.scene.tile_width-1))
             self.tile_y = max(0, min(new_position[1], self.scene.tile_height-1))
-        print(self.name, "can't move")

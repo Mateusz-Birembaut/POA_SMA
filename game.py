@@ -20,11 +20,9 @@ screen = pygame.display.set_mode((scene.screen_width, scene.screen_height))
 
 labyrinth = Labyrinth((tile_width, tile_height))
 
-mouse_x, mouse_y = 1, 1
-mouse = Entity('./res/mouse.png', (mouse_x, mouse_y), scene, labyrinth, 'mouse')
+mouse = Entity('./res/mouse.png', (1, 1), scene, labyrinth, 'mouse')
 
-cat_x, cat_y = 0, 0
-cat = Entity('./res/cat.png', (cat_x, cat_y), scene, labyrinth, 'cat')
+cat = Entity('./res/cat.png', (19, 1), scene, labyrinth, 'cat')
 
 
 # Game loop
@@ -37,17 +35,34 @@ while True:
             sys.exit()
 
     # Update
-    pygame.time.wait(50)
-    new_mouse_x, new_mouse_y = mouse_x, mouse_y
-    new_mouse_x += (-1 if mouse_x == 20 else 1) * int(random.random()*2)
-    new_mouse_y += (-1 if mouse_y == 20 else 1) * int(random.random()*2)
+    pygame.time.wait(25)
+
+    new_mouse_x, new_mouse_y = mouse.tile_x, mouse.tile_y
+
+    can_move_x, can_move_y = False, False
+    if labyrinth.attempt_move(mouse.name, (new_mouse_x+1, mouse.tile_y)):
+        can_move_x = True
+    if labyrinth.attempt_move(mouse.name, (mouse.tile_x, new_mouse_y+1)):
+        can_move_y = True
+
+    if can_move_x and can_move_y:
+        if random.random() > .5:
+            new_mouse_x += 1
+        else:
+            new_mouse_y += 1
+    elif (not can_move_x) and (not can_move_y):
+        new_mouse_x = 1
+        new_mouse_y = 1
+    else:
+        new_mouse_x += can_move_x * 1
+        new_mouse_y += can_move_y * 1
 
     # Draw
     labyrinth.draw(screen)
     mouse.move((new_mouse_x, new_mouse_y))
     mouse.draw(screen)
     # cat.move((cat_x, cat_y))
-    # cat.draw(screen)
+    cat.draw(screen)
 
     pygame.display.flip()
     gameClock.tick(30)
