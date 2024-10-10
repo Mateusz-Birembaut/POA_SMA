@@ -16,7 +16,16 @@ class Maze:
         # m.solver = BacktrackingSolver()
         # m.solve()
 
-        self.maze = str(m)
+        self.maze = []
+
+        line = ""
+        for char in str(m):
+            if char == '\n':
+                self.maze.append(line)
+                line = ""
+            else:
+                line += char
+        self.maze.append(line)
 
     def draw(self, screen: pygame.surface):
         # TODO mettre des marges au labyrinthe
@@ -26,14 +35,14 @@ class Maze:
 
         x, y = 0, 0
 
-        for tile in self.maze:
-            if tile == '#':
-                pygame.draw.rect(screen, (255, 255, 255), (x, y, tile_width, tile_height))
-            elif tile == ' ':
-                pygame.draw.rect(screen, (10, 10, 10), (x, y, tile_width, tile_height))
-            
-            x += tile_width
+        for line in self.maze:
+            for tile in line:
+                if tile == '#':
+                    pygame.draw.rect(screen, "white", (x, y, tile_width, tile_height))
+                elif tile == ' ':
+                    pygame.draw.rect(screen, (10, 10, 10), (x, y, tile_width, tile_height))
 
-            if tile == '\n':
-                x = 0
-                y += tile_height
+                x += tile_width
+
+            x = 0
+            y += tile_height
