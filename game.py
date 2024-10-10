@@ -9,10 +9,13 @@ pygame.init()
 fps = 60
 fpsClock = pygame.time.Clock()
 
-width, height = 1600, 900
+tile_x, tile_y = 10, 10
+tile_width, tile_height = 35, 35
+
+width, height = (tile_x*2+1)*tile_width, (tile_y*2+1)*tile_height
 screen = pygame.display.set_mode((width, height))
 
-labyrinthe = Maze((10, 10))
+labyrinthe = Maze(tile_x, tile_y)
 
 # Game loop
 while True:
