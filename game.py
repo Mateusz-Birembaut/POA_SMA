@@ -14,19 +14,19 @@ screen = pygame.display.set_mode((width, height))
 
 labyrinthe = Maze((10, 10))
 
-# Game loop.
+# Game loop
 while True:
-  screen.fill((0, 0, 0))
+    screen.fill((0, 0, 0))
 
-  for event in pygame.event.get():
-    if event.type == QUIT:
-      pygame.quit()
-      sys.exit()
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
 
-  # Update.
+    # Update
 
-  # Draw.
-  labyrinthe.draw(screen)
+    # Draw
+    labyrinthe.draw(screen)
 
-  pygame.display.flip()
-  fpsClock.tick(fps)
+    pygame.display.flip()
+    fpsClock.tick(fps)
