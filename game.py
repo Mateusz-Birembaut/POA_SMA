@@ -14,6 +14,8 @@ screen = pygame.display.set_mode((width, height))
 
 labyrinthe = Maze((10, 10))
 
+mouse_image = pygame.image.load("./res/mouse.png").convert_alpha()
+
 # Game loop.
 while True:
   screen.fill((0, 0, 0))
@@ -27,6 +29,7 @@ while True:
 
   # Draw.
   labyrinthe.draw(screen)
+  screen.blit(mouse_image, mouse_image.get_rect(center = screen.get_rect().center))
 
   pygame.display.flip()
   fpsClock.tick(fps)

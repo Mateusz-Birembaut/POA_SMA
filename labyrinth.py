@@ -32,8 +32,8 @@ class Maze:
             elif tile == ' ':
                 pygame.draw.rect(screen, (10, 10, 10), (x, y, tile_width, tile_height))
             
-            x += tile_width
+            x += tile_width - 1
 
             if tile == '\n':
                 x = 0
-                y += tile_height
+                y += tile_height - 1
