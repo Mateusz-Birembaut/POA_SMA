@@ -16,5 +16,5 @@ class Mouse:
         screen.blit(self.image, (self.tile_x * tile_width_px, self.tile_y * tile_height_px))
 
     def move(self, new_position):
-        self.tile_x = min(new_position[0], self.scene.tile_width-1)
-        self.tile_y = min(new_position[1], self.scene.tile_height-1)
+        self.tile_x = max(0, min(new_position[0], self.scene.tile_width-1))
+        self.tile_y = max(0, min(new_position[1], self.scene.tile_height-1))
