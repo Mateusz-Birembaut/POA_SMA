@@ -1,14 +1,20 @@
 import pygame
 
+import Scene
+
+
 class Mouse:
 
-    def __init__(self, size, position):
-        self.position = position
-        self.width = size[0]
-        self.height = size[1]
+    def __init__(self, img_url: str, position: tuple[int, int], scene: Scene):
+        self.image = pygame.image.load(img_url).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (scene.tile_width_px, scene.tile_height_px))
+        self.scene = scene
+        self.tile_x = position[0]
+        self.tile_y = position[1]
 
-    def draw(self, screen):
-        IMAGE = pygame.image.load('./res/mouse.png').convert_alpha()
-        IMAGE = pygame.transform.scale(IMAGE, (self.width ,self.height))
-        screen.blit(IMAGE, self.position)
-        
+    def draw(self, screen, tile_width_px, tile_height_px):
+        screen.blit(self.image, (self.tile_x * tile_width_px, self.tile_y * tile_height_px))
+
+    def move(self, new_position):
+        self.tile_x = min(new_position[0], self.scene.tile_width-1)
+        self.tile_y = min(new_position[1], self.scene.tile_height-1)

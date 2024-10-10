@@ -1,24 +1,31 @@
+import random
 import sys
+
 import pygame
 from pygame.locals import *
 
-from mouse import Mouse
+from Scene import Scene
 from labyrinth import Maze
+from mouse import Mouse
 
 pygame.init()
 
 fps = 60
 fpsClock = pygame.time.Clock()
 
-tile_x, tile_y = 10, 10
-tile_width, tile_height = 35, 35
+tile_width, tile_height = 10, 10
+tile_width_px, tile_height_px = 35, 35
 
-width, height = (tile_x*2+1)*tile_width, (tile_y*2+1)*tile_height
+scene = Scene((tile_width, tile_height), (tile_width_px, tile_height_px))
+
+labyrinthe = Maze(tile_width, tile_height)
+
+width, height = (tile_width * 2 + 1) * tile_width_px, (tile_height * 2 + 1) * tile_height_px
 screen = pygame.display.set_mode((width, height))
 
-labyrinthe = Maze(tile_x, tile_y)
+mouse_x, mouse_y = 0, 0
+mouse = Mouse('./res/mouse.png', (mouse_x, mouse_y), scene)
 
-mouse = Mouse((tile_width,tile_height),pygame.Vector2(width/2,height/2))
 
 # Game loop
 while True:
@@ -30,11 +37,15 @@ while True:
             sys.exit()
 
     # Update
-
+    print(pygame.time.get_ticks())
+    pygame.time.wait(100)
+    mouse_x += int(random.random()*2)
+    mouse_y += int(random.random()*2)
+    print(mouse_x, mouse_y)
     # Draw
     labyrinthe.draw(screen)
-    mouse.draw(screen)
-
+    mouse.move((mouse_x, mouse_y))
+    mouse.draw(screen, tile_width_px, tile_height_px)
 
     pygame.display.flip()
     fpsClock.tick(fps)
