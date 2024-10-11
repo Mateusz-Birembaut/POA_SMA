@@ -1,11 +1,12 @@
 import numpy
 
-from Entity import Entity
+from Entity2 import Entity2
+import Scene
 
-class Cat(Entity):
+class Cat(Entity2):
 
-    def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, labyrinth: Labyrinth, name: str):
-        Entity.__init__(img_url, position, scene, labyrinth, name)
+    def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, maze):
+        Entity2.__init__(self, img_url, position, scene, maze)
         self.sawMouse = False
         self.lastSeenMousePosition = (-1,-1)
         self.runningSpeed = 2
@@ -15,7 +16,7 @@ class Cat(Entity):
         for coord in to_test:
             x = self.tile_x + coord[0]
             y =  self.tile_y + coord[1]
-            while(self.labyrinth.maze[y][x] != '#'):
+            while(self.maze[x][y] >= 0):
                 if mousePosition == (x, y):
                     self.lastSeenMouse = (x,y)
                     self.sawMouse = True
@@ -30,7 +31,31 @@ class Cat(Entity):
         if(self.sawMouse == True): # si on a vu la souris
             self.moveTowardsLastSeenPosition(mousePosition) # se déplacer vers la position vue
         else :
-            Entity.move() # avec entity.move => se déplace sur la case la moins visité
+            #Entity2.move() # avec entity.move => se déplace sur la case la moins visité
+            print("cat x :" ,self.tile_x)
+            print("cat y :" ,self.tile_y)
+
+            print("indice de la case x-1 :" ,self.maze[self.tile_x-1][self.tile_y])
+            print("indice de la case x+1 :" ,self.maze[self.tile_x+1][self.tile_y])
+            print("indice de la case y-1 :" ,self.maze[self.tile_x][self.tile_y]-1)
+            print("indice de la case y+1 :" ,self.maze[self.tile_x][self.tile_y]+1)
+
+            to_test = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+            smallestIndex = 1000;
+            movement = [0,0]
+            x = self.tile_x
+            y = self.tile_y
+            for coord in to_test:
+                x = x + coord[0]
+                y = y + coord[1]
+                tileIndex = self.maze[y][x]
+                if(tileIndex >= 0):
+                    if(tileIndex < smallestIndex):
+                        smallestIndex = tileIndex
+                        movement = coord
+            self.tile_x = self.tile_x + movement[0]
+            self.tile_y = self.tile_y + movement[1]
+            self.maze[self.tile_x][self.tile_y] += 1
 
 
     def moveTowardsLastSeenPosition(self, mousePosition):
