@@ -1,7 +1,6 @@
-import pygame
-
-import Labyrinth
 import Scene
+import pygame
+from Branch import Branch
 
 
 class Entity:
@@ -13,7 +12,7 @@ class Entity:
         self.tile_y = position[1]
         self.scene = scene
         self.symbol = symbol
-        self.maze_memory = []
+        # self.maze_memory = Branch()
         # **-****
         # *---***
         # *-*-***

@@ -5,6 +5,7 @@ import pygame
 from pygame.locals import *
 
 from Entity import Entity
+from Mouse import Mouse
 from Labyrinth import Labyrinth
 from Scene import Scene
 
@@ -20,9 +21,9 @@ screen = pygame.display.set_mode((scene.screen_width, scene.screen_height))
 
 labyrinth = Labyrinth((tile_width, tile_height))
 
-mouse = Entity('./res/mouse.png', (1, 1), scene, labyrinth, 'mouse')
+mouse = Mouse('./res/mouse.png', (1, 1), scene, 'mouse')
 
-cat = Entity('./res/cat.png', (19, 1), scene, labyrinth, 'cat')
+cat = Entity('./res/cat.png', (19, 1), scene, 'cat')
 
 
 # Game loop
@@ -35,14 +36,13 @@ while True:
             sys.exit()
 
     # Update
-    pygame.time.wait(25)
 
     new_mouse_x, new_mouse_y = mouse.tile_x, mouse.tile_y
 
     can_move_x, can_move_y = False, False
-    if labyrinth.attempt_move(mouse.name, (new_mouse_x+1, mouse.tile_y)):
+    if labyrinth.attempt_move((new_mouse_x+1, mouse.tile_y)):
         can_move_x = True
-    if labyrinth.attempt_move(mouse.name, (mouse.tile_x, new_mouse_y+1)):
+    if labyrinth.attempt_move((mouse.tile_x, new_mouse_y+1)):
         can_move_y = True
 
     if can_move_x and can_move_y:

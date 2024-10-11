@@ -46,5 +46,7 @@ class Labyrinth:
             x = 0
             y += tile_height
 
-    def attempt_move(self, entity: str, position: tuple[int, int]) -> bool:
+    def attempt_move(self, position: tuple[int, int]) -> bool:
+        if position[0] < 0 or position[1] < 0: return False
+        if position[1] > self.width or position[1] > self.height: return False
         return self.maze[position[1]][position[0]] != '#'
