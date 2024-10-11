@@ -1,17 +1,18 @@
 import Scene
 import pygame
 from Branch import Branch
-
+from EntityState import EntityState
 
 class Entity:
 
-    def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, symbol: str):
+    def __init__(self, img_url: str, position: tuple[int, int], scene: Scene):
         self.image = pygame.image.load(img_url).convert_alpha()
         self.image = pygame.transform.scale(self.image, (scene.tile_width_px, scene.tile_height_px))
         self.tile_x = position[0]
         self.tile_y = position[1]
         self.scene = scene
-        self.symbol = symbol
+        self.symbol = ''
+        self.state = EntityState.SEARCH
         # self.maze_memory = Branch()
         # **-****
         # *---***

@@ -47,6 +47,21 @@ class Labyrinth:
             y += tile_height
 
     def attempt_move(self, position: tuple[int, int]) -> bool:
+        # print(position)
         if position[0] < 0 or position[1] < 0: return False
-        if position[1] > self.width or position[1] > self.height: return False
+        if position[1] >= self.width or position[0] >= self.height: return False
         return self.maze[position[1]][position[0]] != '#'
+
+    def tile_existe(self, position: tuple[int, int]) -> bool:
+        if position[0] < 0 or position[1] < 0: return False
+        if position[1] >= self.width or position[0] >= self.height: return False
+        return True
+
+    def get_entrance(self) -> tuple[int, int] :
+        [print(line) for line in self.maze]
+        for y in range(len(self.maze)):
+            for x in range(len(self.maze[y])):
+                # print(x, y, self.maze[y][x])
+                if self.maze[y][x] == 'E':
+                    # print(x, y)
+                    return x, y
