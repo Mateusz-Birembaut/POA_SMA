@@ -3,7 +3,7 @@ from mazelib import Maze as Maze
 from mazelib.generate.Prims import Prims
 
 
-class Labyrinth:
+class Labyrinth2:
     def __init__(self, size: tuple[int, int]):
         self.width = size[0] * 2 + 1
         self.height = size[1] * 2 + 1
@@ -20,17 +20,13 @@ class Labyrinth:
         line = []
         for char in str(m):
             if char != '\n':
-                integer  = -100
-                if(char == '#'):
+                integer = 0
+                if char == '#':
                     integer = -1
-                elif( char == 'E'):
+                elif char == 'E':
                     integer = -2
-                elif( char == 'S'):
+                elif char == 'S':
                     integer = -3
-                    print(char)
-                    print(m)
-                else:
-                    integer  = 0
                 line.append(integer)
             else:
                 self.maze.append(line)
@@ -52,10 +48,7 @@ class Labyrinth:
                 else :
                     pygame.draw.rect(screen, (10, 10, 10), (x, y, tile_width, tile_height))
 
-                y += tile_width
+                x += tile_width
 
-            y = 0
-            x += tile_height
-
-    def attempt_move(self, entity: str, position: tuple[int, int]) -> bool:
-        return self.maze[position[1]][position[0]] != '#'
+            x = 0
+            y += tile_height

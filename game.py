@@ -8,6 +8,7 @@ from Entity import Entity
 from Entity2 import Entity2
 from Cat import Cat
 from Labyrinth import Labyrinth
+from Labyrinth2 import Labyrinth2
 from Scene import Scene
 import copy
 
@@ -21,7 +22,7 @@ scene = Scene((tile_width, tile_height), (tile_width_px, tile_height_px))
 
 screen = pygame.display.set_mode((scene.screen_width, scene.screen_height))
 
-labyrinth = Labyrinth((tile_width, tile_height))
+labyrinth = Labyrinth2((tile_width, tile_height))
 
 #mouse = Entity('./res/mouse.png', (1, 1), scene, labyrinth, 'mouse')
 
@@ -38,12 +39,12 @@ while True:
             sys.exit()
 
     # Update
-    pygame.time.wait(25)
+    #pygame.time.wait(25)
 
     # Draw
     labyrinth.draw(screen)
-    cat.move((0,0))
+    cat.move((10,8))
     cat.draw(screen)
 
     pygame.display.flip()
-    gameClock.tick(0.1)
+    gameClock.tick(60)
