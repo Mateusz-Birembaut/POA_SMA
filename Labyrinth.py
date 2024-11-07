@@ -17,13 +17,20 @@ class Labyrinth:
         # m.solver = BacktrackingSolver()
         # m.solve()
 
-        line = ""
+        line = []
         for char in str(m):
             if char != '\n':
-                line += char
+                integer = 0
+                if char == '#':
+                    integer = -1
+                elif char == 'E':
+                    integer = -2
+                elif char == 'S':
+                    integer = -3
+                line.append(integer)
             else:
                 self.maze.append(line)
-                line = ""
+                line = []
         self.maze.append(line)
 
     def draw(self, screen: pygame.surface):
@@ -36,15 +43,12 @@ class Labyrinth:
 
         for line in self.maze:
             for tile in line:
-                if tile == '#':
+                if tile == -1:
                     pygame.draw.rect(screen, "white", (x, y, tile_width, tile_height))
-                elif tile == ' ':
+                else :
                     pygame.draw.rect(screen, (10, 10, 10), (x, y, tile_width, tile_height))
 
                 x += tile_width
 
             x = 0
             y += tile_height
-
-    def attempt_move(self, entity: str, position: tuple[int, int]) -> bool:
-        return self.maze[position[1]][position[0]] != '#'

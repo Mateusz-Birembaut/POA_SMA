@@ -1,15 +1,16 @@
 import numpy
 
-from Entity2 import Entity2
+from Entity import Entity
 import Scene
 
-class Cat(Entity2):
+class Cat(Entity):
 
     def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, maze):
-        Entity2.__init__(self, img_url, position, scene, maze)
+        Entity.__init__(self, img_url, position, scene, maze)
         self.saw_mouse = False
         self.lastSeenMousePosition = (-1,-1)
         self.runningSpeed = 2
+
 
     def seesMouse(self, mouse_position):
         to_test = [[1, 0], [0, 1], [-1, 0], [0, -1]]
@@ -27,11 +28,11 @@ class Cat(Entity2):
         self.saw_mouse = False
 
     def move(self, mouse_position):
-        self.seesMouse(mouse_position)
+        self.seesMouse(mouse_position) # regarde si il voit la souris autour
         if self.saw_mouse : # si on a vu la souris
             self.moveTowardsLastSeenPosition(mouse_position) # se déplacer vers la position vue
         else :
-            #Entity2.move() # avec entity.move => se déplace sur la case la moins visité
+            # se déplace sur la case la moins visité autour
             to_test = [[1, 0], [0, 1], [-1, 0], [0, -1]]
             smallest_index = 1000
             movement = [0, 0]
@@ -46,6 +47,7 @@ class Cat(Entity2):
             self.tile_x += movement[0]
             self.tile_y += movement[1]
             self.maze[self.tile_y][self.tile_x] += 1
+            self.checkIfDeadEnd()
 
 
     def moveTowardsLastSeenPosition(self, mouse_position):
@@ -68,3 +70,54 @@ class Cat(Entity2):
                 break
         self.tile_x = x
         self.tile_y = y
+
+    def checkIfDeadEnd(self):
+        to_test = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+        for coord in to_test:
+            foundWall = False
+            i = 1  # commence a 1 pour tester les cases adjacentes
+            while not foundWall:
+                x = self.tile_x + coord[0] * i
+                y = self.tile_y + coord[1] * i
+
+                # si que (x, y) est dans les limites
+                if 0 <= x < len(self.maze[0]) and 0 <= y < len(self.maze):
+                    tile_index = self.maze[y][x]
+
+                    if tile_index == -1:  # si un mur est trouvé
+                        foundWall = True
+                        isDeadEnd = True
+                        index = 1
+                        while index < i:
+                            x = self.tile_x + coord[0] * index
+                            y = self.tile_y + coord[1] * index
+
+                            if 0 <= x < len(self.maze[0]) and 0 <= y < len(self.maze):
+
+                                # Verifie les cases adjactentes pour verifier si c'est un couloir
+
+                                if coord[0] != 0:  # check les cases en focntion de si on est dans un mvt horizontale ou vertical
+                                    if (y + 1 < len(self.maze) and self.maze[y + 1][x] != -1) or \
+                                            (y - 1 >= 0 and self.maze[y - 1][x] != -1):
+                                        isDeadEnd = False
+                                        break
+                                else:
+                                    if (x + 1 < len(self.maze[0]) and self.maze[y][x + 1] != -1) or \
+                                            (x - 1 >= 0 and self.maze[y][x - 1] != -1):
+                                        isDeadEnd = False
+                                        break
+
+                            index += 1
+
+                        # si ce couloir est un cul de sac, j'incrémente les valeurs de ce chemin de +10 pour pas y passer
+                        if isDeadEnd:
+                            index = 1
+                            while index < i:
+                                x = self.tile_x + coord[0] * index
+                                y = self.tile_y + coord[1] * index
+                                self.maze[y][x] += 10
+                                index += 1
+                else:
+                    break  # si on est hors limite on dit que non
+
+                i += 1
