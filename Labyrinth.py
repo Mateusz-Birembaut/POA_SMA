@@ -33,11 +33,13 @@ class Labyrinth:
                 line = []
         self.maze.append(line)
 
-    def draw(self, screen: pygame.surface):
+    def draw(self, screen: pygame.surface, margin_right):
         # TODO mettre des marges au labyrinthe
 
-        tile_width = screen.get_width() / self.width
-        tile_height = screen.get_height() / self.height
+        drawable_width = screen.get_width() - margin_right
+
+        tile_width = drawable_width / self.width
+        tile_height = drawable_width / self.height 
 
         x, y = 0, 0
 
@@ -52,3 +54,12 @@ class Labyrinth:
 
             x = 0
             y += tile_height
+
+
+    def get_random_empty_position(self):
+        import random
+        while True:
+            x = random.randint(0, self.width - 1)
+            y = random.randint(0, self.height - 1)
+            if self.maze[y][x] >= 0:
+                return (x, y)

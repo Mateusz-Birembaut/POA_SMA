@@ -21,7 +21,7 @@ class Cat(Entity):
                 if mouse_position == (x, y):
                     self.lastSeenMousePosition = (x,y)
                     self.saw_mouse = True
-                    break
+                    return
                 x = x + coord[0]
                 y = y + coord[1]
 
@@ -44,9 +44,11 @@ class Cat(Entity):
                     smallest_index = tile_index
                     movement = coord
 
+            self.maze[self.tile_y][self.tile_x] += 1
+
             self.tile_x += movement[0]
             self.tile_y += movement[1]
-            self.maze[self.tile_y][self.tile_x] += 1
+
             self.checkIfDeadEnd()
 
 
