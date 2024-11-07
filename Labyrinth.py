@@ -8,6 +8,7 @@ class Labyrinth:
         self.width = size[0] * 2 + 1
         self.height = size[1] * 2 + 1
         self.maze = []
+        self.exits = []
 
         m = Maze()
         m.generator = Prims(size[0], size[1])  # fois 2 + 1
@@ -47,6 +48,12 @@ class Labyrinth:
             for tile in line:
                 if tile == -1:
                     pygame.draw.rect(screen, "white", (x, y, tile_width, tile_height))
+                elif tile == -2:
+                    pygame.draw.rect(screen, "red", (x, y, tile_width, tile_height))
+                    self.exits.append((x / tile_width, y / tile_height))
+                elif tile == -3:
+                    pygame.draw.rect(screen, "green", (x, y, tile_width, tile_height))
+                    self.exits.append((x / tile_width, y / tile_height))
                 else :
                     pygame.draw.rect(screen, (10, 10, 10), (x, y, tile_width, tile_height))
 

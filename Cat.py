@@ -32,24 +32,7 @@ class Cat(Entity):
         if self.saw_mouse : # si on a vu la souris
             self.moveTowardsLastSeenPosition(mouse_position) # se déplacer vers la position vue
         else :
-            # se déplace sur la case la moins visité autour
-            to_test = [[1, 0], [0, 1], [-1, 0], [0, -1]]
-            smallest_index = 1000
-            movement = [0, 0]
-            for coord in to_test:
-                x = self.tile_x + coord[0]
-                y = self.tile_y + coord[1]
-                tile_index = self.maze[y][x]
-                if 0 <= tile_index < smallest_index:
-                    smallest_index = tile_index
-                    movement = coord
-
-            self.maze[self.tile_y][self.tile_x] += 1
-
-            self.tile_x += movement[0]
-            self.tile_y += movement[1]
-
-            self.checkIfDeadEnd()
+            super().move()
 
 
     def moveTowardsLastSeenPosition(self, mouse_position):

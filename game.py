@@ -1,10 +1,9 @@
-import random
 import sys
 
 import pygame
 from pygame.locals import *
 
-from Entity import Entity
+from Mouse import Mouse
 from Cat import Cat
 from Labyrinth import Labyrinth
 from Scene import Scene
@@ -27,7 +26,7 @@ labyrinth = Labyrinth((tile_width, tile_height))
 
 menu = Menu(screen.get_width(), screen.get_height(), margin_right)
 
-mouse = Entity('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  copy.deepcopy(labyrinth.maze))
+mouse = Mouse('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  copy.deepcopy(labyrinth.maze))
 
 cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.maze))
 
@@ -41,22 +40,33 @@ while True:
             pygame.quit()
             sys.exit()
         if event.type == MOUSEBUTTONDOWN:
-            print("Event: ", event)
+            #print("Event: ", event)
             menu.handle_event(event)
 
     labyrinth.draw(screen, margin_right)
     menu.draw(screen)
 
     if menu.restarted:
+        labyrinth = Labyrinth((tile_width, tile_height))
         cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.maze))
-        mouse = Entity('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  copy.deepcopy(labyrinth.maze))
+        mouse = Mouse('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  copy.deepcopy(labyrinth.maze))
         menu.restarted = False
+        menu.paused = True
+        menu.ended = False
 
-    if not menu.paused:
-        cat.move((mouse.tile_x , mouse.tile_y))
+    if not menu.ended and not menu.paused:
+        cat.move((mouse.tile_x, mouse.tile_y))
+        if (cat.tile_x, cat.tile_y) == (mouse.tile_x, mouse.tile_y):
+            print("chat a gagné")
+            menu.ended = True
+
+        mouse.move()
+        if (mouse.tile_x, mouse.tile_y) in labyrinth.exits:
+            print("souris a gagné")
+            menu.ended = True
 
     cat.draw(screen)
     mouse.draw(screen)
 
     pygame.display.flip()
-    gameClock.tick(60)
+    gameClock.tick(20)
