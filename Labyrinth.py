@@ -39,7 +39,11 @@ class Labyrinth:
                 if tile == '#':
                     pygame.draw.rect(screen, "white", (x, y, tile_width, tile_height))
                 elif tile == ' ':
-                    pygame.draw.rect(screen, (10, 10, 10), (x, y, tile_width, tile_height))
+                    pygame.draw.rect(screen, (0, 0, 0), (x, y, tile_width, tile_height))
+                elif tile == 'E':
+                    pygame.draw.rect(screen, (127, 127, 127), (x, y, tile_width, tile_height))
+                elif tile == 'S':
+                    pygame.draw.rect(screen, (0, 255, 0), (x, y, tile_width, tile_height))
 
                 x += tile_width
 
@@ -55,7 +59,7 @@ class Labyrinth:
 
     def __tile_exists(self, position: tuple[int, int]) -> bool:
         if position[0] < 0 or position[1] < 0: return False
-        return not position[0] >= self.__width or position[1] >= self.__height
+        return not (position[0] >= self.__width or position[1] >= self.__height)
 
     def get_tile(self, position: tuple[int, int]) -> str:
         if not self.__tile_exists(position): return ''

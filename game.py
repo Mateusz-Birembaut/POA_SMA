@@ -66,4 +66,5 @@ while True:
     cat.draw(screen)
 
     pygame.display.flip()
-    gameClock.tick(10)
+    gameClock.tick(100)
+    # input('>')
