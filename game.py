@@ -1,12 +1,14 @@
-import random
 import sys
 
 import pygame
 from pygame.locals import *
 
-from Entity import Entity
+from Mouse import Mouse
+from Cat import Cat
 from Labyrinth import Labyrinth
 from Scene import Scene
+from Menu import Menu
+import copy
 
 pygame.init()
 gameClock = pygame.time.Clock()
@@ -14,15 +16,21 @@ gameClock = pygame.time.Clock()
 tile_width, tile_height = 10, 10
 tile_width_px, tile_height_px = 35, 35
 
-scene = Scene((tile_width, tile_height), (tile_width_px, tile_height_px))
+game_speed = 10
+
+margin_right = 250
+
+scene = Scene((tile_width, tile_height), (tile_width_px, tile_height_px), margin_right)
 
 screen = pygame.display.set_mode((scene.screen_width, scene.screen_height))
 
 labyrinth = Labyrinth((tile_width, tile_height))
 
-mouse = Entity('./res/mouse.png', (1, 1), scene, labyrinth, 'mouse')
+menu = Menu(screen.get_width(), screen.get_height(), margin_right, game_speed)
 
-cat = Entity('./res/cat.png', (19, 1), scene, labyrinth, 'cat')
+mouse = Mouse('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  copy.deepcopy(labyrinth.maze))
+
+cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.maze))
 
 
 # Game loop
@@ -33,36 +41,36 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == MOUSEBUTTONDOWN:
+            #print("Event: ", event)
+            menu.handle_event(event)
 
-    # Update
-    pygame.time.wait(25)
+    labyrinth.draw(screen, margin_right)
+    menu.draw(screen)
 
-    new_mouse_x, new_mouse_y = mouse.tile_x, mouse.tile_y
+    if menu.restarted:
+        labyrinth = Labyrinth((tile_width, tile_height))
+        cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.maze))
+        mouse = Mouse('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  copy.deepcopy(labyrinth.maze))
+        menu.restarted = False
+        menu.paused = True
+        menu.ended = False
 
-    can_move_x, can_move_y = False, False
-    if labyrinth.attempt_move(mouse.name, (new_mouse_x+1, mouse.tile_y)):
-        can_move_x = True
-    if labyrinth.attempt_move(mouse.name, (mouse.tile_x, new_mouse_y+1)):
-        can_move_y = True
+    if not menu.ended and not menu.paused:
+        cat.move((mouse.tile_x, mouse.tile_y))
+        if (cat.tile_x, cat.tile_y) == (mouse.tile_x, mouse.tile_y):
+            print("chat a gagné")
+            menu.ended = True
+            continue
 
-    if can_move_x and can_move_y:
-        if random.random() > .5:
-            new_mouse_x += 1
-        else:
-            new_mouse_y += 1
-    elif (not can_move_x) and (not can_move_y):
-        new_mouse_x = 1
-        new_mouse_y = 1
-    else:
-        new_mouse_x += can_move_x * 1
-        new_mouse_y += can_move_y * 1
+        mouse.move()
+        if (mouse.tile_x, mouse.tile_y) in labyrinth.exits:
+            print("souris a gagné")
+            menu.ended = True
+            continue
 
-    # Draw
-    labyrinth.draw(screen)
-    mouse.move((new_mouse_x, new_mouse_y))
-    mouse.draw(screen)
-    # cat.move((cat_x, cat_y))
     cat.draw(screen)
+    mouse.draw(screen)
 
     pygame.display.flip()
-    gameClock.tick(30)
+    gameClock.tick(menu.game_speed)
