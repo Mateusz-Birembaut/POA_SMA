@@ -1,10 +1,10 @@
 class Branch:
 
-	def __init__(self, parent):
+	def __init__(self, parent: 'Branch' = None):
 		self.__parent = parent
 		self.__values = ''
 		self.__previous_value = -1
-		self.__children = []
+		self.__children: list[Branch] = []
 
 	def get_parent(self):
 		return self.__parent

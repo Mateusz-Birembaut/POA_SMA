@@ -12,12 +12,12 @@ class Mouse(Entity):
     def __init__(self, img_url: str, position: tuple[int, int], scene: Scene):
         Entity.__init__(self, img_url, position, scene)
         self.visibility = 5
-        self.maze_memory = Branch(None)
+        self.maze_memory = Branch()
         self.symbol = 'M'
         self.next_move_possible = []
 
     # aka update_memory
-    def see(self, lab: Labyrinth): # maze: list[str]):
+    def see(self, lab: Labyrinth):  # maze: list[str]):
         print('SEE')
         print('last : ', self.maze_memory.get_last_value())
         self.next_move_possible = []

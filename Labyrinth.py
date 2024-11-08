@@ -5,8 +5,8 @@ from mazelib.generate.Prims import Prims
 
 class Labyrinth:
     def __init__(self, size: tuple[int, int]):
-        self.width = size[0] * 2 + 1
-        self.height = size[1] * 2 + 1
+        self.__width = size[0] * 2 + 1
+        self.__height = size[1] * 2 + 1
         self.__maze = []
 
         m = Maze()
@@ -29,8 +29,8 @@ class Labyrinth:
     def draw(self, screen: pygame.surface):
         # TODO mettre des marges au labyrinthe
 
-        tile_width = screen.get_width() / self.width
-        tile_height = screen.get_height() / self.height
+        tile_width = screen.get_width() / self.__width
+        tile_height = screen.get_height() / self.__height
 
         x, y = 0, 0
 
@@ -53,8 +53,7 @@ class Labyrinth:
 
     def tile_exists(self, position: tuple[int, int]) -> bool:
         if position[0] < 0 or position[1] < 0: return False
-        if position[1] >= self.width or position[0] >= self.height: return False
-        return True
+        return not position[1] >= self.__width or position[0] >= self.__height
 
     def get_tile(self, position: tuple[int, int]) -> str:
         # print(position)
@@ -66,7 +65,7 @@ class Labyrinth:
         old_line = self.__maze[position[1]]
         self.__maze[position[1]] = old_line[:position[0]] + value + old_line[position[0]+1:]
 
-    def get_entrance(self) -> tuple[int, int] :
+    def get_entrance(self) -> tuple[int, int]:
         [print(line) for line in self.__maze]
         for y in range(len(self.__maze)):
             for x in range(len(self.__maze[y])):
