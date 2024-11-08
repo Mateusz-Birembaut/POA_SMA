@@ -1,8 +1,11 @@
-from Entity import Entity
-from Branch import Branch
-from Scene import Scene
 import random
+
+import Labyrinth
 import Move
+from Branch import Branch
+from Entity import Entity
+from Scene import Scene
+
 
 class Mouse(Entity):
 
@@ -14,7 +17,7 @@ class Mouse(Entity):
         self.next_move_possible = []
 
     # aka update_memory
-    def see(self, lab): # maze: list[str]):
+    def see(self, lab: Labyrinth): # maze: list[str]):
         print('SEE')
         print('last : ', self.maze_memory.get_last_value())
         self.next_move_possible = []
@@ -27,9 +30,9 @@ class Mouse(Entity):
                 print('d\'où on vient donc ignore')
                 continue
             print('attempt :', (self.tile_y + coord[1], self.tile_x + coord[0]))
-            if lab.tile_existe((self.tile_y + coord[1], self.tile_x + coord[0])):
+            if lab.tile_exists((self.tile_y + coord[1], self.tile_x + coord[0])):
                 print('case existe')
-                adjacent_tile = lab.maze[self.tile_y + coord[1]][self.tile_x + coord[0]]
+                adjacent_tile = lab.get_tile([self.tile_x + coord[0], self.tile_y + coord[1]])
                 if adjacent_tile == ' ':
                     print('chemin possible, création branche')
                     self.maze_memory.create_children(1)
@@ -52,7 +55,7 @@ class Mouse(Entity):
             self.next_move_possible = [Move.invert_char[prev]]
 
     # aka move_or_idle
-    def action(self, lab):
+    def action(self, lab: Labyrinth):
         # se déplace ou pas en fonction de la mémoire et de l'objectif
         # si mode = cherche -> chercher sortie -> faire en fonction de mémoire
         # si mode = fuite -> fuir chat -> ignoré mémoire

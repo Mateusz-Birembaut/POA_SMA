@@ -7,7 +7,7 @@ class Labyrinth:
     def __init__(self, size: tuple[int, int]):
         self.width = size[0] * 2 + 1
         self.height = size[1] * 2 + 1
-        self.maze = []
+        self.__maze = []
 
         m = Maze()
         m.generator = Prims(size[0], size[1])  # fois 2 + 1
@@ -22,9 +22,9 @@ class Labyrinth:
             if char != '\n':
                 line += char
             else:
-                self.maze.append(line)
+                self.__maze.append(line)
                 line = ""
-        self.maze.append(line)
+        self.__maze.append(line)
 
     def draw(self, screen: pygame.surface):
         # TODO mettre des marges au labyrinthe
@@ -34,7 +34,7 @@ class Labyrinth:
 
         x, y = 0, 0
 
-        for line in self.maze:
+        for line in self.__maze:
             for tile in line:
                 if tile == '#':
                     pygame.draw.rect(screen, "white", (x, y, tile_width, tile_height))
@@ -48,20 +48,29 @@ class Labyrinth:
 
     def attempt_move(self, position: tuple[int, int]) -> bool:
         # print(position)
-        if position[0] < 0 or position[1] < 0: return False
-        if position[1] >= self.width or position[0] >= self.height: return False
-        return self.maze[position[1]][position[0]] != '#'
+        if not self.tile_exists(position): return False
+        return self.__maze[position[1]][position[0]] != '#'
 
-    def tile_existe(self, position: tuple[int, int]) -> bool:
+    def tile_exists(self, position: tuple[int, int]) -> bool:
         if position[0] < 0 or position[1] < 0: return False
         if position[1] >= self.width or position[0] >= self.height: return False
         return True
 
+    def get_tile(self, position: tuple[int, int]) -> str:
+        # print(position)
+        # for line in self.__maze:
+        #     print(line)
+        return self.__maze[position[1]][position[0]]
+
+    def set_tile(self, position: tuple[int, int], value: str):
+        old_line = self.__maze[position[1]]
+        self.__maze[position[1]] = old_line[:position[0]] + value + old_line[position[0]+1:]
+
     def get_entrance(self) -> tuple[int, int] :
-        [print(line) for line in self.maze]
-        for y in range(len(self.maze)):
-            for x in range(len(self.maze[y])):
+        [print(line) for line in self.__maze]
+        for y in range(len(self.__maze)):
+            for x in range(len(self.__maze[y])):
                 # print(x, y, self.maze[y][x])
-                if self.maze[y][x] == 'E':
+                if self.__maze[y][x] == 'E':
                     # print(x, y)
                     return x, y

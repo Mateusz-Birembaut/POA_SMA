@@ -1,12 +1,11 @@
-import random
 import sys
 
 import pygame
 from pygame.locals import *
 
 from Entity import Entity
-from Mouse import Mouse
 from Labyrinth import Labyrinth
+from Mouse import Mouse
 from Scene import Scene
 
 pygame.init()
