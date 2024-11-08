@@ -1,4 +1,5 @@
 import pygame
+import random
 from mazelib import Maze as Maze
 from mazelib.generate.Prims import Prims
 
@@ -64,7 +65,6 @@ class Labyrinth:
 
 
     def get_random_empty_position(self):
-        import random
         while True:
             x = random.randint(0, self.width - 1)
             y = random.randint(0, self.height - 1)

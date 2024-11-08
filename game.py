@@ -61,11 +61,13 @@ while True:
         if (cat.tile_x, cat.tile_y) == (mouse.tile_x, mouse.tile_y):
             print("chat a gagné")
             menu.ended = True
+            continue
 
         mouse.move()
         if (mouse.tile_x, mouse.tile_y) in labyrinth.exits:
             print("souris a gagné")
             menu.ended = True
+            continue
 
     cat.draw(screen)
     mouse.draw(screen)
