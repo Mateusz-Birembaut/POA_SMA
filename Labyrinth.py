@@ -48,20 +48,21 @@ class Labyrinth:
 
     def attempt_move(self, position: tuple[int, int]) -> bool:
         # print(position)
-        if not self.tile_exists(position): return False
+        # todo calculer la position
+        # todo vérifier si ya pas le chat/souris
+        if not self.__tile_exists(position): return False
         return self.__maze[position[1]][position[0]] != '#'
 
-    def tile_exists(self, position: tuple[int, int]) -> bool:
+    def __tile_exists(self, position: tuple[int, int]) -> bool:
         if position[0] < 0 or position[1] < 0: return False
-        return not position[1] >= self.__width or position[0] >= self.__height
+        return not position[0] >= self.__width or position[1] >= self.__height
 
     def get_tile(self, position: tuple[int, int]) -> str:
-        # print(position)
-        # for line in self.__maze:
-        #     print(line)
+        if not self.__tile_exists(position): return ''
         return self.__maze[position[1]][position[0]]
 
     def set_tile(self, position: tuple[int, int], value: str):
+        if not self.__tile_exists(position): return
         old_line = self.__maze[position[1]]
         self.__maze[position[1]] = old_line[:position[0]] + value + old_line[position[0]+1:]
 

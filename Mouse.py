@@ -30,9 +30,10 @@ class Mouse(Entity):
                 print('d\'où on vient donc ignore')
                 continue
             print('attempt :', (self.tile_y + coord[1], self.tile_x + coord[0]))
-            if lab.tile_exists((self.tile_y + coord[1], self.tile_x + coord[0])):
+            # if lab.tile_exists((self.tile_y + coord[1], self.tile_x + coord[0])):
+            adjacent_tile = lab.get_tile([self.tile_x + coord[0], self.tile_y + coord[1]])
+            if adjacent_tile != '':
                 print('case existe')
-                adjacent_tile = lab.get_tile([self.tile_x + coord[0], self.tile_y + coord[1]])
                 if adjacent_tile == ' ':
                     print('chemin possible, création branche')
                     self.maze_memory.create_children(1)
@@ -44,11 +45,11 @@ class Mouse(Entity):
                     #             # TODO activer mode fuite et aller à l'oposé
                     #             pass
                 elif adjacent_tile == 'S':
-                    print('c\'est la sortie !!!')
+                    print('c\'est la sortie !!! ---------------------------')
         if not self.next_move_possible:
             print('cul de sac -> revenir en arrière')
             prev = self.maze_memory.get_previous_value()
-            if prev is None:
+            if prev is '':
                 print('on est de retour à l\'intersection, ont change de branche')
                 self.maze_memory = self.maze_memory.get_parent()
                 prev = self.maze_memory.get_previous_value()
@@ -67,8 +68,6 @@ class Mouse(Entity):
             print('new_pos = ', self.tile_x + Move.move[res][0], self.tile_y + Move.move[res][1])
             if self.move((self.tile_x + Move.move[res][0], self.tile_y + Move.move[res][1]), lab):
                 self.maze_memory.add_value(res)
-        else:
-            print(self.next_move_possible)
 
     # ???
     def next(self):
