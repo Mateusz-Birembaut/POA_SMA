@@ -16,6 +16,8 @@ gameClock = pygame.time.Clock()
 tile_width, tile_height = 10, 10
 tile_width_px, tile_height_px = 35, 35
 
+game_speed = 10
+
 margin_right = 250
 
 scene = Scene((tile_width, tile_height), (tile_width_px, tile_height_px), margin_right)
@@ -24,7 +26,7 @@ screen = pygame.display.set_mode((scene.screen_width, scene.screen_height))
 
 labyrinth = Labyrinth((tile_width, tile_height))
 
-menu = Menu(screen.get_width(), screen.get_height(), margin_right)
+menu = Menu(screen.get_width(), screen.get_height(), margin_right, game_speed)
 
 mouse = Mouse('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  copy.deepcopy(labyrinth.maze))
 
@@ -69,4 +71,4 @@ while True:
     mouse.draw(screen)
 
     pygame.display.flip()
-    gameClock.tick(20)
+    gameClock.tick(menu.game_speed)
