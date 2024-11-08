@@ -17,7 +17,7 @@ class Branch:
 		self.__values += value
 
 	def get_previous_value(self) -> str:
-		if self.__previous_value < 0: return None
+		if self.__previous_value < 0: return ''
 		self.__previous_value -= 1
 		return self.__values[self.__previous_value + 1]
 

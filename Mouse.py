@@ -52,7 +52,7 @@ class Mouse(Entity):
             self.next_move_possible = [Move.invert_char[prev]]
 
     # aka move_or_idle
-    def action(self):
+    def action(self, lab):
         # se déplace ou pas en fonction de la mémoire et de l'objectif
         # si mode = cherche -> chercher sortie -> faire en fonction de mémoire
         # si mode = fuite -> fuir chat -> ignoré mémoire
@@ -62,8 +62,8 @@ class Mouse(Entity):
             print(res)
             print('pos = ', self.tile_x, self.tile_y)
             print('new_pos = ', self.tile_x + Move.move[res][0], self.tile_y + Move.move[res][1])
-            self.move((self.tile_x + Move.move[res][0], self.tile_y + Move.move[res][1]))
-            self.maze_memory.add_value(res)
+            if self.move((self.tile_x + Move.move[res][0], self.tile_y + Move.move[res][1]), lab):
+                self.maze_memory.add_value(res)
         else:
             print(self.next_move_possible)
 

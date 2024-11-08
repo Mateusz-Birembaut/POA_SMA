@@ -60,7 +60,7 @@ while True:
     # Draw
     labyrinth.draw(screen)
     mouse.see(labyrinth)
-    mouse.action()
+    mouse.action(labyrinth)
     # mouse.move((new_mouse_x, new_mouse_y))
     mouse.draw(screen)
     # cat.move((cat_x, cat_y))
