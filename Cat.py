@@ -5,11 +5,12 @@ import Scene
 
 class Cat(Entity):
 
-    def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, maze):
-        Entity.__init__(self, img_url, position, scene, maze)
+    def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, m):
+        Entity.__init__(self, img_url, position, scene, m)
         self.saw_mouse = False
         self.lastSeenMousePosition = (-1,-1)
         self.runningSpeed = 2
+
 
 
     def seesMouse(self, mouse_position):

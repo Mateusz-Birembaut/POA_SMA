@@ -11,6 +11,7 @@ class Labyrinth:
         self.maze = []
         self.exits = []
 
+
         m = Maze()
         m.generator = Prims(size[0], size[1])  # fois 2 + 1
         m.generate()
@@ -18,6 +19,8 @@ class Labyrinth:
         m.generate_entrances()
         # m.solver = BacktrackingSolver()
         # m.solve()
+        self.m = m
+
 
         line = []
         for char in str(m):

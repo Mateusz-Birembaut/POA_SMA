@@ -6,13 +6,30 @@ import numpy
 
 class Entity:
 
-    def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, maze):
+    def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, m):
         self.image = pygame.image.load(img_url).convert_alpha()
         self.image = pygame.transform.scale(self.image, (scene.tile_width_px, scene.tile_height_px))
         self.tile_x = position[0]
         self.tile_y = position[1]
         self.scene = scene
-        self.maze = maze
+        self.maze = []
+
+        line = []
+        for char in str(m):
+            if char != '\n':
+                integer = 0
+                if char == '#':
+                    integer = -1
+                elif char == 'E':
+                    integer = -2
+                elif char == 'S':
+                    integer = -3
+                line.append(integer)
+            else:
+                self.maze.append(line)
+                line = []
+        self.maze.append(line)
+
         self.maze[self.tile_x][self.tile_y] = 0
         self.old_position = None
 

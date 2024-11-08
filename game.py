@@ -28,9 +28,9 @@ labyrinth = Labyrinth((tile_width, tile_height))
 
 menu = Menu(screen.get_width(), screen.get_height(), margin_right, game_speed)
 
-mouse = Mouse('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  copy.deepcopy(labyrinth.maze))
+mouse = Mouse('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  copy.deepcopy(labyrinth.m))
 
-cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.maze))
+cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.m))
 
 
 # Game loop
@@ -42,7 +42,6 @@ while True:
             pygame.quit()
             sys.exit()
         if event.type == MOUSEBUTTONDOWN:
-            #print("Event: ", event)
             menu.handle_event(event)
 
     labyrinth.draw(screen, margin_right)
