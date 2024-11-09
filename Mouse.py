@@ -100,10 +100,10 @@ class Mouse(Entity):
                 if self.state == EntityState.REVERSE:
                     print('toutes les branches sont visitées, ont revient en arrière')
                     prev = self.maze_memory.get_previous_value()
-                    print(Move.invert_char[prev])
+                    print(Move.invert_move[prev])
                     self.move((self.tile_x + Move.invert_move[prev][0], self.tile_y + Move.invert_move[prev][1]), lab)
             else:
-                print(Move.invert_char[prev])
+                print(Move.invert_move[prev])
                 self.move((self.tile_x + Move.invert_move[prev][0], self.tile_y + Move.invert_move[prev][1]), lab)
 
     # ???
