@@ -4,7 +4,7 @@ import Labyrinth
 import Move
 from Branch import Branch
 from Entity import Entity
-from EntityState import EntityState
+from Enums import EntityState
 from Scene import Scene
 
 

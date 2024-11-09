@@ -2,7 +2,7 @@ import pygame
 
 import Labyrinth
 import Scene
-from EntityState import EntityState
+from Enums import EntityState
 
 
 class Entity:
