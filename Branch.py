@@ -6,7 +6,6 @@ class Branch:
 	def __init__(self, parent: 'Branch' = None):
 		self.__parent = parent
 		self.__values: list[EntityMove] = []
-		self.__previous_value = -1
 		self.__children: list[Branch] = []
 		self.__completed = False
 
@@ -20,19 +19,17 @@ class Branch:
 		return self.__values
 
 	def get_last_value(self) -> EntityMove:
-		if len(self.__values) == 0:
+		if not self.__values:
 			return EntityMove.NONE
 		return self.__values[-1]
 
-	def get_previous_value(self) -> EntityMove:
-		if self.__previous_value < 0:
+	def pop(self) -> EntityMove:
+		if not self.__values:
 			return EntityMove.NONE
-		self.__previous_value -= 1
-		return self.__values[self.__previous_value + 1]
+		return self.__values.pop()
 
 	def add_value(self, value: EntityMove):
 		self.__values.append(value)
-		self.__previous_value += 1
 
 	def get_children(self) -> list['Branch']:
 		return self.__children

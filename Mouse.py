@@ -78,7 +78,7 @@ class Mouse(Entity):
             print('---CHANGEMENT STATE---', self.state, EntityState.REVERSE)
             self.state = EntityState.REVERSE
             print('historique', self.maze_memory.get_values())
-            prev = self.maze_memory.get_previous_value()
+            prev = self.maze_memory.pop()
             if prev == EntityMove.NONE:
                 print('on est de retour à l\'intersection, ont change de branche')
                 self.maze_memory.set_completed()
@@ -97,7 +97,7 @@ class Mouse(Entity):
                 # revenir en arrière
                 if self.state == EntityState.REVERSE:
                     print('toutes les branches sont visitées, ont revient en arrière')
-                    prev = self.maze_memory.get_previous_value()
+                    prev = self.maze_memory.pop()
                     print(prev.value * -1)
                     self.move((self.tile_x + prev.value[0] * -1, self.tile_y + prev.value[1] * -1), lab)
             else:
