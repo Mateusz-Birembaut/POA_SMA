@@ -16,3 +16,4 @@ class EntityMove(Enum):
     DOWN = Vec2(0, 1)
     LEFT = Vec2(-1, 0)
     RIGHT = Vec2(1, 0)
+    NONE = Vec2(0, 0)
