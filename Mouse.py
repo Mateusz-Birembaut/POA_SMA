@@ -24,7 +24,7 @@ class Mouse(Entity):
         print('-----SEE-----')
         # regarde les self.visibility tuiles autour de lui (sauf d'où il vient)
         # et l'enregistre dans sa mémoire
-        to_test = [[0, -1, 'z'], [0, 1, 's'], [1, 0, 'd'], [-1, 0, 'q']]
+        to_test = [(0, -1, 'z'), (0, 1, 's'), (1, 0, 'd'), (-1, 0, 'q')]
         for coord in to_test:
             # print(coord)
             if Move.invert_move[self.maze_memory.get_last_value()] == coord[:-1]:
