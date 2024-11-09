@@ -2,7 +2,7 @@ class Branch:
 
 	def __init__(self, parent: 'Branch' = None):
 		self.__parent = parent
-		self.__values = ''
+		self.__values = []
 		self.__previous_value = -1
 		self.__children: list[Branch] = []
 		self.__completed = False
@@ -13,11 +13,12 @@ class Branch:
 	def is_completed(self) -> bool:
 		return self.__completed
 
-	def get_values(self) -> str:
+	def get_values(self) -> list[str]:
 		return self.__values
 
 	def get_last_value(self) -> str:
-		return self.__values[-1:]
+		if self.__values == []: return ''
+		return self.__values[-1]
 
 	def get_previous_value(self) -> str:
 		if self.__previous_value < 0: return ''
@@ -25,7 +26,7 @@ class Branch:
 		return self.__values[self.__previous_value + 1]
 
 	def add_value(self, value: str):
-		self.__values += value
+		self.__values.append(value)
 		self.__previous_value += 1
 
 	def get_children(self) -> list['Branch']:
