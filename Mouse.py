@@ -4,9 +4,9 @@ import Labyrinth
 import Move
 from Branch import Branch
 from Entity import Entity
+from EntityState import EntityState
 from Scene import Scene
 
-from EntityState import EntityState
 
 class Mouse(Entity):
 
