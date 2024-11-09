@@ -6,6 +6,7 @@ from Branch import Branch
 from Entity import Entity
 from Enums import EntityState
 from Scene import Scene
+from Vec2 import Vec2
 
 
 class Mouse(Entity):
@@ -27,6 +28,8 @@ class Mouse(Entity):
         to_test = [(0, -1, 'z'), (0, 1, 's'), (1, 0, 'd'), (-1, 0, 'q')]
         for coord in to_test:
             # print(coord)
+            if Vec2(0, 1)[0] == coord[0]:
+                print('oui', coord)
             if Move.invert_move[self.maze_memory.get_last_value()] == coord[:-1]:
                 print(coord[2], '- d\'où on vient donc ignore')
                 continue
