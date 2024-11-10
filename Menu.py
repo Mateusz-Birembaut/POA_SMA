@@ -28,7 +28,7 @@ class Menu:
         self.paused = True
         self.restarted = True
         self.ended = False
-        self.algo_m = True
+        self.algo_m = False
 
     def draw(self, screen):
         self.surface.fill((150, 150, 150))
