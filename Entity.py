@@ -3,21 +3,28 @@ import random
 import numpy
 import pygame
 
+import Labyrinth
 import Scene
+from Enums import EntityState
 
 
 class Entity:
 
-    def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, m):
-        self.image = pygame.image.load(img_url).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (scene.tile_width_px, scene.tile_height_px))
+    def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, m: str):
+        image = pygame.image.load(img_url).convert_alpha()
+        self.image = pygame.transform.scale(image, (scene.tile_width_px, scene.tile_height_px))
         self.tile_x = position[0]
         self.tile_y = position[1]
         self.scene = scene
+        self.symbol = ''
+        self.state = EntityState.SEARCH
+        # self.maze_memory = Branch()
+        # self.visibility = 0
+
         self.maze = []
 
         line = []
-        for char in str(m):
+        for char in m:
             if char != '\n':
                 integer = 0
                 if char == '#':
@@ -72,6 +79,24 @@ class Entity:
             self.maze[self.tile_y][self.tile_x] += 1  # on se déplace
 
         self.check_if_dead_end()  # regarder autour pour voir si il y a des culs-de-sac
+
+    def move2(self, new_position: tuple[int, int], lab: Labyrinth) -> bool:
+        # todo donner seulement X ou Y en entrée et calculer new_pos
+        if new_position == (self.tile_x, self.tile_y): return False
+        if lab.attempt_move(new_position):
+            self.tile_x = max(0, min(new_position[0], self.scene.tile_width-1))
+            self.tile_y = max(0, min(new_position[1], self.scene.tile_height-1))
+            return True
+        return False
+
+    def see(self, lab: Labyrinth):
+        # regarde les self.visibility tuiles devant lui et l'enregistre dans sa mémoire
+        # pour chat -> inf   souris -> 5
+        pass
+
+    def action(self, lab: Labyrinth):
+        # se déplace ou pas en fonction de la mémoire et de l'objectif
+        pass
 
     def check_if_dead_end(self):
         to_test = [[1, 0], [0, 1], [-1, 0], [0, -1]]

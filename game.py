@@ -1,4 +1,3 @@
-import copy
 import sys
 
 import pygame
@@ -7,7 +6,7 @@ from pygame.locals import *
 from Cat import Cat
 from Labyrinth import Labyrinth
 from Menu import Menu
-from Mouse import Mouse1
+from Mouse import Mouse1, Mouse2
 from Scene import Scene
 
 pygame.init()
@@ -28,10 +27,9 @@ labyrinth = Labyrinth((tile_width, tile_height))
 
 menu = Menu(screen.get_width(), screen.get_height(), margin_right, game_speed)
 
-mouse = Mouse1('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  copy.deepcopy(labyrinth.m))
+mouse = Mouse1('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  str(labyrinth.m))
 
-cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.m))
-
+cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, str(labyrinth.m))
 
 # Game loop
 while True:
@@ -49,8 +47,8 @@ while True:
 
     if menu.restarted:
         labyrinth = Labyrinth((tile_width, tile_height))
-        cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.m))
-        mouse = Mouse1('./res/mouse.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.m))
+        cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, str(labyrinth.m))
+        mouse = Mouse1('./res/mouse.png', labyrinth.get_random_empty_position(), scene, str(labyrinth.m))
         menu.restarted = False
         menu.paused = True
         menu.ended = False
@@ -62,11 +60,14 @@ while True:
             menu.ended = True
             continue
 
+        # mouse.see(labyrinth)
+        # mouse.action(labyrinth)
         mouse.move()
         if (mouse.tile_x, mouse.tile_y) in labyrinth.exits:
             print("souris a gagné")
             menu.ended = True
             continue
+
 
     cat.draw(screen)
     mouse.draw(screen)
