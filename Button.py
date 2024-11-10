@@ -1,5 +1,3 @@
-import pygame
-
 class Button:
     def __init__(self, text, pos, font, color=(0, 0, 0)):
         self.text = text

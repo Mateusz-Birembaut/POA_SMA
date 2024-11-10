@@ -22,7 +22,7 @@ class Slider:
         pygame.draw.rect(surface, (100, 100, 100), self.handle_rect)  # barre du slider
         surface.blit(self.text_surface, (self.rect.x, self.rect.y - 50))  # texte du slider
 
-        value_surface = self.font.render(str(int(self.value)), True, (0, 0, 0)) # texte de la valeur du slider
+        value_surface = self.font.render(str(int(self.value)), True, (0, 0, 0))  # texte de la valeur du slider
         surface.blit(value_surface, (self.rect.x + self.rect.width / 2 - 14, self.rect.y - 30))
 
     def is_clicked(self, mouse_pos):

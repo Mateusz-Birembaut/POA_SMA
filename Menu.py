@@ -1,8 +1,10 @@
 import sys
 
 import pygame
-from Slider import Slider
+
 from Button import Button
+from Slider import Slider
+
 
 class Menu:
     def __init__(self, width, height, margin_right, speed):
@@ -27,9 +29,6 @@ class Menu:
         self.restarted = False
         self.ended = False
 
-
-
-
     def draw(self, screen):
         self.surface.fill((150, 150, 150))
         for button in self.buttons:
@@ -39,22 +38,20 @@ class Menu:
 
         screen.blit(self.surface, (self.width - self.margin_right, 0))
 
-
     def handle_event(self, event):
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_x, mouse_y = event.pos
-                # Ajuster la position de la souris pour correspondre aux coordonnées du menu
-                mouse_x -= self.width - self.margin_right
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = event.pos
+            # Ajuster la position de la souris pour correspondre aux coordonnées du menu
+            mouse_x -= self.width - self.margin_right
 
-                if self.speed_slider.is_clicked((mouse_x, mouse_y)):
-                    print("slider clicked")
-                    #self.speed_slider.handle_event(event)
+            if self.speed_slider.is_clicked((mouse_x, mouse_y)):
+                print("slider clicked")
+                # self.speed_slider.handle_event(event)
 
-                for button in self.buttons:
-                    if button.is_clicked((mouse_x, mouse_y)):
-                        self.handle_action(button.text)
-                        return
-                    
+            for button in self.buttons:
+                if button.is_clicked((mouse_x, mouse_y)):
+                    self.handle_action(button.text)
+                    return
 
     def handle_action(self, button_text):
         if button_text == "Play / Pause":
