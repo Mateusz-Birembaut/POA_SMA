@@ -3,7 +3,6 @@ import random
 import numpy
 import pygame
 
-import Labyrinth
 import Scene
 from Enums import EntityState
 
@@ -80,23 +79,20 @@ class Entity:
 
         self.check_if_dead_end()  # regarder autour pour voir si il y a des culs-de-sac
 
-    def move2(self, new_position: tuple[int, int], lab: Labyrinth) -> bool:
-        # todo donner seulement X ou Y en entrée et calculer new_pos
-        if new_position == (self.tile_x, self.tile_y): return False
-        if lab.attempt_move(new_position):
-            self.tile_x = max(0, min(new_position[0], self.scene.tile_width-1))
-            self.tile_y = max(0, min(new_position[1], self.scene.tile_height-1))
-            return True
-        return False
+    # retourne l'indice de la différence entre position ancienne et actuelle
+    # si pas trouvé on retourne None
+    def index_of_old_position(self, movement_possible):
+        index = 0
+        if self.old_position is not None:
+            # direction vers laquelle la souris a été vu en dernier
+            direction = tuple(numpy.subtract(self.old_position, (self.tile_x, self.tile_y)))
+            direction = list(direction)
+            for coord in movement_possible:
+                if direction == coord:
+                    return index
+                index = index + 1
 
-    def see(self, lab: Labyrinth):
-        # regarde les self.visibility tuiles devant lui et l'enregistre dans sa mémoire
-        # pour chat -> inf   souris -> 5
-        pass
-
-    def action(self, lab: Labyrinth):
-        # se déplace ou pas en fonction de la mémoire et de l'objectif
-        pass
+        return None  # pas trouvé
 
     def check_if_dead_end(self):
         to_test = [[1, 0], [0, 1], [-1, 0], [0, -1]]
@@ -150,17 +146,20 @@ class Entity:
 
                 i += 1
 
-    # retourne l'indice de la différence entre position ancienne et actuelle
-    # si pas trouvé on retourne None
-    def index_of_old_position(self, movement_possible):
-        index = 0
-        if self.old_position is not None:
-            # direction vers laquelle la souris a été vu en dernier
-            direction = tuple(numpy.subtract(self.old_position, (self.tile_x, self.tile_y)))
-            direction = list(direction)
-            for coord in movement_possible:
-                if direction == coord:
-                    return index
-                index = index + 1
+    def see(self):
+        # regarde les self.visibility tuiles devant lui et l'enregistre dans sa mémoire
+        # pour chat -> inf   souris -> 5
+        pass
 
-        return None  # pas trouvé
+    def action(self):
+        # se déplace ou pas en fonction de la mémoire et de l'objectif
+        pass
+
+    def move2(self, new_position: tuple[int, int]) -> bool:
+        # todo donner seulement X ou Y en entrée et calculer new_pos
+        if new_position == (self.tile_x, self.tile_y): return False
+        if self.scene.lab.attempt_move(new_position):
+            self.tile_x = max(0, min(new_position[0], self.scene.tile_width_nb - 1))
+            self.tile_y = max(0, min(new_position[1], self.scene.tile_height_nb - 1))
+            return True
+        return False

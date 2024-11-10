@@ -2,39 +2,25 @@ import random
 
 import numpy
 
-import Labyrinth
 from Branch import Branch
 from Entity import Entity
 from Enums import EntityState, EntityMove
 from Scene import Scene
 
 
-class Mouse1(Entity):
+class Mouse(Entity):
 
     def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, m: str):
         Entity.__init__(self, img_url, position, scene, m)
         self.exitLocation = None
         self.sawExit = False
 
-    def sees_exit(self):
-        to_test = [[1, 0], [0, 1], [-1, 0], [0, -1]]
-        for coord in to_test:
-            x = self.tile_x + coord[0]
-            y = self.tile_y + coord[1]
-            while self.maze[y][x] >= 0:
-                x = x + coord[0]
-                y = y + coord[1]
-
-            if self.maze[y][x] == -3 or self.maze[y][x] == -2:
-                self.sawExit = True
-                self.exitLocation = (x, y)
-    
-    def move(self):
+    def process(self):
         if self.sawExit:
             self.move_to_exit()
         else:
             super().move()
-            self.sees_exit()
+            self.check_exit()
 
     def move_to_exit(self):
         x = self.tile_x
@@ -55,6 +41,19 @@ class Mouse1(Entity):
         self.tile_x = x
         self.tile_y = y
 
+    def check_exit(self):
+        to_test = [[1, 0], [0, 1], [-1, 0], [0, -1]]
+        for coord in to_test:
+            x = self.tile_x + coord[0]
+            y = self.tile_y + coord[1]
+            while self.maze[y][x] >= 0:
+                x = x + coord[0]
+                y = y + coord[1]
+
+            if self.maze[y][x] == -3 or self.maze[y][x] == -2:
+                self.sawExit = True
+                self.exitLocation = (x, y)
+
 
 class Mouse2(Entity):
 
@@ -65,7 +64,11 @@ class Mouse2(Entity):
         self.symbol = 'M'
         self.next_move_possible: list[EntityMove] = []
 
-    def see(self, lab: Labyrinth):
+    def process(self):
+        self.see()
+        self.action()
+
+    def see(self):
         self.next_move_possible = []
 
         if self.state != EntityState.SEARCH: return
@@ -75,7 +78,7 @@ class Mouse2(Entity):
             if self.maze_memory.get_last_value().value * -1 == direction.value:
                 continue
 
-            adjacent_tile = lab.get_tile((self.tile_x + direction.value[0], self.tile_y + direction.value[1]))
+            adjacent_tile = self.scene.lab.get_tile((self.tile_x + direction.value[0], self.tile_y + direction.value[1]))
             if adjacent_tile != '':
                 if adjacent_tile == ' ':  # espace = chemin
                     self.next_move_possible.append(direction)
@@ -96,8 +99,7 @@ class Mouse2(Entity):
                 for move in self.next_move_possible:
                     self.maze_memory.create_child(move)
 
-    # aka move_or_idle
-    def action(self, lab: Labyrinth):
+    def action(self):
         if self.state == EntityState.OUT: return
 
         # todo se déplace ou pas en fonction de la mémoire et de l'objectif
@@ -108,16 +110,16 @@ class Mouse2(Entity):
         # un seul choix -> y aller
         if len(self.next_move_possible) == 1:
             move = self.next_move_possible[0]
-            if self.move2((self.tile_x + move.value[0], self.tile_y + move.value[1]), lab):
+            if self.move2((self.tile_x + move.value[0], self.tile_y + move.value[1])):
                 self.maze_memory.add_value(move)
-            if lab.get_tile((self.tile_x, self.tile_y)) == 'S':
+            if self.scene.lab.get_tile((self.tile_x, self.tile_y)) == 'S':
                 self.state = EntityState.OUT
 
         # plusieurs choix -> choisir un chemin
         elif len(self.next_move_possible) > 1:
             branch = random.choice(self.maze_memory.get_children())
             move = branch.get_last_value().value
-            self.move2((self.tile_x + move[0], self.tile_y + move[1]), lab)
+            self.move2((self.tile_x + move[0], self.tile_y + move[1]))
             self.maze_memory = branch
 
         # cul de sac -> faire demi-tour
@@ -134,7 +136,7 @@ class Mouse2(Entity):
                     if not branch.is_completed():
                         self.maze_memory = branch
                         prev_move = self.maze_memory.get_last_value()
-                        self.move2((self.tile_x + prev_move.value[0], self.tile_y + prev_move.value[1]), lab)
+                        self.move2((self.tile_x + prev_move.value[0], self.tile_y + prev_move.value[1]))
                         self.state = EntityState.SEARCH
                         return
                 # sinon, encore revenir en arrière
@@ -142,8 +144,4 @@ class Mouse2(Entity):
 
             # si pas arrivé à la dernière intersection
             if prev_move != EntityMove.NONE:
-                self.move2((self.tile_x + prev_move.value[0] * -1, self.tile_y + prev_move.value[1] * -1), lab)
-
-    # ???
-    def next(self):
-        pass
+                self.move2((self.tile_x + prev_move.value[0] * -1, self.tile_y + prev_move.value[1] * -1))

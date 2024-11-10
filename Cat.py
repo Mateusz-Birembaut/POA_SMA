@@ -12,7 +12,16 @@ class Cat(Entity):
         self.lastSeenMousePosition = (-1, -1)
         self.runningSpeed = 2
 
-    def sees_mouse(self, mouse_position):
+    def process(self, mouse_position):
+        if (self.tile_x, self.tile_y) == mouse_position:
+            return
+        self.check_mouse(mouse_position)  # regarde si il voit la souris autour
+        if self.saw_mouse:  # si on a vu la souris
+            self.move_towards_last_seen_position()  # se déplacer vers la position vue
+        else:
+            super().move()
+
+    def check_mouse(self, mouse_position):
         to_test = [[1, 0], [0, 1], [-1, 0], [0, -1]]
         for coord in to_test:
             x = self.tile_x + coord[0]
@@ -26,15 +35,6 @@ class Cat(Entity):
                 y = y + coord[1]
 
         self.saw_mouse = False
-
-    def move(self, mouse_position):
-        if (self.tile_x, self.tile_y) == mouse_position:
-            return
-        self.sees_mouse(mouse_position)  # regarde si il voit la souris autour
-        if self.saw_mouse:  # si on a vu la souris
-            self.move_towards_last_seen_position()  # se déplacer vers la position vue
-        else:
-            super().move()
 
     def move_towards_last_seen_position(self):
         x = self.tile_x
