@@ -27,8 +27,6 @@ class Labyrinth:
         self.__maze.append(line)
 
     def draw(self, screen: pygame.surface):
-        # TODO mettre des marges au labyrinthe
-
         tile_width = screen.get_width() / self.__width
         tile_height = screen.get_height() / self.__height
 
@@ -51,7 +49,6 @@ class Labyrinth:
             y += tile_height
 
     def attempt_move(self, position: tuple[int, int]) -> bool:
-        # print(position)
         # todo calculer la position
         # todo vérifier si ya pas le chat/souris
         if not self.__tile_exists(position): return False
@@ -74,7 +71,5 @@ class Labyrinth:
         [print(line) for line in self.__maze]
         for y in range(len(self.__maze)):
             for x in range(len(self.__maze[y])):
-                # print(x, y, self.maze[y][x])
                 if self.__maze[y][x] == 'E':
-                    # print(x, y)
                     return x, y

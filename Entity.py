@@ -16,14 +16,7 @@ class Entity:
         self.symbol = ''
         self.state = EntityState.SEARCH
         # self.maze_memory = Branch()
-        # **-****
-        # *---***
-        # *-*-***
-        # ---****
-        # *-*****                                                         ->[z]
-        # *******                                                 |>[zzd] ->[ds]
-        # mémoire -> un arbre, une branche par intersection, [dd] ->[d]
-        # self.visibility = 5 / inf                               |>[s]
+        # self.visibility = 0
 
     def draw(self, screen: pygame.Surface):
         screen.blit(self.image, (self.tile_x * self.scene.tile_width_px, self.tile_y * self.scene.tile_height_px))

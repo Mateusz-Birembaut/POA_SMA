@@ -1,7 +1,7 @@
 class Vec2():
 
     def __init__(self, x: int, y: int):
-        self.__values = (x, y)
+        self.__values = x, y
 
     def __getitem__(self, index: int) -> int:
         return self.__values[index]
