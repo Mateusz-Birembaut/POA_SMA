@@ -4,7 +4,7 @@ import Scene
 from Entity import Entity
 
 
-class Mouse(Entity):
+class Mouse1(Entity):
 
     def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, maze):
         Entity.__init__(self, img_url, position, scene, maze)

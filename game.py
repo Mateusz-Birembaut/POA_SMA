@@ -7,7 +7,7 @@ from pygame.locals import *
 from Cat import Cat
 from Labyrinth import Labyrinth
 from Menu import Menu
-from Mouse import Mouse
+from Mouse import Mouse1
 from Scene import Scene
 
 pygame.init()
@@ -28,7 +28,7 @@ labyrinth = Labyrinth((tile_width, tile_height))
 
 menu = Menu(screen.get_width(), screen.get_height(), margin_right, game_speed)
 
-mouse = Mouse('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  copy.deepcopy(labyrinth.m))
+mouse = Mouse1('./res/mouse.png', labyrinth.get_random_empty_position(), scene,  copy.deepcopy(labyrinth.m))
 
 cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.m))
 
@@ -50,7 +50,7 @@ while True:
     if menu.restarted:
         labyrinth = Labyrinth((tile_width, tile_height))
         cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.m))
-        mouse = Mouse('./res/mouse.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.m))
+        mouse = Mouse1('./res/mouse.png', labyrinth.get_random_empty_position(), scene, copy.deepcopy(labyrinth.m))
         menu.restarted = False
         menu.paused = True
         menu.ended = False
