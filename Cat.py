@@ -9,7 +9,7 @@ class Cat(Entity):
     def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, m):
         Entity.__init__(self, img_url, position, scene, m)
         self.saw_mouse = False
-        self.lastSeenMousePosition = (-1, -1)
+        self.lastSeenMousePosition = (-5, -5)
         self.runningSpeed = 2
 
     def process(self, mouse_position):
@@ -33,6 +33,9 @@ class Cat(Entity):
                     return
                 x = x + coord[0]
                 y = y + coord[1]
+        if self.lastSeenMousePosition != (-5, -5):
+            self.saw_mouse = True
+            return
 
         self.saw_mouse = False
 
@@ -50,6 +53,7 @@ class Cat(Entity):
             self.maze[y][x] += 1  # dans le maze du chat on est passé par la
 
             if self.lastSeenMousePosition == (x, y):  # si on est arrivé à la dernière position connu on stop
+                self.lastSeenMousePosition = (-5,-5)
                 break
 
         self.tile_x = x
