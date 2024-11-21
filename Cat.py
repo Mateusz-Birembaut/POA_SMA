@@ -11,7 +11,7 @@ class Cat(Entity):
         Entity.__init__(self, img_url, position, scene, m)
         self.state = EntityState.SEARCH
         self.lastSeenMousePosition = (-5, -5)
-        self.runningSpeed = 2
+        self.runningSpeed = 1
 
     def process(self, mouse_position):
         if (self.tile_x, self.tile_y) == mouse_position:
