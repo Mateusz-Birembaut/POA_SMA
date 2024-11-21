@@ -2,13 +2,14 @@ import numpy
 
 import Scene
 from Entity import Entity
+from Enums import EntityState
 
 
 class Cat(Entity):
 
     def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, m):
         Entity.__init__(self, img_url, position, scene, m)
-        self.saw_mouse = False
+        self.state = EntityState.SEARCH
         self.lastSeenMousePosition = (-5, -5)
         self.runningSpeed = 2
 
@@ -16,7 +17,7 @@ class Cat(Entity):
         if (self.tile_x, self.tile_y) == mouse_position:
             return
         self.check_mouse(mouse_position)  # regarde si il voit la souris autour
-        if self.saw_mouse:  # si on a vu la souris
+        if self.state == EntityState.CHASE:  # si on a vu la souris
             self.move_towards_last_seen_position()  # se déplacer vers la position vue
         else:
             super().move()
@@ -29,15 +30,15 @@ class Cat(Entity):
             while self.maze[y][x] >= 0:
                 if mouse_position == (x, y):
                     self.lastSeenMousePosition = (x, y)
-                    self.saw_mouse = True
+                    self.state = EntityState.CHASE
                     return
                 x = x + coord[0]
                 y = y + coord[1]
         if self.lastSeenMousePosition != (-5, -5):
-            self.saw_mouse = True
+            self.state = EntityState.CHASE
             return
 
-        self.saw_mouse = False
+        self.state = EntityState.SEARCH
 
     def move_towards_last_seen_position(self):
         x = self.tile_x
