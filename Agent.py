@@ -7,7 +7,7 @@ import Scene
 from Enums import EntityState
 
 
-class Entity:
+class Agent:
 
     def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, m: str):
         image = pygame.image.load(img_url).convert_alpha()
@@ -17,9 +17,6 @@ class Entity:
         self.scene = scene
         self.symbol = ''
         self.state = EntityState.SEARCH
-        # self.maze_memory = Branch()
-        # self.visibility = 0
-
         self.maze = []
 
         line = []

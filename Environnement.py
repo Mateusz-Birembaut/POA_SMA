@@ -5,7 +5,7 @@ from mazelib import Maze as Maze
 from mazelib.generate.Prims import Prims
 
 
-class Labyrinth:
+class Environnement:
     def __init__(self, size: tuple[int, int]):
         self.__width = size[0] * 2 + 1
         self.__height = size[1] * 2 + 1
