@@ -11,7 +11,7 @@ class Scene:
         self.screen_width = self.tile_width_nb * tile_px[0] + margin_right
         self.screen_height = self.tile_height_nb * tile_px[1]
         self.margin_right = margin_right
-        self.lab = None
+        self.env = None
 
-    def set_environnement(self, lab: Environnement):
-        self.lab = lab
+    def set_environnement(self, env: Environnement):
+        self.env = env

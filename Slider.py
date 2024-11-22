@@ -39,7 +39,6 @@ class Slider:
 
         if event.type == pygame.MOUSEMOTION and self.dragging:
             # Limiter le mouvement dans les bornes du slider
-            print(mouse_x)
             new_x = max(self.rect.left, min(mouse_x, self.rect.right))
 
             # Mettre à jour la position de la poignée

@@ -6,9 +6,8 @@ from Vec2 import Vec2
 class EntityState(Enum):
     SEARCH = 1
     CHASE = 2
-    FLEE = 3
-    REVERSE = 4
-    OUT = 5
+    REVERSE = 3
+    WIN = 4
 
 
 class EntityMove(Enum):

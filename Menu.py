@@ -14,7 +14,7 @@ class Menu:
         self.surface = pygame.Surface((margin_right, height))
 
         self.font = pygame.font.Font(None, 36)
-        self.menu_items = ["Play / Pause", "Restart", "Change algo", "Exit"]
+        self.menu_items = ["Play / Pause", "Restart", "Exit"]
 
         self.buttons = []  # liste des boutons
         for index, item in enumerate(self.menu_items):
@@ -28,7 +28,6 @@ class Menu:
         self.paused = True
         self.restarted = True
         self.ended = False
-        self.algo_m = False
 
     def draw(self, screen):
         self.surface.fill((150, 150, 150))
@@ -63,10 +62,6 @@ class Menu:
 
         elif button_text == "Restart":
             self.restarted = True
-
-        elif button_text == "Change algo":
-            print('algo changé')
-            self.algo_m = not self.algo_m
 
         elif button_text == "Exit":
             pygame.quit()

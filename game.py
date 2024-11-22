@@ -6,10 +6,12 @@ from pygame.locals import QUIT
 from Cat import Cat
 from Environnement import Environnement
 from Menu import Menu
-from Mouse import Mouse, Mouse2
+from Mouse import Mouse
 from Scene import Scene
+from Enums import EntityState
 
 pygame.init()
+pygame.display.set_caption("Cat & Mouse")
 gameClock = pygame.time.Clock()
 
 tile_width_nb, tile_height = 10, 10
@@ -26,7 +28,7 @@ screen = pygame.display.set_mode((scene.screen_width, scene.screen_height))
 menu = Menu(screen.get_width(), screen.get_height(), margin_right, game_speed)
 
 environnement = Environnement((tile_width_nb, tile_height))
-mouse = Mouse2('./res/mouse.png', environnement.get_entrance(), scene, str(environnement.m))
+mouse = Mouse('./res/mouse.png', environnement.get_position_of('E'), scene)
 cat = Cat('./res/cat.png', environnement.get_random_empty_position(), scene, str(environnement.m))
 
 last_action_time = 0
@@ -45,10 +47,7 @@ while True:
     if menu.restarted:
         environnement = Environnement((tile_width_nb, tile_height))
         scene.set_environnement(environnement)
-        if menu.algo_m:
-            mouse = Mouse('./res/mouse.png', environnement.get_random_empty_position(), scene, str(environnement.m))
-        else:
-            mouse = Mouse2('./res/mouse.png', environnement.get_entrance(), scene, str(environnement.m))
+        mouse = Mouse('./res/mouse.png', environnement.get_position_of('E'), scene)
         cat = Cat('./res/cat.png', environnement.get_random_empty_position(), scene, str(environnement.m))
         menu.restarted = False
         menu.paused = True
@@ -65,15 +64,15 @@ while True:
         # Gérer l'action alternée entre chat et souris
         if current_time - last_action_time >= menu.speed_slider.value:
             if current_turn == "cat":
-                cat.process((mouse.tile_x, mouse.tile_y)) # todo doit pas connaitre pos souris
-                if (cat.tile_x, cat.tile_y) == (mouse.tile_x, mouse.tile_y):
+                cat.process()
+                if cat.state == EntityState.WIN:
                     print("chat a gagné")
                     menu.ended = True
                     continue
                 current_turn = "mouse"  # Passe à la souris pour le prochain tour
             else:
                 mouse.process()
-                if (mouse.tile_x, mouse.tile_y) in environnement.exits:
+                if mouse.state == EntityState.WIN:
                     print("souris a gagné")
                     menu.ended = True
                     continue

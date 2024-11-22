@@ -10,18 +10,15 @@ class Environnement:
         self.__width = size[0] * 2 + 1
         self.__height = size[1] * 2 + 1
         self.__maze = []
-        self.exits = []
 
         m = Maze()
         m.generator = Prims(size[0], size[1])  # fois 2 + 1
         m.generate()
 
         m.generate_entrances()
-        # m.solver = BacktrackingSolver()
-        # m.solve()
         self.m = m
 
-        line = []
+        line = ''
         for char in str(m):
             if char != '\n':
                 line += char
@@ -46,10 +43,8 @@ class Environnement:
                     pygame.draw.rect(screen, (0, 0, 0), (x, y, tile_width, tile_height))
                 elif tile == 'E':
                     pygame.draw.rect(screen, (127, 127, 127), (x, y, tile_width, tile_height))
-                    self.exits.append((x / tile_width, y / tile_height))
                 elif tile == 'S':
                     pygame.draw.rect(screen, (0, 255, 0), (x, y, tile_width, tile_height))
-                    self.exits.append((x / tile_width, y / tile_height))
 
                 x += tile_width
 
@@ -64,10 +59,9 @@ class Environnement:
                 return x, y
 
     def attempt_move(self, position: tuple[int, int]) -> bool:
-        # todo calculer la position
-        # todo vérifier si ya pas le chat/souris
-        if not self.__tile_exists(position): return False
-        return self.__maze[position[1]][position[0]] != '#'
+        tile = self.get_tile(position)
+        if tile == '': return False # '' est une case inexistante donc on renvoit faux
+        return tile != '#'
 
     def __tile_exists(self, position: tuple[int, int]) -> bool:
         if position[0] < 0 or position[1] < 0: return False
@@ -82,9 +76,15 @@ class Environnement:
         old_line = self.__maze[position[1]]
         self.__maze[position[1]] = old_line[:position[0]] + value + old_line[position[0]+1:]
 
-    def get_entrance(self) -> tuple[int, int]:
-        [print(line) for line in self.__maze]
+    def change_agent_pos(self, new_position: tuple[int, int], agent_symbol: str):
+        old_position = self.get_position_of(agent_symbol)
+        if old_position:
+            self.set_tile(old_position, ' ')
+        if not new_position == self.get_position_of('S'):
+            self.set_tile(new_position, agent_symbol)
+
+    def get_position_of(self, target: str) -> tuple[int, int]:
         for y in range(len(self.__maze)):
             for x in range(len(self.__maze[y])):
-                if self.__maze[y][x] == 'E':
+                if self.__maze[y][x] == target:
                     return x, y
