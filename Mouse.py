@@ -3,15 +3,15 @@ import random
 import numpy
 
 from Branch import Branch
-from Entity import Entity
+from Agent import Agent
 from Enums import EntityState, EntityMove
 from Scene import Scene
 
 
-class Mouse(Entity):
+class Mouse(Agent):
 
     def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, m: str):
-        Entity.__init__(self, img_url, position, scene, m)
+        Agent.__init__(self, img_url, position, scene, m)
         self.exitLocation = None
         self.sawExit = False
 
@@ -33,7 +33,7 @@ class Mouse(Entity):
         else:
             y += numpy.sign(direction[1])  # ajoute 1 ou -1 selon la direction
 
-        self.maze[y][x] += 1  # dans le maze de la souris on est passé par la
+        self.memory[y][x] += 1  # dans le maze de la souris on est passé par la
 
         # if self.exitLocation == (x, y): # si la souris est dans sur la sortie
         # ici mettre fin au jeu ?
@@ -46,19 +46,19 @@ class Mouse(Entity):
         for coord in to_test:
             x = self.tile_x + coord[0]
             y = self.tile_y + coord[1]
-            while self.maze[y][x] >= 0:
+            while self.memory[y][x] >= 0:
                 x = x + coord[0]
                 y = y + coord[1]
 
-            if self.maze[y][x] == -3 or self.maze[y][x] == -2:
+            if self.memory[y][x] == -3 or self.memory[y][x] == -2:
                 self.sawExit = True
                 self.exitLocation = (x, y)
 
 
-class Mouse2(Entity):
+class Mouse2(Agent):
 
     def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, m: str):
-        Entity.__init__(self, img_url, position, scene, m)
+        Agent.__init__(self, img_url, position, scene, m)
         self.visibility = 5
         self.maze_memory: Branch = Branch()
         self.symbol = 'M'

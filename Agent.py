@@ -17,7 +17,7 @@ class Agent:
         self.scene = scene
         self.symbol = ''
         self.state = EntityState.SEARCH
-        self.maze = []
+        self.memory = []
 
         line = []
         for char in m:
@@ -31,11 +31,11 @@ class Agent:
                     integer = -3
                 line.append(integer)
             else:
-                self.maze.append(line)
+                self.memory.append(line)
                 line = []
-        self.maze.append(line)
+        self.memory.append(line)
 
-        self.maze[self.tile_x][self.tile_y] = 0
+        self.memory[self.tile_x][self.tile_y] = 0
         self.old_position = None
 
     def draw(self, screen: pygame.Surface):
@@ -48,7 +48,7 @@ class Agent:
         for coord in to_test:
             x = self.tile_x + coord[0]
             y = self.tile_y + coord[1]
-            tile_index = self.maze[y][x]
+            tile_index = self.memory[y][x]
             if 0 <= tile_index <= smallest_index:
                 if tile_index == smallest_index:
                     movements_possibles.append(coord)
@@ -71,8 +71,8 @@ class Agent:
         self.tile_x += movement[0]
         self.tile_y += movement[1]
 
-        if self.maze[self.tile_y][self.tile_x] >= 0:  # petite verif pour voir si c'est pas un mur
-            self.maze[self.tile_y][self.tile_x] += 1  # on se déplace
+        if self.memory[self.tile_y][self.tile_x] >= 0:  # petite verif pour voir si c'est pas un mur
+            self.memory[self.tile_y][self.tile_x] += 1  # on se déplace
 
         self.check_if_dead_end()  # regarder autour pour voir si il y a des culs-de-sac
 
@@ -101,8 +101,8 @@ class Agent:
                 y = self.tile_y + coord[1] * i
 
                 # si que (x, y) est dans les limites
-                if 0 <= x < len(self.maze[0]) and 0 <= y < len(self.maze):
-                    tile_index = self.maze[y][x]
+                if 0 <= x < len(self.memory[0]) and 0 <= y < len(self.memory):
+                    tile_index = self.memory[y][x]
 
                     if tile_index == -1:  # si un mur est trouvé
                         found_wall = True
@@ -112,19 +112,19 @@ class Agent:
                             x = self.tile_x + coord[0] * index
                             y = self.tile_y + coord[1] * index
 
-                            if 0 <= x < len(self.maze[0]) and 0 <= y < len(self.maze):
+                            if 0 <= x < len(self.memory[0]) and 0 <= y < len(self.memory):
 
                                 # Verifie les cases adjactentes pour verifier si c'est un couloir
 
                                 if coord[0] != 0:
                                     # check les cases en fonction de si on est dans un mvt horizontale ou vertical
-                                    if (y + 1 < len(self.maze) and self.maze[y + 1][x] != -1) or \
-                                            (y - 1 >= 0 and self.maze[y - 1][x] != -1):
+                                    if (y + 1 < len(self.memory) and self.memory[y + 1][x] != -1) or \
+                                            (y - 1 >= 0 and self.memory[y - 1][x] != -1):
                                         is_dead_end = False
                                         break
                                 else:
-                                    if (x + 1 < len(self.maze[0]) and self.maze[y][x + 1] != -1) or \
-                                            (x - 1 >= 0 and self.maze[y][x - 1] != -1):
+                                    if (x + 1 < len(self.memory[0]) and self.memory[y][x + 1] != -1) or \
+                                            (x - 1 >= 0 and self.memory[y][x - 1] != -1):
                                         is_dead_end = False
                                         break
 
@@ -136,7 +136,7 @@ class Agent:
                             while index < i:
                                 x = self.tile_x + coord[0] * index
                                 y = self.tile_y + coord[1] * index
-                                self.maze[y][x] += 10
+                                self.memory[y][x] += 10
                                 index += 1
                 else:
                     break  # si on est hors limite on dit que non

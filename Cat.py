@@ -1,14 +1,14 @@
 import numpy
 
 import Scene
-from Entity import Entity
+from Agent import Agent
 from Enums import EntityState
 
 
-class Cat(Entity):
+class Cat(Agent):
 
     def __init__(self, img_url: str, position: tuple[int, int], scene: Scene, m):
-        Entity.__init__(self, img_url, position, scene, m)
+        Agent.__init__(self, img_url, position, scene, m)
         self.state = EntityState.SEARCH
         self.lastSeenMousePosition = (-5, -5)
         self.runningSpeed = 2
@@ -27,7 +27,7 @@ class Cat(Entity):
         for coord in to_test:
             x = self.tile_x + coord[0]
             y = self.tile_y + coord[1]
-            while self.maze[y][x] >= 0:
+            while self.memory[y][x] >= 0:
                 if mouse_position == (x, y):
                     self.lastSeenMousePosition = (x, y)
                     self.state = EntityState.CHASE
@@ -51,7 +51,7 @@ class Cat(Entity):
             else:
                 y += numpy.sign(direction[1])  # ajoute 1 ou -1 selon la direction
 
-            self.maze[y][x] += 1  # dans le maze du chat on est passé par la
+            self.memory[y][x] += 1  # dans le maze du chat on est passé par la
 
             if self.lastSeenMousePosition == (x, y):  # si on est arrivé à la dernière position connu on stop
                 self.lastSeenMousePosition = (-5,-5)

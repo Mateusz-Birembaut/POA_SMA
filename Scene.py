@@ -1,4 +1,4 @@
-import Labyrinth
+import Environnement
 
 
 class Scene:
@@ -13,5 +13,5 @@ class Scene:
         self.margin_right = margin_right
         self.lab = None
 
-    def set_labyrinth(self, lab: Labyrinth):
+    def set_environnement(self, lab: Environnement):
         self.lab = lab

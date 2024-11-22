@@ -4,7 +4,7 @@ import pygame
 from pygame.locals import QUIT
 
 from Cat import Cat
-from Labyrinth import Labyrinth
+from Environnement import Environnement
 from Menu import Menu
 from Mouse import Mouse, Mouse2
 from Scene import Scene
@@ -25,9 +25,9 @@ screen = pygame.display.set_mode((scene.screen_width, scene.screen_height))
 
 menu = Menu(screen.get_width(), screen.get_height(), margin_right, game_speed)
 
-labyrinth = Labyrinth((tile_width_nb, tile_height))
-mouse = Mouse2('./res/mouse.png', labyrinth.get_entrance(), scene, str(labyrinth.m))
-cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, str(labyrinth.m))
+environnement = Environnement((tile_width_nb, tile_height))
+mouse = Mouse2('./res/mouse.png', environnement.get_entrance(), scene, str(environnement.m))
+cat = Cat('./res/cat.png', environnement.get_random_empty_position(), scene, str(environnement.m))
 
 last_action_time = 0
 current_turn = "cat"
@@ -43,20 +43,20 @@ while True:
             menu.handle_event(event)
 
     if menu.restarted:
-        labyrinth = Labyrinth((tile_width_nb, tile_height))
-        scene.set_labyrinth(labyrinth)
+        environnement = Environnement((tile_width_nb, tile_height))
+        scene.set_environnement(environnement)
         if menu.algo_m:
-            mouse = Mouse('./res/mouse.png', labyrinth.get_random_empty_position(), scene, str(labyrinth.m))
+            mouse = Mouse('./res/mouse.png', environnement.get_random_empty_position(), scene, str(environnement.m))
         else:
-            mouse = Mouse2('./res/mouse.png', labyrinth.get_entrance(), scene, str(labyrinth.m))
-        cat = Cat('./res/cat.png', labyrinth.get_random_empty_position(), scene, str(labyrinth.m))
+            mouse = Mouse2('./res/mouse.png', environnement.get_entrance(), scene, str(environnement.m))
+        cat = Cat('./res/cat.png', environnement.get_random_empty_position(), scene, str(environnement.m))
         menu.restarted = False
         menu.paused = True
         menu.ended = False
         last_action_time = pygame.time.get_ticks()
         current_turn = "cat"
 
-    labyrinth.draw(screen, margin_right)
+    environnement.draw(screen, margin_right)
     menu.draw(screen)
 
     current_time = pygame.time.get_ticks()  # Temps actuel en millisecondes
@@ -65,7 +65,7 @@ while True:
         # Gérer l'action alternée entre chat et souris
         if current_time - last_action_time >= menu.speed_slider.value:
             if current_turn == "cat":
-                cat.process((mouse.tile_x, mouse.tile_y))
+                cat.process((mouse.tile_x, mouse.tile_y)) # todo doit pas connaitre pos souris
                 if (cat.tile_x, cat.tile_y) == (mouse.tile_x, mouse.tile_y):
                     print("chat a gagné")
                     menu.ended = True
@@ -73,7 +73,7 @@ while True:
                 current_turn = "mouse"  # Passe à la souris pour le prochain tour
             else:
                 mouse.process()
-                if (mouse.tile_x, mouse.tile_y) in labyrinth.exits:
+                if (mouse.tile_x, mouse.tile_y) in environnement.exits:
                     print("souris a gagné")
                     menu.ended = True
                     continue
