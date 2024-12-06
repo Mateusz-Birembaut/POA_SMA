@@ -1,46 +1,77 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxe42ghjxf0af"]
+[gd_scene load_steps=12 format=3 uid="uid://dxe42ghjxf0af"]
 
 [ext_resource type="Script" path="res://src/environment.gd" id="1_3dsaf"]
+[ext_resource type="Texture2D" uid="uid://dlxfkfvecjhf0" path="res://assets/candies.png" id="2_v5ftg"]
 [ext_resource type="PackedScene" uid="uid://bifqeet5uhpgr" path="res://src/agent.tscn" id="3_4dp1j"]
 [ext_resource type="Texture2D" uid="uid://dyt7jlom3h7rq" path="res://assets/cat.png" id="4_348a0"]
 [ext_resource type="Script" path="res://src/prof.gd" id="4_vctu3"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pnoga"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8cgxa"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_cfg5q"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_x7ntd"]
+normal = Vector2(1, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wjmat"]
 size = Vector2(300, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hvdhb"]
-size = Vector2(40, 40)
+size = Vector2(50, 50)
 
-[node name="Room" type="Node2D"]
+[node name="StaticBody2D" type="StaticBody2D"]
 script = ExtResource("1_3dsaf")
-students = 2
-
-[node name="Desk" type="Area2D" parent="."]
-unique_name_in_owner = true
-
-[node name="ColorRect" type="ColorRect" parent="Desk"]
-offset_right = 300.0
-offset_bottom = 80.0
-color = Color(0.535877, 0.374656, 0.197697, 1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Desk"]
-position = Vector2(150.25, 40)
-shape = SubResource("RectangleShape2D_wjmat")
-
-[node name="Candies" type="Area2D" parent="."]
-unique_name_in_owner = true
-
-[node name="ColorRect" type="ColorRect" parent="Candies"]
-offset_left = 547.0
-offset_top = 539.0
-offset_right = 587.0
-offset_bottom = 579.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Candies"]
-position = Vector2(567, 559)
-shape = SubResource("RectangleShape2D_hvdhb")
 
 [node name="Prof" parent="." instance=ExtResource("3_4dp1j")]
 unique_name_in_owner = true
+position = Vector2(576, 235)
+collision_layer = 0
 script = ExtResource("4_vctu3")
 sprite_texture = ExtResource("4_348a0")
+
+[node name="WorldBoundaryNorth" type="CollisionShape2D" parent="."]
+position = Vector2(576, 0)
+shape = SubResource("WorldBoundaryShape2D_pnoga")
+
+[node name="WorldBoundaryEast" type="CollisionShape2D" parent="."]
+position = Vector2(1152, 324)
+shape = SubResource("WorldBoundaryShape2D_8cgxa")
+
+[node name="WorldBoundarySouth" type="CollisionShape2D" parent="."]
+position = Vector2(576, 648)
+shape = SubResource("WorldBoundaryShape2D_cfg5q")
+
+[node name="WorldBoundaryWest" type="CollisionShape2D" parent="."]
+position = Vector2(0, 324)
+shape = SubResource("WorldBoundaryShape2D_x7ntd")
+
+[node name="Desk" type="StaticBody2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(576, 170)
+collision_layer = 0
+
+[node name="ColorRect" type="ColorRect" parent="Desk"]
+offset_left = -150.0
+offset_top = -40.0
+offset_right = 150.0
+offset_bottom = 40.0
+color = Color(0.535877, 0.374656, 0.197697, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Desk"]
+shape = SubResource("RectangleShape2D_wjmat")
+
+[node name="Candies" type="StaticBody2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(576, 556)
+
+[node name="Sprite2D" type="Sprite2D" parent="Candies"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_v5ftg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Candies"]
+shape = SubResource("RectangleShape2D_hvdhb")

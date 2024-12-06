@@ -13,39 +13,30 @@ enum States {WORK, CHASE, COMEBACK, LEAVE, COLLECT}
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var shape : CollisionShape2D = $CollisionShape2D
 
-var initial_position : Vector2i
+var initial_position : Vector2
 var state : States
 var speed : float 
 
 
 func _ready() -> void:
 	sprite_texture = sprite_texture
-	print(name)
-	print("-", sprite, "-")
-	#sprite.texture = sprite_texture
+	initial_position = position
+	state = States.WORK
 
 
-func _process(delta: float) -> void:
-	#sprite.texture = sprite_texture
-	pass
-	## Using move_and_collide.
-	#var collision = agent.move_and_collide(agent.velocity * delta)
-	#if collision:
-		#print("I collided with ", collision.get_collider().name)
-#
-	## Using move_and_slide.
-	#agent.move_and_slide()
-	#for i in agent.get_slide_collision_count():
-		#collision = agent.get_slide_collision(i)
-		#print("I collided with ", collision.get_collider().name)
+func _physics_process(delta):
+	#velocity *= speed * delta
+	move_and_collide(velocity)
+	#move_and_slide()
 
-#func move_towards( _position: Vector2 ) -> void:
-	#var direction = (_position - position).normalized()
-	#position += direction * speed
-	
+
+func look_towards(p_position: Vector2 ) -> void:
+	velocity = (p_position - position).normalized()
+
 
 func see() -> void:
 	pass
+
 
 func action() -> void:
 	pass
