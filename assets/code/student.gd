@@ -1,4 +1,4 @@
-class_name Student extends Agent
+class_name Student
 
 
 func _ready() -> void:

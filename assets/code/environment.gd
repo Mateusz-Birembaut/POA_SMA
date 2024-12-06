@@ -13,16 +13,19 @@ var agents : Array[Agent]
 func _ready() -> void:
 	desk.position = Vector2i(get_window().size.x/2-150, 100)
 	prof.position = Vector2i(get_window().size.x/2 - 25, get_window().size.y/2 - 25)
-	agents.append(prof)
-	for i in number_student:
-		var new_student := student_scene.instantiate()
-		new_student.position = Vector2i(100, 0)
-		add_child(new_student)
-		agents.append(new_student)
+	#agents.append(prof)
+	#for i in number_student:
+		#var new_student := student_scene.instantiate()
+		#new_student.position = Vector2i(100, 0)
+		#new_student.speed = 100
+		#add_child(new_student)
+		#agents.append(new_student)
 
 
 func _process(delta: float) -> void:
-	pass
+	for i in number_student:
+		agents[i].move_towards(Vector2(500,500), delta);
+	
 
 func get_agents() -> Array[Agent]:
 	return agents
