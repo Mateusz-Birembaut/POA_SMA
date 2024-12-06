@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://dxe42ghjxf0af"]
+
+[ext_resource type="Script" path="res://assets/code/environment.gd" id="1_3dsaf"]
+[ext_resource type="PackedScene" uid="uid://dvaogwyrpvbdq" path="res://assets/scene/prof.tscn" id="2_iwpi7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wjmat"]
+size = Vector2(300, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvdhb"]
+size = Vector2(40, 40)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_3dsaf")
+number_student = 5
+
+[node name="Desk" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="ColorRect" type="ColorRect" parent="Desk"]
+offset_right = 300.0
+offset_bottom = 80.0
+color = Color(0.535877, 0.374656, 0.197697, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Desk"]
+position = Vector2(150.25, 40)
+shape = SubResource("RectangleShape2D_wjmat")
+
+[node name="Prof" parent="." instance=ExtResource("2_iwpi7")]
+unique_name_in_owner = true
+
+[node name="Candies" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="ColorRect" type="ColorRect" parent="Candies"]
+offset_left = 547.0
+offset_top = 539.0
+offset_right = 587.0
+offset_bottom = 579.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Candies"]
+position = Vector2(567, 559)
+shape = SubResource("RectangleShape2D_hvdhb")
