@@ -9,7 +9,7 @@ var time_since_last_interval := 0.0
 
 func _ready() -> void:
 	super._ready()
-	speed = 10000
+	speed = 5000
 	var rng = RandomNumberGenerator.new()
 	interval = rng.randf_range(5, 20)
 	print(interval)

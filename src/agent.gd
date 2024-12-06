@@ -25,9 +25,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta):
-	#velocity *= speed * delta
-	move_and_collide(velocity)
-	#move_and_slide()
+	velocity *= speed * delta
+	#move_and_collide(velocity)
+	move_and_slide()
 
 
 func look_towards(p_position: Vector2 ) -> void:
