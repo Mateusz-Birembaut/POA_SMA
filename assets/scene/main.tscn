@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxe42ghjxf0af"]
+[gd_scene load_steps=6 format=3 uid="uid://dxe42ghjxf0af"]
 
 [ext_resource type="Script" path="res://assets/code/environment.gd" id="1_3dsaf"]
 [ext_resource type="PackedScene" uid="uid://dvaogwyrpvbdq" path="res://assets/scene/prof.tscn" id="2_iwpi7"]
+[ext_resource type="PackedScene" uid="uid://bvdq528k2lhgv" path="res://assets/scene/prof2.tscn" id="3_7q80x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wjmat"]
 size = Vector2(300, 80)
@@ -26,6 +27,10 @@ shape = SubResource("RectangleShape2D_wjmat")
 
 [node name="Prof" parent="." instance=ExtResource("2_iwpi7")]
 unique_name_in_owner = true
+visible = false
+script = null
+
+[node name="Prof2" parent="." instance=ExtResource("3_7q80x")]
 
 [node name="Candies" type="Area2D" parent="."]
 unique_name_in_owner = true
