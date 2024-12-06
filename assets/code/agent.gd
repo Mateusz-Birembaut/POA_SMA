@@ -2,6 +2,8 @@ class_name Agent extends Area2D
 
 enum {WORK, CHASE, COMEBACK, LEAVE}
 
+@onready var env = get_parent()
+
 func _ready() -> void:
 	pass
 
