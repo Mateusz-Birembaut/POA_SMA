@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxe42ghjxf0af"]
+[gd_scene load_steps=7 format=3 uid="uid://dxe42ghjxf0af"]
 
 [ext_resource type="Script" path="res://assets/code/environment.gd" id="1_3dsaf"]
-[ext_resource type="PackedScene" uid="uid://bvdq528k2lhgv" path="res://assets/scene/prof.tscn" id="3_7q80x"]
+[ext_resource type="PackedScene" uid="uid://bifqeet5uhpgr" path="res://assets/scene/agent.tscn" id="3_4dp1j"]
+[ext_resource type="Texture2D" uid="uid://dyt7jlom3h7rq" path="res://assets/img/cat.png" id="4_348a0"]
+[ext_resource type="Script" path="res://assets/code/prof.gd" id="4_vctu3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wjmat"]
 size = Vector2(300, 80)
@@ -11,6 +13,7 @@ size = Vector2(40, 40)
 
 [node name="Room" type="Node2D"]
 script = ExtResource("1_3dsaf")
+students = 2
 
 [node name="Desk" type="Area2D" parent="."]
 unique_name_in_owner = true
@@ -24,9 +27,6 @@ color = Color(0.535877, 0.374656, 0.197697, 1)
 position = Vector2(150.25, 40)
 shape = SubResource("RectangleShape2D_wjmat")
 
-[node name="Prof" parent="." instance=ExtResource("3_7q80x")]
-unique_name_in_owner = true
-
 [node name="Candies" type="Area2D" parent="."]
 unique_name_in_owner = true
 
@@ -39,3 +39,9 @@ offset_bottom = 579.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Candies"]
 position = Vector2(567, 559)
 shape = SubResource("RectangleShape2D_hvdhb")
+
+[node name="Prof" parent="." instance=ExtResource("3_4dp1j")]
+unique_name_in_owner = true
+position = Vector2(5, 100)
+script = ExtResource("4_vctu3")
+sprite_texture = ExtResource("4_348a0")
