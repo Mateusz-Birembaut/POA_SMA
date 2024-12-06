@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://assets/code/prof.gd" id="1_f33ne"]
 [ext_resource type="PackedScene" uid="uid://bifqeet5uhpgr" path="res://assets/scene/agent.tscn" id="2_opiyp"]
 
-[node name="Prof2" type="Sprite2D"]
+[node name="Prof" type="Sprite2D"]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_2nro4")
 script = ExtResource("1_f33ne")

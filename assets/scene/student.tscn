@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfsy8xhkusm5p"]
+
+[ext_resource type="Texture2D" uid="uid://cbk3pxpyjpgbo" path="res://assets/img/mouse.png" id="1_2nq1q"]
+[ext_resource type="Script" path="res://assets/code/student.gd" id="2_3c68k"]
+[ext_resource type="PackedScene" uid="uid://bifqeet5uhpgr" path="res://assets/scene/agent.tscn" id="3_pokne"]
+
+[node name="Student" type="Sprite2D"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_2nq1q")
+script = ExtResource("2_3c68k")
+
+[node name="Agent" parent="." instance=ExtResource("3_pokne")]
