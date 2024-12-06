@@ -15,10 +15,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func move_towards( _position ) -> void:
-	# direction = _position - position . normalize
-	# position = position + direction * speed
-	pass
+func move_towards( _position: Vector2 ) -> void:
+	var direction = (_position - position).normalized()
+	position += direction * speed
+	
 
 func see() -> void:
 	pass
