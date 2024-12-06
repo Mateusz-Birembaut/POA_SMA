@@ -1,4 +1,4 @@
-extends Node2D
+class_name Env extends Node2D
 
 
 @export var number_student: int
