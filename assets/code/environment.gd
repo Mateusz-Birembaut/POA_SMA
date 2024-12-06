@@ -1,7 +1,8 @@
 class_name Env extends Node2D
 
 
-@export var number_student: int
+@export_range(1, 20)
+var number_student: int
 
 @onready var desk = %Desk
 
