@@ -21,13 +21,12 @@ func _process(delta: float) -> void:
 func see() -> void:
 	# get la position de l'eleve le plus proche  des bonbon qui soit parti 
 	
-	# si position => déplacer vers l'eleve	= CHASE
 	#if studentPosition != null :
 		# state = CHASE
 	#else:
-		
-	# sinon =>
-		# si deja à la table STATE = WORK 
-		# sinon revenir vers la table  STATE = COMEBACK
+		#if position == initial_position :
+			#state = WORK
+		#else :
+			#state = COMEBACK 
 
 	pass
