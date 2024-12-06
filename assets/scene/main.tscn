@@ -42,6 +42,5 @@ shape = SubResource("RectangleShape2D_hvdhb")
 
 [node name="Prof" parent="." instance=ExtResource("3_4dp1j")]
 unique_name_in_owner = true
-position = Vector2(5, 100)
 script = ExtResource("4_vctu3")
 sprite_texture = ExtResource("4_348a0")

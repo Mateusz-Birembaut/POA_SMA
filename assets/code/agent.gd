@@ -1,4 +1,3 @@
-@tool
 class_name Agent extends CharacterBody2D
 
 enum States {WORK, CHASE, COMEBACK, LEAVE, COLLECT}

@@ -11,8 +11,7 @@ var student_scene := preload("res://assets/scene/student.tscn")
 var agents : Array[Agent]
 
 func _ready() -> void:
-	desk.position = Vector2i(get_window().size.x/2-150, 100)
-
+	desk.position = Vector2i(get_window().size.x/2 - 150, 100)
 	prof.position = Vector2i(get_window().size.x/2 - 25, get_window().size.y/2 - 25)
 	agents.append(prof)
 
