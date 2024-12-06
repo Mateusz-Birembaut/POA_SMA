@@ -7,7 +7,7 @@ var students := 5
 @onready var desk = %Desk
 @onready var prof : Agent = %Prof
 
-var student_scene := preload("res://assets/scene/student.tscn")
+var student_scene := preload("res://src/student.tscn")
 var agents : Array[Agent]
 
 func _ready() -> void:
