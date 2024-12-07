@@ -1,4 +1,4 @@
-class_name Env extends StaticBody2D
+class_name Env extends Node2D
 
 
 @export_range(1, 20)
