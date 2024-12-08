@@ -36,6 +36,19 @@ func _process(delta: float) -> void:
 			check_students()
 
 
+func _physics_process(delta):
+	if env.DEBUG:
+		var direction_x = Input.get_axis("ui_left", "ui_right")
+		var direction_y = Input.get_axis("ui_up", "ui_down")
+
+		velocity.x = direction_x * speed * delta
+		velocity.y = direction_y * speed * delta
+
+		move_and_slide()
+	else:
+		super._physics_process(delta)
+
+
 func check_students() -> void:
 	student_to_chase = null
 	var shortest_distance := INF
