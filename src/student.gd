@@ -1,10 +1,13 @@
 class_name Student extends Agent
 
 
+enum Strategies { NONE , DODGE }
+
 var collected_candies := 0
 var time_since_last_collect := 0.0
 var interval: float
 var time_since_last_interval := 0.0
+var strategie : Strategies
 
 
 func _ready() -> void:
@@ -12,7 +15,10 @@ func _ready() -> void:
 	speed = 5000
 	var rng = RandomNumberGenerator.new()
 	interval = rng.randf_range(5, 20)
-	print(interval)
+	strategie = get_random_enum_value(Strategies)
+	if env.DEBUG:
+		print(name, " strategie : ", strategie)
+		print(name, " interval : ", interval)
 
 
 func _process(delta: float) -> void:
