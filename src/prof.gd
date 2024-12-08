@@ -51,19 +51,28 @@ func _physics_process(delta):
 		super._physics_process(delta)
 
 
+#func check_students() -> void:
+	#student_to_chase = null
+	#var shortest_distance := INF
+	#var distance : float
+	#for student in env.students:
+		#distance = (student.position - env.candies.position).length()
+		#if distance < 100 and distance < shortest_distance:
+			#print("a student is not working !!!!!")
+			#shortest_distance = distance
+			#student_to_chase = student
+			#print(name, " passe à l'état CHASE")
+			#state = States.CHASE
+
 func check_students() -> void:
-	student_to_chase = null
-	var shortest_distance := INF
-	var distance : float
-	for student in env.students:
-		distance = (student.position - env.candies.position).length()
-		if distance < 100 and distance < shortest_distance:
-			print("student near candies !!!!!")
-			shortest_distance = distance
-			student_to_chase = student
+	if student_to_chase == null:
+		student_to_chase = env.get_closest_student_to_candies()
+		if student_to_chase != null:
+			print("a student is not working !!!!!")
 			print(name, " passe à l'état CHASE")
 			state = States.CHASE
-
+			
+	
 
 func see() -> void:
 	# get la position de l'eleve le plus proche des bonbons qui soit parti 

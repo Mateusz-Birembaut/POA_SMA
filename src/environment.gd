@@ -22,3 +22,14 @@ func _ready() -> void:
 		add_child(new_student)
 		students.append(new_student)
 		x += 50
+		
+func get_closest_student_to_candies() -> Agent:
+	var student_to_chase = null
+	var min_distance = 100000
+	for student in students:
+		if student.state == Agent.States.LEAVE:
+			var distanceToCandies = (student.position - candies.position).length()
+			if distanceToCandies < min_distance:
+				min_distance = distanceToCandies
+				student_to_chase = student
+	return student_to_chase
