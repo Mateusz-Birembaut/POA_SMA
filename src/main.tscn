@@ -36,7 +36,6 @@ sprite_texture = ExtResource("4_348a0")
 [node name="Desk" type="StaticBody2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(576, 170)
-collision_layer = 0
 
 [node name="ColorRect" type="ColorRect" parent="Desk"]
 offset_left = -150.0
