@@ -41,10 +41,12 @@ func _physics_process(delta):
 		var direction_x = Input.get_axis("ui_left", "ui_right")
 		var direction_y = Input.get_axis("ui_up", "ui_down")
 
-		velocity.x = direction_x * speed * delta
-		velocity.y = direction_y * speed * delta
-
-		move_and_slide()
+		if direction_x and direction_y:
+			velocity.x = direction_x * speed * delta
+			velocity.y = direction_y * speed * delta
+			move_and_slide()
+		else:
+			super._physics_process(delta)
 	else:
 		super._physics_process(delta)
 
