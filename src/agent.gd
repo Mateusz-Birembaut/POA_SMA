@@ -17,10 +17,6 @@ var initial_position : Vector2
 var state : States
 var speed : float
 
-func get_random_enum_value(p_enum):
-	var values = p_enum.values()
-	return values[randi() % values.size()]
-
 
 func _ready() -> void:
 	sprite_texture = sprite_texture

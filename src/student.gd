@@ -15,7 +15,7 @@ func _ready() -> void:
 	speed = 5000
 	var rng = RandomNumberGenerator.new()
 	interval = rng.randf_range(5, 20)
-	strategie = get_random_enum_value(Strategies)
+	strategie = Strategies.values()[randi() % Strategies.size()]
 	if env.DEBUG:
 		print(name, " strategie : ", strategie)
 		print(name, " interval : ", interval)
