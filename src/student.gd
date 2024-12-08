@@ -25,11 +25,12 @@ func _process(delta: float) -> void:
 		States.WORK:
 			time_since_last_interval += delta
 		States.LEAVE:
-			look_towards(env.candies.position)
-			if (position - env.candies.position).length() <= 60:
-				velocity = Vector2()
-				print(name, " passe à l'état COLLECT")
-				state = States.COLLECT
+			match strategie:
+				Strategies.NONE :
+					move_none()
+				Strategies.DODGE:
+					move_dodge()
+					
 		States.COMEBACK:
 			look_towards(initial_position)
 			if (position - initial_position).length() <= 1:
@@ -48,6 +49,31 @@ func send_to_work() -> void:
 	print(name, " passe à l'état COMEBACK")
 	state = States.COMEBACK
 
+func move_none() -> void :
+	look_towards(env.candies.position)
+	if (position - env.candies.position).length() <= 60:
+		velocity = Vector2()
+		print(name, " passe à l'état COLLECT")
+		state = States.COLLECT
+		
+func move_dodge() -> void :
+	var direction_away_from_prof = (position - env.prof.position).normalized()
+	var distance_away_from_prof = (position - env.prof.position).length()
+	var evade_range = 400
+	
+	if distance_away_from_prof <= evade_range:
+		var candies_direction = (env.candies.position - position).normalized()
+		var ratio = distance_away_from_prof / evade_range
+		var movement_direction = ((1 - ratio) * direction_away_from_prof) + (ratio * candies_direction)
+		var movement_position = position + movement_direction
+		look_towards(movement_position)
+	else:
+		look_towards(env.candies.position)
+		
+	if (position - env.candies.position).length() <= 60:
+		velocity = Vector2()
+		print(name, " passe à l'état COLLECT")
+		state = States.COLLECT
 
 func see() -> void:
 	## get la position de l'eleve le plus proche des bonbons qui soit parti 
