@@ -1,6 +1,8 @@
 class_name Env extends Node2D
 
 
+const DEBUG := true
+
 @export_range(1, 20)
 var number_of_students := 5
 
