@@ -24,7 +24,7 @@ func _process(delta: float) -> void:
 		States.CHASE:
 			check_students() # a commenter si on ne veut pas changer de "cible"
 			nav.target_position = student_to_chase.position
-			velocity = (nav.get_next_path_position() - global_position).normalized()
+			look_towards(nav.get_next_path_position())
 
 			if (position - student_to_chase.position).length() <= 50:
 				print(name, " renvoit un élève au travail")
@@ -34,10 +34,8 @@ func _process(delta: float) -> void:
 
 		States.COMEBACK:
 			if (nav.get_final_position() - global_position).length() > 30:
-				var direction := Vector2()
 				nav.target_position = initial_position
-				direction = (nav.get_next_path_position() - global_position).normalized()
-				velocity = direction
+				look_towards(nav.get_next_path_position())
 			else:
 				look_towards(initial_position)
 			if (position - initial_position).length() <= 5:

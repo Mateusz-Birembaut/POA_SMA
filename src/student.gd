@@ -58,10 +58,8 @@ func _process(delta: float) -> void:
 
 		States.COMEBACK:
 			if (nav.get_final_position() - global_position).length() > 30:
-				var direction := Vector2()
 				nav.target_position = initial_position
-				direction = (nav.get_next_path_position() - global_position).normalized()
-				velocity = direction
+				look_towards(nav.get_next_path_position())
 			else:
 				look_towards(initial_position)
 			if (position - initial_position).length() <= 5:
