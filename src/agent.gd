@@ -12,10 +12,12 @@ enum States {WORK, CHASE, COMEBACK, LEAVE, COLLECT, READY}
 @onready var env = get_parent()
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var shape : CollisionShape2D = $CollisionShape2D
+@onready var nav : NavigationAgent2D = $NavigationAgent2D
 
 var initial_position : Vector2
 var state : States
 var speed : float
+const ACCEL : float = 2.0
 
 
 func _ready() -> void:

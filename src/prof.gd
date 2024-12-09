@@ -20,6 +20,7 @@ func _process(delta: float) -> void:
 	match state:
 		States.WORK:
 			check_students()
+
 		States.CHASE:
 			check_students() # a commenter si on ne veut pas changer de "cible"
 			look_towards(student_to_chase.position)
@@ -28,9 +29,16 @@ func _process(delta: float) -> void:
 				student_to_chase.send_to_work()
 				print(name, " passe à l'état COMEBACK")
 				state = States.COMEBACK
+
 		States.COMEBACK:
-			look_towards(initial_position)
-			if (position - initial_position).length() <= 1:
+			if (nav.get_final_position() - global_position).length() > 30:
+				var direction := Vector2()
+				nav.target_position = initial_position
+				direction = (nav.get_next_path_position() - global_position).normalized()
+				velocity = direction
+			else:
+				look_towards(initial_position)
+			if (position - initial_position).length() <= 5:
 				velocity = Vector2()
 				print(name, " passe à l'état WORK")
 				state = States.WORK
@@ -65,6 +73,7 @@ func _physics_process(delta):
 			#print(name, " passe à l'état CHASE")
 			#state = States.CHASE
 
+
 func check_students() -> void:
 	#if student_to_chase == null:
 		student_to_chase = env.get_closest_student_to_candies()
@@ -72,8 +81,7 @@ func check_students() -> void:
 			print("a student is not working !!!!!")
 			print(name, " passe à l'état CHASE")
 			state = States.CHASE
-			
-	
+
 
 func see() -> void:
 	# get la position de l'eleve le plus proche des bonbons qui soit parti 

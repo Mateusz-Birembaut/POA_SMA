@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dxe42ghjxf0af"]
+[gd_scene load_steps=13 format=3 uid="uid://dxe42ghjxf0af"]
 
 [ext_resource type="Script" path="res://src/environment.gd" id="1_3dsaf"]
 [ext_resource type="Texture2D" uid="uid://dlxfkfvecjhf0" path="res://assets/candies.png" id="2_v5ftg"]
@@ -23,12 +23,20 @@ normal = Vector2(-1, 0)
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_x7ntd"]
 normal = Vector2(1, 0)
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_vbv6l"]
+vertices = PackedVector2Array(791, 274, 791, 67, 1127, 25, 1127, 623, 25, 25, 366, 67, 25, 623, 366, 274)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 2, 1, 5), PackedInt32Array(0, 3, 6, 7), PackedInt32Array(7, 6, 4, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1152, 0, 1152, 648, 766, 252, 766, 92, 391, 92, 391, 249, 767, 249, 1152, 648, 0, 648)])
+cell_size = 25.0
+border_size = 25.0
+agent_radius = 25.0
+
 [node name="Room" type="Node2D"]
 script = ExtResource("1_3dsaf")
 
 [node name="Prof" parent="." instance=ExtResource("3_4dp1j")]
 unique_name_in_owner = true
-position = Vector2(576, 235)
+position = Vector2(576, 240)
 collision_layer = 0
 script = ExtResource("4_vctu3")
 sprite_texture = ExtResource("4_348a0")
@@ -76,3 +84,6 @@ shape = SubResource("WorldBoundaryShape2D_cfg5q")
 [node name="WorldBoundaryWest" type="CollisionShape2D" parent="WorldBoundaries"]
 position = Vector2(0, 324)
 shape = SubResource("WorldBoundaryShape2D_x7ntd")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_vbv6l")
