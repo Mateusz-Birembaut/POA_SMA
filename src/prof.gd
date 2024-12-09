@@ -23,7 +23,9 @@ func _process(delta: float) -> void:
 
 		States.CHASE:
 			check_students() # a commenter si on ne veut pas changer de "cible"
-			look_towards(student_to_chase.position)
+			nav.target_position = student_to_chase.position
+			velocity = (nav.get_next_path_position() - global_position).normalized()
+
 			if (position - student_to_chase.position).length() <= 50:
 				print(name, " renvoit un élève au travail")
 				student_to_chase.send_to_work()
