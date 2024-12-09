@@ -42,6 +42,7 @@ func _process(delta: float) -> void:
 			time_since_last_interval += delta
 			if(env.get_number_ready_student() >= prefered_group_size):
 				env.signal_go()
+
 		States.WORK:
 			time_since_last_interval += delta
 
@@ -52,6 +53,7 @@ func _process(delta: float) -> void:
 				Strategies.DODGE:
 					move_dodge()
 			if (position - env.candies.position).length() <= 60:
+				nav.target_position = Vector2()
 				velocity = Vector2()
 				print(name, " passe à l'état COLLECT")
 				state = States.COLLECT

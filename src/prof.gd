@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 			check_students()
 
 		States.CHASE:
-			check_students() # a commenter si on ne veut pas changer de "cible"
+			#check_students() # a commenter si on ne veut pas changer de "cible"
 			nav.target_position = student_to_chase.position
 			look_towards(nav.get_next_path_position())
 
@@ -39,6 +39,7 @@ func _process(delta: float) -> void:
 			else:
 				look_towards(initial_position)
 			if (position - initial_position).length() <= 5:
+				nav.target_position = Vector2()
 				velocity = Vector2()
 				print(name, " passe à l'état WORK")
 				state = States.WORK
