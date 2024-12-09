@@ -82,7 +82,8 @@ func send_to_work() -> void:
 
 
 func move_none() -> void :
-	look_towards(env.candies.position)
+	nav.target_position = env.candies.position
+	look_towards(nav.get_next_path_position())
 
 
 func move_dodge() -> void :
