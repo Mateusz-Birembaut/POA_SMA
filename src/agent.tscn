@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://ddnam5qi8s0gm" path="res://assets/missing.png" id="1_j5m1o"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d4u83"]
-size = Vector2(50, 50)
+[sub_resource type="CircleShape2D" id="CircleShape2D_88gaf"]
+radius = 25.0
 
 [node name="Agent" type="CharacterBody2D"]
 
@@ -12,7 +12,7 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_j5m1o")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_d4u83")
+shape = SubResource("CircleShape2D_88gaf")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 debug_enabled = true
