@@ -24,12 +24,10 @@ normal = Vector2(-1, 0)
 normal = Vector2(1, 0)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_vbv6l"]
-vertices = PackedVector2Array(791, 274, 791, 67, 1127, 25, 1127, 623, 25, 25, 366, 67, 25, 623, 366, 274)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 2, 1, 5), PackedInt32Array(0, 3, 6, 7), PackedInt32Array(7, 6, 4, 5)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1152, 0, 1152, 648, 766, 252, 766, 92, 391, 92, 391, 249, 767, 249, 1152, 648, 0, 648)])
-cell_size = 25.0
-border_size = 25.0
-agent_radius = 25.0
+vertices = PackedVector2Array(761, 245, 761, 95, 1117, 35, 1117, 613, 35, 35, 391, 95, 631, 613, 631, 501, 391, 245, 522, 501, 35, 613, 522, 613)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 2, 1, 5), PackedInt32Array(0, 3, 6, 7), PackedInt32Array(8, 0, 7, 9), PackedInt32Array(10, 4, 5, 8), PackedInt32Array(11, 10, 8, 9)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1152, 0, 1152, 648, 1152, 648, 726, 648, 726, 130, 426, 130, 426, 210, 726, 210, 726, 648, 596, 648, 596, 536, 557, 536, 557, 648, 0, 648)])
+agent_radius = 35.0
 
 [node name="Room" type="Node2D"]
 script = ExtResource("1_3dsaf")
