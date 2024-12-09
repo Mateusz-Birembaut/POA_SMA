@@ -10,13 +10,6 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	# if CHASE => se déplacer vers l'eleve plus proche bonbons
-		#move_towards()
-	# if COMEBACK => se déplacer vers la table
-		# direction = tablePosition - position . normalize
-		# position = position + direction * speed
-	# if WORK => regarder si des élèves s'approche des bonbons
-
 	match state:
 		States.WORK:
 			check_students()

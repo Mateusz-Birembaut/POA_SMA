@@ -1,0 +1,87 @@
+[gd_scene load_steps=13 format=3 uid="uid://dxe42ghjxf0af"]
+
+[ext_resource type="Script" path="res://src/environment.gd" id="1_3dsaf"]
+[ext_resource type="Texture2D" uid="uid://dlxfkfvecjhf0" path="res://assets/candies.png" id="2_v5ftg"]
+[ext_resource type="PackedScene" uid="uid://bifqeet5uhpgr" path="res://src/agent.tscn" id="3_4dp1j"]
+[ext_resource type="Texture2D" uid="uid://dyt7jlom3h7rq" path="res://assets/cat.png" id="4_348a0"]
+[ext_resource type="Script" path="res://src/prof.gd" id="4_vctu3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wjmat"]
+size = Vector2(300, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvdhb"]
+size = Vector2(50, 50)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pnoga"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8cgxa"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_cfg5q"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_x7ntd"]
+normal = Vector2(1, 0)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_vbv6l"]
+vertices = PackedVector2Array(761, 245, 761, 95, 1117, 35, 1117, 613, 35, 35, 391, 95, 631, 613, 631, 501, 391, 245, 522, 501, 35, 613, 522, 613)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 2, 1, 5), PackedInt32Array(0, 3, 6, 7), PackedInt32Array(8, 0, 7, 9), PackedInt32Array(10, 4, 5, 8), PackedInt32Array(11, 10, 8, 9)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1152, 0, 1152, 648, 1152, 648, 726, 648, 726, 130, 426, 130, 426, 210, 726, 210, 726, 648, 596, 648, 596, 536, 557, 536, 557, 648, 0, 648)])
+agent_radius = 35.0
+
+[node name="Room" type="Node2D"]
+script = ExtResource("1_3dsaf")
+
+[node name="Prof" parent="." instance=ExtResource("3_4dp1j")]
+unique_name_in_owner = true
+position = Vector2(576, 240)
+collision_layer = 0
+script = ExtResource("4_vctu3")
+sprite_texture = ExtResource("4_348a0")
+
+[node name="Desk" type="StaticBody2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(576, 170)
+
+[node name="ColorRect" type="ColorRect" parent="Desk"]
+offset_left = -150.0
+offset_top = -40.0
+offset_right = 150.0
+offset_bottom = 40.0
+color = Color(0.535877, 0.374656, 0.197697, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Desk"]
+shape = SubResource("RectangleShape2D_wjmat")
+
+[node name="Candies" type="StaticBody2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(576, 556)
+
+[node name="Sprite2D" type="Sprite2D" parent="Candies"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_v5ftg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Candies"]
+shape = SubResource("RectangleShape2D_hvdhb")
+
+[node name="WorldBoundaries" type="StaticBody2D" parent="."]
+
+[node name="WorldBoundaryNorth" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(576, 0)
+shape = SubResource("WorldBoundaryShape2D_pnoga")
+
+[node name="WorldBoundaryEast" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(1152, 324)
+shape = SubResource("WorldBoundaryShape2D_8cgxa")
+
+[node name="WorldBoundarySouth" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(576, 648)
+shape = SubResource("WorldBoundaryShape2D_cfg5q")
+
+[node name="WorldBoundaryWest" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(0, 324)
+shape = SubResource("WorldBoundaryShape2D_x7ntd")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_vbv6l")

@@ -4,7 +4,7 @@ class_name Env extends Node2D
 const DEBUG := true
 
 @export_range(1, 20)
-var number_of_students := 5
+var number_of_students := 6
 
 @onready var desk = %Desk
 @onready var candies = %Candies
@@ -28,7 +28,7 @@ func get_closest_student_to_candies() -> Agent:
 	var student_to_chase = null
 	var min_distance = 100000
 	for student in students:
-		if student.state == Agent.States.LEAVE:
+		if student.state == Agent.States.LEAVE or student.state == Agent.States.COLLECT  :
 			var distanceToCandies = (student.position - candies.position).length()
 			if distanceToCandies < min_distance:
 				min_distance = distanceToCandies
