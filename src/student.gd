@@ -8,6 +8,9 @@ var time_since_last_collect := 0.0
 var interval: float
 var time_since_last_interval := 0.0
 var strategie : Strategies
+var prefered_group_size : int
+
+var is_solitary : bool
 
 
 func _ready() -> void:
@@ -16,18 +19,30 @@ func _ready() -> void:
 	var rng = RandomNumberGenerator.new()
 	interval = rng.randf_range(5, 20)
 	strategie = Strategies.values()[randi() % Strategies.size()]
+	is_solitary = randf() < 0.5
+	prefered_group_size = randi_range(2,4)
 	if env.DEBUG:
 		print(name, " strategie : ", strategie)
 		print(name, " interval : ", interval)
+		print("is solitary : ",is_solitary)
 
 
 func _process(delta: float) -> void:
 	if time_since_last_interval >= interval:
-		print(name, " passe à l'état LEAVE")
-		state = States.LEAVE
-		time_since_last_interval = 0
+		if is_solitary:
+			print(name, " passe à l'état READY")
+			state = States.READY
+			time_since_last_interval = 0
+		else :
+			print(name, " passe à l'état LEAVE")
+			state = States.LEAVE
+			time_since_last_interval = 0
 
 	match state:
+		States.READY:
+			time_since_last_interval += delta
+			if(env.get_number_ready_student() >= prefered_group_size):
+				env.signal_go()
 		States.WORK:
 			time_since_last_interval += delta
 		States.LEAVE:

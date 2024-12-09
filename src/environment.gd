@@ -33,3 +33,17 @@ func get_closest_student_to_candies() -> Agent:
 				min_distance = distanceToCandies
 				student_to_chase = student
 	return student_to_chase
+
+func get_number_ready_student() -> int:
+	var nb_ready = 0
+	for student in students:
+		if student.state == Agent.States.READY:
+			nb_ready += 1
+				
+	return nb_ready
+	
+func signal_go() -> void :
+	for student in students:
+		if student.state == Agent.States.READY:
+			student.state = Agent.States.LEAVE
+				

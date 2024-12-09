@@ -21,6 +21,7 @@ func _process(delta: float) -> void:
 		States.WORK:
 			check_students()
 		States.CHASE:
+			check_students() # a commenter si on ne veut pas changer de "cible"
 			look_towards(student_to_chase.position)
 			if (position - student_to_chase.position).length() <= 50:
 				print(name, " renvoit un élève au travail")
@@ -65,7 +66,7 @@ func _physics_process(delta):
 			#state = States.CHASE
 
 func check_students() -> void:
-	if student_to_chase == null:
+	#if student_to_chase == null:
 		student_to_chase = env.get_closest_student_to_candies()
 		if student_to_chase != null:
 			print("a student is not working !!!!!")
