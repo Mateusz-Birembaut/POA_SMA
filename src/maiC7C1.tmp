@@ -1,0 +1,85 @@
+[gd_scene load_steps=13 format=3 uid="uid://dxe42ghjxf0af"]
+
+[ext_resource type="Script" path="res://src/environment.gd" id="1_3dsaf"]
+[ext_resource type="Texture2D" uid="uid://dlxfkfvecjhf0" path="res://assets/candies.png" id="2_v5ftg"]
+[ext_resource type="PackedScene" uid="uid://bifqeet5uhpgr" path="res://src/agent.tscn" id="3_4dp1j"]
+[ext_resource type="Texture2D" uid="uid://dyt7jlom3h7rq" path="res://assets/cat.png" id="4_348a0"]
+[ext_resource type="Script" path="res://src/prof.gd" id="4_vctu3"]
+[ext_resource type="PackedScene" uid="uid://b27xa4y6cqh2b" path="res://src/desk.tscn" id="5_u8008"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ofuiq"]
+radius = 24.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pnoga"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8cgxa"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_cfg5q"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_x7ntd"]
+normal = Vector2(1, 0)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_vbv6l"]
+vertices = PackedVector2Array(1117, 35, 1117, 613, 620, 613, 620, 512, 35, 35, 529, 512, 35, 613, 529, 613)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(6, 4, 5, 7)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1152, 0, 1152, 648, 1152, 648, 585, 648, 585, 547, 564, 547, 564, 648, 0, 648)])
+agent_radius = 35.0
+
+[node name="Room" type="Node2D"]
+script = ExtResource("1_3dsaf")
+number_of_students = 7
+
+[node name="Desk" parent="." instance=ExtResource("5_u8008")]
+position = Vector2(95, 573)
+
+[node name="Prof" parent="." instance=ExtResource("3_4dp1j")]
+unique_name_in_owner = true
+script = ExtResource("4_vctu3")
+sprite_texture = ExtResource("4_348a0")
+
+[node name="Candies" type="StaticBody2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(576, 556)
+
+[node name="Sprite2D" type="Sprite2D" parent="Candies"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_v5ftg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Candies"]
+shape = SubResource("CircleShape2D_ofuiq")
+
+[node name="WorldBoundaries" type="StaticBody2D" parent="."]
+
+[node name="WorldBoundaryNorth" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(576, 0)
+shape = SubResource("WorldBoundaryShape2D_pnoga")
+
+[node name="WorldBoundaryEast" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(1152, 324)
+shape = SubResource("WorldBoundaryShape2D_8cgxa")
+
+[node name="WorldBoundarySouth" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(576, 648)
+shape = SubResource("WorldBoundaryShape2D_cfg5q")
+
+[node name="WorldBoundaryWest" type="CollisionShape2D" parent="WorldBoundaries"]
+position = Vector2(0, 324)
+shape = SubResource("WorldBoundaryShape2D_x7ntd")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_vbv6l")
+
+[node name="Score" type="Label" parent="."]
+offset_left = 555.0
+offset_top = 596.0
+offset_right = 595.0
+offset_bottom = 619.0
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Timer" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0

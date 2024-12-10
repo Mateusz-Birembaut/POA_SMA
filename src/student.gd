@@ -1,7 +1,7 @@
 class_name Student extends Agent
 
 
-enum Strategies { NONE , DODGE }
+enum Strategies { NONE , DODGE, LURE }
 
 var time_since_last_collect := 0.0
 var interval: float
@@ -10,7 +10,7 @@ var evade_range := 400.0
 var prefered_group_size : int
 var is_solitary : bool
 var strategy : Strategies
-
+var lure = false
 
 
 func _ready() -> void:
@@ -27,15 +27,31 @@ func _ready() -> void:
 		print("is solitary : ",is_solitary)
 	if strategy == Strategies.NONE :
 		sprite.modulate = Color(0, 0, 1)
+	if strategy ==  Strategies.LURE:
+		sprite.modulate = Color(1, 0, 0)
 	else :
 		sprite.modulate = Color(0, 1, 0)
 
 func _process(delta: float) -> void:
 	if time_since_last_interval >= interval:
-		if is_solitary:
+		if is_solitary and strategy != Strategies.LURE:
 			print(name, " passe à l'état READY")
 			state = States.READY
 			time_since_last_interval = 0
+			
+		elif strategy == Strategies.LURE :
+			if env.get_lure_ready_student() == 0:
+				lure = true
+				state = States.READY
+			else:
+				if lure :
+					state = States.LEAVE 
+				else :
+					if !env.lure_exists():
+						lure = true
+					state = States.READY
+			time_since_last_interval = 0
+				
 		else :
 			print(name, " passe à l'état LEAVE")
 			state = States.LEAVE
@@ -56,6 +72,8 @@ func _process(delta: float) -> void:
 					move_none()
 				Strategies.DODGE:
 					move_dodge()
+				Strategies.LURE:
+					move_lure()
 			if (agent.position - env.candies.position).length() <= 40:
 				nav.target_position = Vector2()
 				agent.velocity = Vector2()
@@ -107,6 +125,36 @@ func move_dodge() -> void :
 				look_towards(env.candies.position)
 		else :
 			look_towards(env.candies.position)
+
+func move_lure() -> void:
+	if env.prof.student_to_chase == self:
+		var direction_away_from_prof = (agent.position - env.prof.agent.position).normalized()
+		var direction_to_candies = (env.candies.position - agent.position).normalized()
+
+		var dot_product = direction_away_from_prof.dot(direction_to_candies)
+
+		if dot_product > 0.5: 
+			var perpendicular_direction = Vector2(-direction_to_candies.y, direction_to_candies.x).normalized()
+			direction_away_from_prof += perpendicular_direction * 0.5
+			direction_away_from_prof = direction_away_from_prof.normalized()
+		if lure:
+			var distance_from_candies = (agent.position - env.candies.position).length()
+			if distance_from_candies <= 100:
+				look_towards(env.candies.position) 
+			else:
+				env.signal_friends_go()
+				var movement_position = agent.position + direction_away_from_prof
+				look_towards(movement_position)
+		else:
+			look_towards(env.candies.position) 	
+	else:
+		if lure :
+			var direction_to_candies = (env.candies.position - agent.position).normalized() 
+			var direction = agent.position + direction_to_candies*0.1
+			look_towards(direction)
+		else :
+			look_towards(env.candies.position) 	
+	
 
 func see() -> void:
 	## get la position de l'eleve le plus proche des bonbons qui soit parti 
