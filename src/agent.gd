@@ -26,6 +26,7 @@ func _ready() -> void:
 	state = States.WORK
 
 
+
 func _physics_process(delta):
 	velocity *= speed * delta
 	#move_and_collide(velocity)

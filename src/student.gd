@@ -25,7 +25,10 @@ func _ready() -> void:
 		print(name, " strategy : ", strategy)
 		print(name, " interval : ", interval)
 		print("is solitary : ",is_solitary)
-
+	if strategy == Strategies.NONE :
+		sprite.modulate = Color(0, 0, 1) # blue shade
+	else :
+		sprite.modulate = Color(0, 1, 0) # green shade
 
 func _process(delta: float) -> void:
 	if time_since_last_interval >= interval:
@@ -90,18 +93,20 @@ func move_none() -> void :
 
 
 func move_dodge() -> void :
-		var direction_away_from_prof = (position - env.prof.position).normalized()
-		var distance_away_from_prof = (position - env.prof.position).length()
-		var distance_from_candies = (position - env.candies.position).length()
-		if distance_away_from_prof <= evade_range and distance_from_candies >= 100:
-			var candies_direction = (env.candies.position - position).normalized()
-			var ratio = distance_away_from_prof / evade_range
-			var movement_direction = ((1 - ratio) * direction_away_from_prof) + (ratio * candies_direction)
-			var movement_position = position + movement_direction
-			look_towards(movement_position)
-		else:
+		if env.prof.student_to_chase == self:
+			var direction_away_from_prof = (position - env.prof.position).normalized()
+			var distance_away_from_prof = (position - env.prof.position).length()
+			var distance_from_candies = (position - env.candies.position).length()
+			if distance_away_from_prof <= evade_range and distance_from_candies >= 100:
+				var candies_direction = (env.candies.position - position).normalized()
+				var ratio = distance_away_from_prof / evade_range
+				var movement_direction = ((1 - ratio) * direction_away_from_prof) + (ratio * candies_direction)
+				var movement_position = position + movement_direction
+				look_towards(movement_position)
+			else:
+				look_towards(env.candies.position)
+		else :
 			look_towards(env.candies.position)
-
 
 func see() -> void:
 	## get la position de l'eleve le plus proche des bonbons qui soit parti 
