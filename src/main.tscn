@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bifqeet5uhpgr" path="res://src/agent.tscn" id="3_4dp1j"]
 [ext_resource type="Texture2D" uid="uid://dyt7jlom3h7rq" path="res://assets/cat.png" id="4_348a0"]
 [ext_resource type="Script" path="res://src/prof.gd" id="4_vctu3"]
-[ext_resource type="PackedScene" path="res://src/desk.tscn" id="5_u8008"]
+[ext_resource type="PackedScene" uid="uid://b27xa4y6cqh2b" path="res://src/desk.tscn" id="5_u8008"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ofuiq"]
 radius = 24.0
