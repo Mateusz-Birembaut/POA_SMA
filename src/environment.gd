@@ -3,25 +3,31 @@ class_name Env extends Node2D
 
 const DEBUG := true
 
-@export_range(1, 20)
-var number_of_students := 6
+@export_range(1, 3)
+var number_of_rows := 1
 
-@onready var desk = %Desk
 @onready var candies = %Candies
 @onready var prof : Agent = %Prof
 
 var student_scene := preload("res://src/student.tscn")
 var students : Array[Agent]
+var desk_scene := preload("res://src/desk.tscn")
 
 
 func _ready() -> void:
-	var x := get_window().size.x/2 - (number_of_students * 55)/2 + 25
-	for i in number_of_students:
-		var new_student : Agent = student_scene.instantiate()
-		new_student.position = Vector2i(x, desk.position.y-40-25-5)
-		add_child(new_student)
-		students.append(new_student)
-		x += 55
+	var y := 150
+	for i in number_of_rows:
+		var x := 200
+		for j in 5:
+			var new_desk : StaticBody2D = desk_scene.instantiate()
+			new_desk.position = Vector2i(x, y)
+			add_child(new_desk)
+			var new_student : Agent = student_scene.instantiate()
+			new_student.position = Vector2i(x, y)
+			add_child(new_student)
+			students.append(new_student)
+			x += 120 + 65
+		y += 80 + 40
 
 
 func get_closest_student_to_candies() -> Agent:

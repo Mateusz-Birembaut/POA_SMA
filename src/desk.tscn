@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://b27xa4y6cqh2b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wjmat"]
+size = Vector2(120, 80)
+
+[node name="Desk" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -60.0
+offset_top = -40.0
+offset_right = 60.0
+offset_bottom = 40.0
+color = Color(0.535877, 0.374656, 0.197697, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wjmat")
