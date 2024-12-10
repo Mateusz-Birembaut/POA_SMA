@@ -3,8 +3,8 @@ class_name Env extends Node2D
 
 const DEBUG := true
 
-@export_range(1, 3)
-var number_of_rows := 1
+@export_range(1, 15)
+var number_of_students := 4
 
 @onready var candies = %Candies
 @onready var prof : Agent = %Prof
@@ -36,17 +36,19 @@ func _ready() -> void:
 	timer.position.x = get_window().size.x/2 - 25
 	score.text = str(total_candies)
 	var y := 100
-	for i in number_of_rows:
+	for i in 3:
 		var x := 200
 		for j in 5:
 			var new_desk : Sprite2D = desk_scene.instantiate()
 			new_desk.position = Vector2i(x, y)
 			add_child(new_desk)
-			var new_student : Agent = student_scene.instantiate()
-			new_student.position = Vector2i(x, y)
-			add_child(new_student)
-			students.append(new_student)
+			if i * 5 + j < number_of_students:
+				var new_student : Agent = student_scene.instantiate()
+				new_student.position = Vector2i(x, y)
+				add_child(new_student)
+				students.append(new_student)
 			x += 120 + 65
+		
 		y += 80 + 40
 
 
