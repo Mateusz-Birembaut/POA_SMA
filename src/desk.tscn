@@ -3,4 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://c4c7j21x302av" path="res://assets/desk.png" id="1_ntmu4"]
 
 [node name="Desk" type="Sprite2D"]
+z_index = -1
+scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_ntmu4")

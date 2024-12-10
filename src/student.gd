@@ -26,9 +26,9 @@ func _ready() -> void:
 		print(name, " interval : ", interval)
 		print("is solitary : ",is_solitary)
 	if strategy == Strategies.NONE :
-		sprite.modulate = Color(0, 0, 1) # blue shade
+		sprite.modulate = Color(0, 0, 1)
 	else :
-		sprite.modulate = Color(0, 1, 0) # green shade
+		sprite.modulate = Color(0, 1, 0)
 
 func _process(delta: float) -> void:
 	if time_since_last_interval >= interval:
