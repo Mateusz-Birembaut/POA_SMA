@@ -6,7 +6,7 @@ var student_to_chase : Agent
 
 func _ready() -> void:
 	super._ready()
-	speed = 0#7500
+	speed = 7500
 
 
 func _process(delta: float) -> void:
