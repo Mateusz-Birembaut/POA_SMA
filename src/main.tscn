@@ -36,8 +36,6 @@ position = Vector2(95, 573)
 
 [node name="Prof" parent="." instance=ExtResource("3_4dp1j")]
 unique_name_in_owner = true
-position = Vector2(95, 572)
-collision_layer = 0
 script = ExtResource("4_vctu3")
 sprite_texture = ExtResource("4_348a0")
 

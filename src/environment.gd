@@ -44,8 +44,10 @@ func _ready() -> void:
 			add_child(new_desk)
 			if i * 5 + j < number_of_students:
 				var new_student : Agent = student_scene.instantiate()
-				new_student.position = Vector2i(x, y)
+				new_student.initial_position = Vector2i(x, y)
 				add_child(new_student)
+				#new_student.agent.position = Vector2i(x, y)
+				#new_student.mini_agent.position = Vector2i(x, y)
 				students.append(new_student)
 			x += 120 + 65
 		
@@ -56,8 +58,8 @@ func get_closest_student_to_candies() -> Agent:
 	var student_to_chase = null
 	var min_distance = 100000
 	for student in students:
-		if student.state == Agent.States.LEAVE or student.state == Agent.States.COLLECT  :
-			var distanceToCandies = (student.position - candies.position).length()
+		if student.state == Agent.States.LEAVE or student.state == Agent.States.COLLECT:
+			var distanceToCandies = (student.agent.position - candies.position).length()
 			if distanceToCandies < min_distance:
 				min_distance = distanceToCandies
 				student_to_chase = student

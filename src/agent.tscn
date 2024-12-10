@@ -1,18 +1,35 @@
-[gd_scene load_steps=3 format=3 uid="uid://bifqeet5uhpgr"]
+[gd_scene load_steps=4 format=3 uid="uid://bifqeet5uhpgr"]
 
 [ext_resource type="Texture2D" uid="uid://ddnam5qi8s0gm" path="res://assets/missing.png" id="1_j5m1o"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_88gaf"]
 radius = 25.0
 
-[node name="Agent" type="CharacterBody2D"]
-scale = Vector2(0.75, 0.75)
+[sub_resource type="CircleShape2D" id="CircleShape2D_aa5el"]
+radius = 9.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Node" type="Node"]
+
+[node name="Agent" type="CharacterBody2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(0.75, 0.75)
+collision_layer = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="Agent"]
+unique_name_in_owner = true
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_j5m1o")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Agent"]
 shape = SubResource("CircleShape2D_88gaf")
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Agent"]
+unique_name_in_owner = true
+debug_enabled = true
+
+[node name="mini_agent" type="CharacterBody2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="mini_agent"]
+shape = SubResource("CircleShape2D_aa5el")

@@ -56,21 +56,23 @@ func _process(delta: float) -> void:
 					move_none()
 				Strategies.DODGE:
 					move_dodge()
-			if (position - env.candies.position).length() <= 60:
+			if (agent.position - env.candies.position).length() <= 40:
 				nav.target_position = Vector2()
-				velocity = Vector2()
+				agent.velocity = Vector2()
+				mini_agent.velocity = Vector2()
 				print(name, " passe à l'état COLLECT")
 				state = States.COLLECT
 
 		States.COMEBACK:
-			if (nav.get_final_position() - global_position).length() > 30:
+			if (nav.get_final_position() - agent.global_position).length() > 30:
 				nav.target_position = initial_position
 				look_towards(nav.get_next_path_position())
 			else:
 				look_towards(initial_position)
-			if (position - initial_position).length() <= 5:
+			if (agent.position - initial_position).length() <= 5:
 				nav.target_position = Vector2()
-				velocity = Vector2()
+				agent.velocity = Vector2()
+				mini_agent.velocity = Vector2()
 				print(name, " passe à l'état WORK")
 				state = States.WORK
 
@@ -92,14 +94,14 @@ func move_none() -> void :
 
 func move_dodge() -> void :
 		if env.prof.student_to_chase == self:
-			var direction_away_from_prof = (position - env.prof.position).normalized()
-			var distance_away_from_prof = (position - env.prof.position).length()
-			var distance_from_candies = (position - env.candies.position).length()
+			var direction_away_from_prof = (agent.position - env.prof.agent.position).normalized()
+			var distance_away_from_prof = (agent.position - env.prof.agent.position).length()
+			var distance_from_candies = (agent.position - env.candies.position).length()
 			if distance_away_from_prof <= evade_range and distance_from_candies >= 100:
-				var candies_direction = (env.candies.position - position).normalized()
+				var candies_direction = (env.candies.position - agent.position).normalized()
 				var ratio = distance_away_from_prof / evade_range
 				var movement_direction = ((1 - ratio) * direction_away_from_prof) + (ratio * candies_direction)
-				var movement_position = position + movement_direction
+				var movement_position = agent.position + movement_direction
 				look_towards(movement_position)
 			else:
 				look_towards(env.candies.position)
