@@ -75,11 +75,9 @@ func _process(delta: float) -> void:
 				state = States.WORK
 
 		States.COLLECT:
-			time_since_last_collect += delta
-			if time_since_last_collect >= 5:
-				env.update_score()
-				print(" prend un bonbon")
-				time_since_last_collect = 0
+			env.update_score()
+			print(" prend un bonbon")
+			state = States.COMEBACK
 
 
 func send_to_work() -> void:
