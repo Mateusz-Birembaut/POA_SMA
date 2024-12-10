@@ -3,7 +3,6 @@ class_name Student extends Agent
 
 enum Strategies { NONE , DODGE }
 
-var collected_candies := 0
 var time_since_last_collect := 0.0
 var interval: float
 var time_since_last_interval := 0.0
@@ -11,7 +10,6 @@ var evade_range := 400.0
 var prefered_group_size : int
 var is_solitary : bool
 var strategy : Strategies
-var left_desk = false
 
 
 
@@ -19,12 +17,10 @@ func _ready() -> void:
 	super._ready()
 	speed = 5000
 	var rng = RandomNumberGenerator.new()
-	#interval = rng.randf_range(5, 20)
-	interval = rng.randf_range(2, 5)
+	interval = rng.randf_range(2, 10)
 	is_solitary = randf() < 0.75
-	#strategy = Strategies.values()[randi() % Strategies.size()]
-	strategy = Strategies.DODGE
-	prefered_group_size = randi_range(2, 4)
+	strategy = Strategies.values()[randi() % Strategies.size()]
+	prefered_group_size = randi_range(2, 3)
 	if env.DEBUG:
 		print(name, " strategy : ", strategy)
 		print(name, " interval : ", interval)
@@ -78,8 +74,8 @@ func _process(delta: float) -> void:
 		States.COLLECT:
 			time_since_last_collect += delta
 			if time_since_last_collect >= 5:
-				collected_candies += 1
-				print(name, " nb bonbons : ", collected_candies)
+				env.update_score()
+				print(" prend un bonbon")
 				time_since_last_collect = 0
 
 
@@ -94,10 +90,6 @@ func move_none() -> void :
 
 
 func move_dodge() -> void :
-	if !left_desk and position.y < env.desk.position.y-30 :
-		move_none()
-	else :
-		left_desk = true
 		var direction_away_from_prof = (position - env.prof.position).normalized()
 		var distance_away_from_prof = (position - env.prof.position).length()
 		var distance_from_candies = (position - env.candies.position).length()

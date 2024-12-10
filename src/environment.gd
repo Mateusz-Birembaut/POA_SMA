@@ -8,13 +8,31 @@ var number_of_rows := 1
 
 @onready var candies = %Candies
 @onready var prof : Agent = %Prof
+@onready var score = get_node("Score")
+@onready var timer = get_node("Timer")
 
 var student_scene := preload("res://src/student.tscn")
 var students : Array[Agent]
 var desk_scene := preload("res://src/desk.tscn")
 
+var total_candies = 10
+var time_elapsed = 0
+
+func update_score() -> void:
+	total_candies -= 1
+	if total_candies == 0:
+		get_tree().paused = true
+	print(total_candies)
+	score.text = str(total_candies)
+
+
+func _process(delta: float) -> void:
+	time_elapsed += delta
+	timer.text = str(snapped(time_elapsed, 0.01))
 
 func _ready() -> void:
+	timer.position.x = get_window().size.x/2 - 25
+	score.text = str(total_candies)
 	var y := 150
 	for i in number_of_rows:
 		var x := 200

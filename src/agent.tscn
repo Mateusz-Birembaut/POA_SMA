@@ -15,4 +15,3 @@ texture = ExtResource("1_j5m1o")
 shape = SubResource("CircleShape2D_88gaf")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-debug_enabled = true
