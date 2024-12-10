@@ -101,6 +101,7 @@ func _process(delta: float) -> void:
 
 
 func send_to_work() -> void:
+	lure = false
 	print(name, " passe à l'état COMEBACK")
 	state = States.COMEBACK
 

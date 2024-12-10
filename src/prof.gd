@@ -24,7 +24,6 @@ func _process(delta: float) -> void:
 			if (agent.position - student_to_chase.agent.position).length() <= 40:
 				print(name, " renvoit un élève au travail")
 				student_to_chase.send_to_work()
-				student_to_chase.lure = false
 				print(name, " passe à l'état COMEBACK")
 				state = States.COMEBACK
 
