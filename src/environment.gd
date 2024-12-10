@@ -37,7 +37,7 @@ func _ready() -> void:
 	for i in number_of_rows:
 		var x := 200
 		for j in 5:
-			var new_desk : StaticBody2D = desk_scene.instantiate()
+			var new_desk : Sprite2D = desk_scene.instantiate()
 			new_desk.position = Vector2i(x, y)
 			add_child(new_desk)
 			var new_student : Agent = student_scene.instantiate()
