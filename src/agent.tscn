@@ -6,7 +6,6 @@
 radius = 25.0
 
 [node name="Agent" type="CharacterBody2D"]
-scale = Vector2(0.75, 0.75)
 collision_layer = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

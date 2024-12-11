@@ -1,14 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://dxe42ghjxf0af"]
+[gd_scene load_steps=14 format=3 uid="uid://dxe42ghjxf0af"]
 
 [ext_resource type="Script" path="res://src/environment.gd" id="1_3dsaf"]
-[ext_resource type="Texture2D" uid="uid://dlxfkfvecjhf0" path="res://assets/candies.png" id="2_v5ftg"]
 [ext_resource type="PackedScene" uid="uid://bifqeet5uhpgr" path="res://src/agent.tscn" id="3_4dp1j"]
-[ext_resource type="Texture2D" uid="uid://dyt7jlom3h7rq" path="res://assets/cat.png" id="4_348a0"]
 [ext_resource type="Script" path="res://src/prof.gd" id="4_vctu3"]
+[ext_resource type="Texture2D" uid="uid://cc5dgku4t1xiy" path="res://assets/cat.png" id="5_ceq7g"]
 [ext_resource type="PackedScene" uid="uid://b27xa4y6cqh2b" path="res://src/desk.tscn" id="5_u8008"]
+[ext_resource type="Texture2D" uid="uid://bwn3ndep7wogk" path="res://assets/plate6.png" id="6_fkhlb"]
+[ext_resource type="Texture2D" uid="uid://b4rghbkcxratq" path="res://assets/room.png" id="7_bbyln"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ofuiq"]
-radius = 24.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qi1pn"]
+radius = 14.9986
+height = 140.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pnoga"]
 normal = Vector2(0, 1)
@@ -22,10 +24,9 @@ normal = Vector2(-1, 0)
 normal = Vector2(1, 0)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_vbv6l"]
-vertices = PackedVector2Array(1117, 35, 1117, 613, 614, 613, 614, 521, 35, 35, 538, 521, 35, 613, 538, 613)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(6, 4, 5, 7)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1152, 0, 1152, 648, 1152, 648, 579, 648, 579, 556, 573, 556, 573, 648, 0, 648)])
-agent_radius = 35.0
+vertices = PackedVector2Array(10, 10, 1142, 10, 1142, 638, 651.539, 559.602, 626.812, 542.477, 604.891, 539.023, 555.672, 537.992, 530.109, 540.211, 10, 638, 500.523, 555.883, 519.438, 578.992, 630.68, 580.461, 545.758, 584.969, 589.547, 586.023)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(0, 4, 5), PackedInt32Array(0, 5, 6), PackedInt32Array(0, 6, 7), PackedInt32Array(8, 0, 7, 9), PackedInt32Array(8, 9, 10), PackedInt32Array(11, 3, 2), PackedInt32Array(8, 10, 12), PackedInt32Array(2, 8, 12, 13), PackedInt32Array(2, 13, 11)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1152, 0, 1152, 648, 1152, 648, 583, 648, 589, 576, 626, 571, 636, 561, 623, 552, 604, 549, 556, 548, 533, 550, 516, 559, 525, 570, 547, 575, 589, 576, 583, 648, 0, 648)])
 
 [node name="Room" type="Node2D"]
 script = ExtResource("1_3dsaf")
@@ -38,18 +39,20 @@ position = Vector2(95, 573)
 unique_name_in_owner = true
 position = Vector2(95, 573)
 script = ExtResource("4_vctu3")
-sprite_texture = ExtResource("4_348a0")
+sprite_texture = ExtResource("5_ceq7g")
 
-[node name="Candies" type="StaticBody2D" parent="."]
+[node name="Cheeses" type="StaticBody2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(576, 556)
 
-[node name="Sprite2D" type="Sprite2D" parent="Candies"]
+[node name="Sprite2D" type="Sprite2D" parent="Cheeses"]
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_v5ftg")
+texture = ExtResource("6_fkhlb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Candies"]
-shape = SubResource("CircleShape2D_ofuiq")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cheeses"]
+position = Vector2(1, 6)
+rotation = 1.58467
+shape = SubResource("CapsuleShape2D_qi1pn")
 
 [node name="WorldBoundaries" type="StaticBody2D" parent="."]
 
@@ -84,3 +87,9 @@ vertical_alignment = 1
 [node name="Timer" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("7_bbyln")
+expand_mode = 1
