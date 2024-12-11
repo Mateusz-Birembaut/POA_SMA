@@ -106,7 +106,7 @@ func lure_exists() -> bool:
 
 func add_lure_student() -> void :
 	while true:
-		var rand_index = randi_range(0, number_of_students)
+		var rand_index = randi_range(0, number_of_students-1)
 		if students[rand_index].strategy != Student.Strategies.LURE :
 			students[rand_index].strategy = Student.Strategies.LURE
 			students[rand_index].sprite.modulate = Color(1, 0, 0)

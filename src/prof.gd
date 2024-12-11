@@ -16,14 +16,20 @@ func _process(delta: float) -> void:
 
 		States.CHASE:
 			#check_students() # a commenter si on ne veut pas changer de "cible"
-			nav.target_position = student_to_chase.position
-			look_towards(nav.get_next_path_position())
-
-			if (position - student_to_chase.position).length() <= 40:
-				print(name, " renvoit un élève au travail")
-				student_to_chase.send_to_work()
-				print(name, " passe à l'état COMEBACK")
+			if student_to_chase.state == States.COMEBACK:
+				check_students() 
+			
+			if student_to_chase == null:
 				state = States.COMEBACK
+				look_towards(initial_position)
+			else :
+				nav.target_position = student_to_chase.position
+				look_towards(nav.get_next_path_position())
+				if (position - student_to_chase.position).length() <= 40:
+					print(name, " renvoit un élève au travail")
+					student_to_chase.send_to_work()
+					print(name, " passe à l'état COMEBACK")
+					state = States.COMEBACK
 
 		States.COMEBACK:
 			if (nav.get_final_position() - global_position).length() > 30:
