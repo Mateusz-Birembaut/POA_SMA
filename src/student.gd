@@ -75,23 +75,21 @@ func _process(delta: float) -> void:
 					move_dodge()
 				Strategies.LURE:
 					move_lure()
-			if (agent.position - env.candies.position).length() <= 40:
+			if (position - env.candies.position).length() <= 50:
 				nav.target_position = Vector2()
-				agent.velocity = Vector2()
-				mini_agent.velocity = Vector2()
+				velocity = Vector2()
 				print(name, " passe à l'état COLLECT")
 				state = States.COLLECT
 
 		States.COMEBACK:
-			if (nav.get_final_position() - agent.global_position).length() > 30:
+			if (nav.get_final_position() - global_position).length() > 30:
 				nav.target_position = initial_position
 				look_towards(nav.get_next_path_position())
 			else:
 				look_towards(initial_position)
-			if (agent.position - initial_position).length() <= 5:
+			if (position - initial_position).length() <= 5:
 				nav.target_position = Vector2()
-				agent.velocity = Vector2()
-				mini_agent.velocity = Vector2()
+				velocity = Vector2()
 				print(name, " passe à l'état WORK")
 				state = States.WORK
 
@@ -114,14 +112,14 @@ func move_none() -> void :
 
 func move_dodge() -> void :
 		if env.prof.student_to_chase == self:
-			var direction_away_from_prof = (agent.position - env.prof.agent.position).normalized()
-			var distance_away_from_prof = (agent.position - env.prof.agent.position).length()
-			var distance_from_candies = (agent.position - env.candies.position).length()
+			var direction_away_from_prof = (position - env.prof.position).normalized()
+			var distance_away_from_prof = (position - env.prof.position).length()
+			var distance_from_candies = (position - env.candies.position).length()
 			if distance_away_from_prof <= evade_range and distance_from_candies >= 100:
-				var candies_direction = (env.candies.position - agent.position).normalized()
+				var candies_direction = (env.candies.position - position).normalized()
 				var ratio = distance_away_from_prof / evade_range
 				var movement_direction = ((1 - ratio) * direction_away_from_prof) + (ratio * candies_direction)
-				var movement_position = agent.position + movement_direction
+				var movement_position = position + movement_direction
 				look_towards(movement_position)
 			else:
 				look_towards(env.candies.position)
@@ -130,8 +128,8 @@ func move_dodge() -> void :
 
 func move_lure() -> void:
 	if env.prof.student_to_chase == self:
-		var direction_away_from_prof = (agent.position - env.prof.agent.position).normalized()
-		var direction_to_candies = (env.candies.position - agent.position).normalized()
+		var direction_away_from_prof = (position - env.prof.position).normalized()
+		var direction_to_candies = (env.candies.position - position).normalized()
 
 		var dot_product = direction_away_from_prof.dot(direction_to_candies)
 
@@ -140,19 +138,19 @@ func move_lure() -> void:
 			direction_away_from_prof += perpendicular_direction * 0.5
 			direction_away_from_prof = direction_away_from_prof.normalized()
 		if lure:
-			var distance_from_candies = (agent.position - env.candies.position).length()
+			var distance_from_candies = (position - env.candies.position).length()
 			if distance_from_candies <= 100:
 				look_towards(env.candies.position) 
 			else:
 				env.signal_friends_go()
-				var movement_position = agent.position + direction_away_from_prof
+				var movement_position = position + direction_away_from_prof
 				look_towards(movement_position)
 		else:
 			look_towards(env.candies.position) 	
 	else:
 		if lure :
-			var direction_to_candies = (env.candies.position - agent.position).normalized() 
-			var direction = agent.position + direction_to_candies*0.1
+			var direction_to_candies = (env.candies.position - position).normalized() 
+			var direction = position + direction_to_candies*0.1
 			look_towards(direction)
 		else :
 			look_towards(env.candies.position) 	

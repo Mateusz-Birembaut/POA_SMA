@@ -63,7 +63,7 @@ func get_closest_student_to_candies() -> Agent:
 	var min_distance = 100000
 	for student in students:
 		if student.state == Agent.States.LEAVE or student.state == Agent.States.COLLECT:
-			var distanceToCandies = (student.agent.position - candies.position).length()
+			var distanceToCandies = (student.position - candies.position).length()
 			if distanceToCandies < min_distance:
 				min_distance = distanceToCandies
 				student_to_chase = student
