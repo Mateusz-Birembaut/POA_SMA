@@ -84,6 +84,7 @@ func _ready() -> void:
 	if nb_student_lure == 1:
 		add_lure_student()
 
+
 func get_closest_student_to_candies() -> Agent:
 	var student_to_chase = null
 	var min_distance = 100000
@@ -104,25 +105,27 @@ func get_number_ready_student() -> int:
 
 	return nb_ready
 
-			
+
 func signal_friends_go(strategy :Student.Strategies) -> void :
 	for student in students:
 		if student.state == Agent.States.READY and student.strategy == strategy:
 			student.state = Agent.States.LEAVE
-			
-			
+
+
 func get_lure_ready_student() -> int :
 	var nb_ready = 0
 	for student in students:
 		if student.state == Agent.States.READY and student.strategy == Student.Strategies.LURE:
 			nb_ready += 1
 	return nb_ready
-	
+
+
 func lure_exists() -> bool:
 	for student in students:
 		if student.strategy == Student.Strategies.LURE and student.lure:
 				return true
 	return false
+
 
 func add_lure_student() -> void :
 	while true:
@@ -131,7 +134,8 @@ func add_lure_student() -> void :
 			students[rand_index].strategy = Student.Strategies.LURE
 			students[rand_index].sprite.modulate = Color(1, 0, 0)
 			return
-		
+
+
 func debug_print(name: StringName, text: String) -> void:
 	if DEBUG:
 		print(name, text)

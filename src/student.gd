@@ -31,6 +31,7 @@ func _ready() -> void:
 	else :
 		sprite.modulate = Color(0, 1, 0)
 
+
 func _process(delta: float) -> void:
 	if time_since_last_interval >= interval:
 		if strategy == Strategies.GROUP:
@@ -132,6 +133,7 @@ func move_dodge() -> void :
 		else :
 			look_towards(env.cheeses.position)
 
+
 func move_lure() -> void:
 	if env.prof.student_to_chase == self:
 		var direction_away_from_prof = (position - env.prof.position).normalized()
@@ -160,4 +162,3 @@ func move_lure() -> void:
 			look_towards(direction)
 		else :
 			look_towards(env.cheeses.position) 
-	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dxe42ghjxf0af"]
+[gd_scene load_steps=14 format=3 uid="uid://dxe42ghjxf0af"]
 
 [ext_resource type="Script" path="res://src/environment.gd" id="1_3dsaf"]
 [ext_resource type="PackedScene" uid="uid://bifqeet5uhpgr" path="res://src/agent.tscn" id="3_4dp1j"]
@@ -6,10 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://cc5dgku4t1xiy" path="res://assets/cat.png" id="5_ceq7g"]
 [ext_resource type="PackedScene" uid="uid://b27xa4y6cqh2b" path="res://src/desk.tscn" id="5_u8008"]
 [ext_resource type="Texture2D" uid="uid://bwn3ndep7wogk" path="res://assets/plate6.png" id="6_fkhlb"]
+[ext_resource type="Texture2D" uid="uid://b4rghbkcxratq" path="res://assets/room.png" id="7_bbyln"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qi1pn"]
-radius = 19.9981
-height = 138.014
+radius = 14.9986
+height = 140.0
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_pnoga"]
 normal = Vector2(0, 1)
@@ -72,7 +73,6 @@ position = Vector2(0, 324)
 shape = SubResource("WorldBoundaryShape2D_x7ntd")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-visible = false
 navigation_polygon = SubResource("NavigationPolygon_vbv6l")
 
 [node name="Score" type="Label" parent="."]

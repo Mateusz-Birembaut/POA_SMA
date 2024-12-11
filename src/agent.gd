@@ -30,8 +30,8 @@ func _ready() -> void:
 
 func _physics_process(delta):
 	velocity *= speed * delta
-	if velocity.length() >0:
-		var angle = velocity.angle() - 1.5708
+	if velocity.length() > 0:
+		var angle = velocity.angle() - PI/2
 		sprite.set_rotation(angle)
 	else:
 		sprite.set_rotation(0)
@@ -40,11 +40,3 @@ func _physics_process(delta):
 
 func look_towards(p_position: Vector2 ) -> void:
 	velocity = (p_position - position).normalized()
-
-
-func see() -> void:
-	pass
-
-
-func action() -> void:
-	pass

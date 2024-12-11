@@ -43,26 +43,7 @@ func _process(delta: float) -> void:
 				env.debug_print(name, " passe à l'état WORK")
 				state = States.WORK
 			check_students()
-		
-func _physics_process(delta):
-	if env.DEBUG:
-		var direction_x = Input.get_axis("ui_left", "ui_right")
-		var direction_y = Input.get_axis("ui_up", "ui_down")
 
-		if direction_x and direction_y:
-			velocity.x = direction_x * speed * delta
-			velocity.y = direction_y * speed * delta
-			move_and_slide()
-		else:
-			super._physics_process(delta)
-	else:
-		super._physics_process(delta)
-	
-	if velocity.length() >0:
-		var angle = velocity.angle() + 1.5708
-		sprite.set_rotation(angle)
-	else:
-		sprite.set_rotation(0)
 
 func check_students() -> void:
 		student_to_chase = env.get_closest_student_to_candies()
