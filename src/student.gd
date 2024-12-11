@@ -1,14 +1,13 @@
 class_name Student extends Agent
 
 
-enum Strategies { NONE , DODGE, LURE }
+enum Strategies { NONE , DODGE, LURE, GROUP }
 
 var time_since_last_collect := 0.0
 var interval: float
 var time_since_last_interval := 0.0
 var evade_range := 400.0
 var prefered_group_size : int
-var is_solitary : bool
 var strategy : Strategies
 var lure = false
 
@@ -18,24 +17,24 @@ func _ready() -> void:
 	speed = 5000
 	var rng = RandomNumberGenerator.new()
 	interval = rng.randf_range(2, 10)
-	is_solitary = randf() < 0.75
 	strategy = Strategies.values()[randi() % Strategies.size()]
-	prefered_group_size = randi_range(2, 3)
+	prefered_group_size = randi_range(2, 5)
 	if env.DEBUG:
 		print(name, " strategy : ", strategy)
 		print(name, " interval : ", interval)
-		print("is solitary : ",is_solitary)
 	if strategy == Strategies.NONE :
 		print("ici")
 		sprite.modulate = Color(0, 0, 1)
 	elif strategy ==  Strategies.LURE:
 		sprite.modulate = Color(1, 0, 0)
+	elif strategy ==  Strategies.GROUP:
+		sprite.modulate = Color(1, 1, 0)
 	else :
 		sprite.modulate = Color(0, 1, 0)
 
 func _process(delta: float) -> void:
 	if time_since_last_interval >= interval:
-		if is_solitary and strategy != Strategies.LURE:
+		if strategy == Strategies.GROUP:
 			print(name, " passe à l'état READY")
 			state = States.READY
 			time_since_last_interval = 0
@@ -75,6 +74,8 @@ func _process(delta: float) -> void:
 					move_dodge()
 				Strategies.LURE:
 					move_lure()
+				Strategies.GROUP:
+					move_dodge()
 			if (position - env.candies.position).length() <= 50:
 				nav.target_position = Vector2()
 				velocity = Vector2()

@@ -81,7 +81,7 @@ func get_number_ready_student() -> int:
 
 func signal_go() -> void :
 	for student in students:
-		if student.state == Agent.States.READY and student.strategy != Student.Strategies.LURE:
+		if student.state == Agent.States.READY and student.strategy == Student.Strategies.GROUP:
 			student.state = Agent.States.LEAVE
 			
 func signal_friends_go() -> void :
