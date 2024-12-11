@@ -13,12 +13,12 @@ class_name Menu extends Node2D
 
 
 func _ready() -> void:
-	play_button.position = Vector2i(get_window().size.x / 3 - 100, get_window().size.y / 2 - 50)
+	play_button.position = Vector2i(get_viewport_rect().size.x / 3 - 100, get_viewport_rect().size.y / 2 - 50)
 
-	quit_button.position = Vector2i(get_window().size.x / 3 - 100, get_window().size.y / 2 + 50)
+	quit_button.position = Vector2i(get_viewport_rect().size.x / 3 - 100, get_viewport_rect().size.y / 2 + 50)
 
-	vbox.position = Vector2i(2 * get_window().size.x / 3 - vbox.size.x / 2,
-							get_window().size.y / 2 - vbox.size.y / 2)
+	vbox.position = Vector2i(2 * get_viewport_rect().size.x / 3 - vbox.size.x / 2,
+							get_viewport_rect().size.y / 2 - vbox.size.y / 2)
 
 	student_slider.value = GM.number_of_students
 	cheese_slider.value = GM.initial_cheese

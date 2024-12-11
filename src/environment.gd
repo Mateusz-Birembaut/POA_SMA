@@ -23,37 +23,8 @@ var remaining_cheese := GM.initial_cheese
 var time_elapsed = 0
 
 
-func update_score() -> void:
-	remaining_cheese -= 1
-	var remaining_cheese_ratio : float = remaining_cheese * 1.0 / GM.initial_cheese
-	var new_texture
-	if remaining_cheese_ratio == 0:
-		new_texture = cheese0
-	elif remaining_cheese_ratio < 0.167:
-		new_texture = cheese1
-	elif remaining_cheese_ratio < 0.333:
-		new_texture = cheese2
-	elif remaining_cheese_ratio < 0.50:
-		new_texture = cheese3
-	elif remaining_cheese_ratio < 0.667:
-		new_texture = cheese4
-	elif remaining_cheese_ratio < 0.833:
-		new_texture = cheese5
-	else:
-		new_texture = cheese6
-	cheeses.get_node("Sprite2D").texture = new_texture
-	if remaining_cheese == 0:
-		get_tree().paused = true
-	score.text = str(remaining_cheese)
-
-
-func _process(delta: float) -> void:
-	time_elapsed += delta
-	timer.text = str(snapped(time_elapsed, 0.01))
-
-
 func _ready() -> void:
-	timer.position.x = get_window().size.x/2 - 25
+	timer.position.x = get_viewport_rect().size.x/2 - 25
 	score.text = str(remaining_cheese)
 	var nb_student_lure = 0
 	var y := 100
@@ -78,6 +49,35 @@ func _ready() -> void:
 		y += 80 + 40
 	if nb_student_lure == 1:
 		add_lure_student()
+
+
+func _process(delta: float) -> void:
+	time_elapsed += delta
+	timer.text = str(snapped(time_elapsed, 0.01))
+
+
+func update_score() -> void:
+	remaining_cheese -= 1
+	var remaining_cheese_ratio : float = remaining_cheese * 1.0 / GM.initial_cheese
+	var new_texture
+	if remaining_cheese_ratio == 0:
+		new_texture = cheese0
+	elif remaining_cheese_ratio < 0.167:
+		new_texture = cheese1
+	elif remaining_cheese_ratio < 0.333:
+		new_texture = cheese2
+	elif remaining_cheese_ratio < 0.50:
+		new_texture = cheese3
+	elif remaining_cheese_ratio < 0.667:
+		new_texture = cheese4
+	elif remaining_cheese_ratio < 0.833:
+		new_texture = cheese5
+	else:
+		new_texture = cheese6
+	cheeses.get_node("Sprite2D").texture = new_texture
+	if remaining_cheese == 0:
+		get_tree().paused = true
+	score.text = str(remaining_cheese)
 
 
 func get_closest_student_to_candies() -> Agent:
