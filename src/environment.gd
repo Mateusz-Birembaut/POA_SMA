@@ -1,7 +1,7 @@
 class_name Env extends Node2D
 
 
-const DEBUG := true
+const DEBUG := false
 
 @export_range(1, 15)
 var number_of_students := 4
@@ -24,7 +24,7 @@ var desk_scene := preload("res://src/desk.tscn")
 
 var initial_cheese := 10
 var remaining_cheese := initial_cheese
-var time_elapsed := 0
+var time_elapsed = 0
 
 
 func update_score() -> void:
@@ -55,6 +55,7 @@ func update_score() -> void:
 func _process(delta: float) -> void:
 	time_elapsed += delta
 	timer.text = str(snapped(time_elapsed, 0.01))
+	print(timer)
 
 
 func _ready() -> void:

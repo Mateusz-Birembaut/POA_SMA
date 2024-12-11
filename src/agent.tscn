@@ -18,4 +18,3 @@ shape = SubResource("CircleShape2D_88gaf")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 unique_name_in_owner = true
-debug_enabled = true
