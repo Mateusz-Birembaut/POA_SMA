@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 				lure = true
 				state = States.READY
 			else:
-				if lure :
+				if lure and env.get_lure_ready_student() >= 2:
 					state = States.LEAVE 
 				else :
 					if !env.lure_exists():
