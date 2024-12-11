@@ -41,14 +41,20 @@ func _process(delta: float) -> void:
 		elif strategy == Strategies.LURE :
 			if env.get_lure_ready_student() == 0:
 				lure = true
+				env.debug_print(name, " devient le leurre")
+				env.debug_print(name, " passe à l'état READY")
 				state = States.READY
 			else:
 				if lure and env.get_lure_ready_student() >= 2:
 					state = States.LEAVE 
+					env.debug_print(name, " passe à l'état LEAVE")
 				else :
-					if !env.lure_exists():
-						lure = true
-					state = States.READY
+					if state == States.WORK:
+						if !env.lure_exists():
+							lure = true
+							env.debug_print(name, " devient le leurre")
+						state = States.READY
+						env.debug_print(name, " passe à l'état READY")
 			time_since_last_interval = 0
 				
 		else :
