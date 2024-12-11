@@ -75,7 +75,7 @@ func _process(delta: float) -> void:
 					move_lure()
 				Strategies.GROUP:
 					move_dodge()
-			if (position - env.candies.position).length() <= 50:
+			if (position - env.cheeses.position).length() <= 50:
 				nav.target_position = Vector2()
 				velocity = Vector2()
 				env.debug_print(name, " passe à l'état COLLECT")
@@ -106,7 +106,7 @@ func send_to_work() -> void:
 
 
 func move_none() -> void :
-	nav.target_position = env.candies.position
+	nav.target_position = env.cheeses.position
 	look_towards(nav.get_next_path_position())
 
 
@@ -114,44 +114,44 @@ func move_dodge() -> void :
 		if env.prof.student_to_chase == self:
 			var direction_away_from_prof = (position - env.prof.position).normalized()
 			var distance_away_from_prof = (position - env.prof.position).length()
-			var distance_from_candies = (position - env.candies.position).length()
+			var distance_from_candies = (position - env.cheeses.position).length()
 			if distance_away_from_prof <= evade_range and distance_from_candies >= 100:
-				var candies_direction = (env.candies.position - position).normalized()
+				var candies_direction = (env.cheeses.position - position).normalized()
 				var ratio = distance_away_from_prof / evade_range
 				var movement_direction = ((1 - ratio) * direction_away_from_prof) + (ratio * candies_direction)
 				var movement_position = position + movement_direction
 				look_towards(movement_position)
 			else:
-				look_towards(env.candies.position)
+				look_towards(env.cheeses.position)
 		else :
-			look_towards(env.candies.position)
+			look_towards(env.cheeses.position)
 
 func move_lure() -> void:
 	if env.prof.student_to_chase == self:
 		var direction_away_from_prof = (position - env.prof.position).normalized()
-		var direction_to_candies = (env.candies.position - position).normalized()
+		var direction_to_cheeses = (env.cheeses.position - position).normalized()
 
-		var dot_product = direction_away_from_prof.dot(direction_to_candies)
+		var dot_product = direction_away_from_prof.dot(direction_to_cheeses)
 
 		if dot_product > 0.5: 
-			var perpendicular_direction = Vector2(-direction_to_candies.y, direction_to_candies.x).normalized()
+			var perpendicular_direction = Vector2(-direction_to_cheeses.y, direction_to_cheeses.x).normalized()
 			direction_away_from_prof += perpendicular_direction * 0.5
 			direction_away_from_prof = direction_away_from_prof.normalized()
 		if lure:
-			var distance_from_candies = (position - env.candies.position).length()
+			var distance_from_candies = (position - env.cheeses.position).length()
 			if distance_from_candies <= 100:
-				look_towards(env.candies.position) 
+				look_towards(env.cheeses.position) 
 			else:
 				env.signal_friends_go(strategy)
 				var movement_position = position + direction_away_from_prof
 				look_towards(movement_position)
 		else:
-			look_towards(env.candies.position) 	
+			look_towards(env.cheeses.position) 	
 	else:
 		if lure :
-			var direction_to_candies = (env.candies.position - position).normalized() 
+			var direction_to_candies = (env.cheeses.position - position).normalized() 
 			var direction = position + direction_to_candies*0.1
 			look_towards(direction)
 		else :
-			look_towards(env.candies.position) 
+			look_towards(env.cheeses.position) 
 	

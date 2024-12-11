@@ -6,7 +6,7 @@ const DEBUG := true
 @export_range(1, 15)
 var number_of_students := 4
 
-@onready var candies = %Candies
+@onready var cheeses = %Cheeses
 @onready var prof : Agent = %Prof
 @onready var score : Label = $Score
 @onready var timer : Label = $Timer
@@ -64,7 +64,7 @@ func get_closest_student_to_candies() -> Agent:
 	var min_distance = 100000
 	for student in students:
 		if student.state == Agent.States.LEAVE or student.state == Agent.States.COLLECT:
-			var distanceToCandies = (student.position - candies.position).length()
+			var distanceToCandies = (student.position - cheeses.position).length()
 			if distanceToCandies < min_distance:
 				min_distance = distanceToCandies
 				student_to_chase = student
