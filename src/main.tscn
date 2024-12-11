@@ -38,6 +38,7 @@ texture = ExtResource("7_bbyln")
 expand_mode = 1
 
 [node name="Restart" type="Button" parent="."]
+process_mode = 3
 offset_left = 622.0
 offset_top = 2.0
 offset_right = 742.0
@@ -45,6 +46,7 @@ offset_bottom = 42.0
 text = "Recommencer"
 
 [node name="Back" type="Button" parent="."]
+process_mode = 3
 offset_left = 451.0
 offset_top = 1.0
 offset_right = 531.0

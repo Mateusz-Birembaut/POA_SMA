@@ -47,10 +47,11 @@ text = "Vitesse de la maîtresse : 10"
 [node name="SpeedSlider" type="HSlider" parent="MenuBox"]
 unique_name_in_owner = true
 layout_mode = 2
-min_value = 10.0
-step = 10.0
-value = 10.0
-tick_count = 10
+min_value = 5.0
+max_value = 25.0
+step = 5.0
+value = 15.0
+tick_count = 5
 ticks_on_borders = true
 
 [node name="CandySliderLabel" type="Label" parent="MenuBox"]
