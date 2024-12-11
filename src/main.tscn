@@ -31,6 +31,26 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1152, 0, 1152, 64
 [node name="Room" type="Node2D"]
 script = ExtResource("1_3dsaf")
 
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("7_bbyln")
+expand_mode = 1
+
+[node name="Restart" type="Button" parent="."]
+offset_left = 622.0
+offset_top = 2.0
+offset_right = 742.0
+offset_bottom = 42.0
+text = "Recommencer"
+
+[node name="Back" type="Button" parent="."]
+offset_left = 451.0
+offset_top = 1.0
+offset_right = 531.0
+offset_bottom = 41.0
+text = "Retour"
+
 [node name="Desk" parent="." instance=ExtResource("5_u8008")]
 position = Vector2(95, 573)
 
@@ -56,19 +76,19 @@ shape = SubResource("CapsuleShape2D_qi1pn")
 [node name="WorldBoundaries" type="StaticBody2D" parent="."]
 
 [node name="WorldBoundaryNorth" type="CollisionShape2D" parent="WorldBoundaries"]
-position = Vector2(576, 0)
+position = Vector2(576, 43)
 shape = SubResource("WorldBoundaryShape2D_pnoga")
 
 [node name="WorldBoundaryEast" type="CollisionShape2D" parent="WorldBoundaries"]
-position = Vector2(1152, 324)
+position = Vector2(1120, 324)
 shape = SubResource("WorldBoundaryShape2D_8cgxa")
 
 [node name="WorldBoundarySouth" type="CollisionShape2D" parent="WorldBoundaries"]
-position = Vector2(576, 648)
+position = Vector2(576, 597)
 shape = SubResource("WorldBoundaryShape2D_cfg5q")
 
 [node name="WorldBoundaryWest" type="CollisionShape2D" parent="WorldBoundaries"]
-position = Vector2(0, 324)
+position = Vector2(62, 324)
 shape = SubResource("WorldBoundaryShape2D_x7ntd")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
@@ -87,8 +107,5 @@ vertical_alignment = 1
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="TextureRect" type="TextureRect" parent="."]
-offset_right = 1152.0
-offset_bottom = 648.0
-texture = ExtResource("7_bbyln")
-expand_mode = 1
+[connection signal="pressed" from="Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

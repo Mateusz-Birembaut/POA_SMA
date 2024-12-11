@@ -19,8 +19,7 @@ var student_scene := preload("res://src/student.tscn")
 var students : Array[Agent]
 var desk_scene := preload("res://src/desk.tscn")
 
-var initial_cheese := 10
-var remaining_cheese := initial_cheese
+var remaining_cheese := GM.initial_cheese
 var time_elapsed = 0
 
 
@@ -136,3 +135,11 @@ func add_lure_student() -> void :
 func debug_print(name: StringName, text: String) -> void:
 	if DEBUG:
 		print(name, text)
+
+
+func _on_restart_pressed() -> void:
+	get_tree().change_scene_to_file("res://src/main.tscn")
+
+
+func _on_back_pressed() -> void:
+	get_tree().change_scene_to_file("res://src/menu.tscn")
