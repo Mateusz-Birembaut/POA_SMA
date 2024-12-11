@@ -1,6 +1,6 @@
 class_name Agent extends CharacterBody2D
 
-enum States {WORK, CHASE, COMEBACK, LEAVE, COLLECT, READY}
+enum States { WORK, CHASE, COMEBACK, LEAVE, COLLECT, READY }
 
 @export var sprite_texture : Texture2D:
 	set(value):

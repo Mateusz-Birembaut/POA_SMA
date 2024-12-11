@@ -1,7 +1,7 @@
 class_name Student extends Agent
 
 
-enum Strategies { NONE , DODGE, LURE, GROUP }
+enum Strategies { NONE, DODGE, LURE, GROUP }
 
 var time_since_last_collect := 0.0
 var interval: float
@@ -19,17 +19,16 @@ func _ready() -> void:
 	interval = rng.randf_range(2, 10)
 	strategy = Strategies.values()[randi() % Strategies.size()]
 	prefered_group_size = randi_range(2, 5)
-	if env.DEBUG:
-		print(name, " strategy : ", strategy)
-		print(name, " interval : ", interval)
-	if strategy == Strategies.NONE :
-		sprite.modulate = Color(0, 1, 1)
+	env.debug_print(name, " strategy : %s" % strategy)
+	env.debug_print(name, " interval : %s" % interval)
+	if strategy == Strategies.NONE:
+		sprite.modulate = Color(0, 0, 1)
+	elif strategy ==  Strategies.DODGE:
+		sprite.modulate = Color(0, 1, 0)
 	elif strategy ==  Strategies.LURE:
 		sprite.modulate = Color(1, 0, 0)
-	elif strategy ==  Strategies.GROUP:
+	else:
 		sprite.modulate = Color(1, 1, 0)
-	else :
-		sprite.modulate = Color(0, 1, 0)
 
 
 func _process(delta: float) -> void:
@@ -38,7 +37,7 @@ func _process(delta: float) -> void:
 			env.debug_print(name, " passe à l'état READY")
 			state = States.READY
 			time_since_last_interval = 0
-			
+
 		elif strategy == Strategies.LURE :
 			if env.get_lure_ready_student() == 0:
 				lure = true
@@ -57,7 +56,6 @@ func _process(delta: float) -> void:
 						state = States.READY
 						env.debug_print(name, " passe à l'état READY")
 			time_since_last_interval = 0
-				
 		else :
 			env.debug_print(name, " passe à l'état LEAVE")
 			state = States.LEAVE
@@ -97,18 +95,18 @@ func _process(delta: float) -> void:
 			if (position - initial_position).length() <= 5:
 				nav.target_position = Vector2()
 				velocity = Vector2()
-				env.debug_print(name," passe à l'état WORK")
+				env.debug_print(name, " passe à l'état WORK")
 				state = States.WORK
 
 		States.COLLECT:
 			env.update_score()
-			env.debug_print(name," prend un bonbon")
+			env.debug_print(name, " prend un bonbon")
 			state = States.COMEBACK
 
 
 func send_to_work() -> void:
 	lure = false
-	env.debug_print(name," passe à l'état COMEBACK")
+	env.debug_print(name, " passe à l'état COMEBACK")
 	state = States.COMEBACK
 
 

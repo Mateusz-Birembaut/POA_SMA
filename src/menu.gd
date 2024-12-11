@@ -1,46 +1,34 @@
 class_name Menu extends Node2D
 
-@onready var PlayButton: Button = %PlayButton
-@onready var ExitButton: Button = %ExitButton
 
-@onready var NbSlider: HSlider = %NbSlider
-@onready var NbSliderLabel: Label = %NbSliderLabel
-@onready var SpeedSlider: HSlider = %SpeedSlider
-@onready var SpeedSliderLabel: Label = %SpeedSliderLabel
-@onready var CandySlider: HSlider = %CandySlider
-@onready var CandySliderLabel: Label = %CandySliderLabel
-@onready var MenuBox: VBoxContainer = %MenuBox
-
-@onready var menu_X = 2 * get_window().size.x / 3 - MenuBox.size.x / 2
-@onready var menu_Y = get_window().size.y / 2 - MenuBox.size.y / 2
+@onready var play_button: Button = $PlayButton
+@onready var quit_button: Button = $QuitButton
+@onready var vbox: VBoxContainer = $VBoxContainer
+@onready var student_label: Label = %StudentLabel
+@onready var student_slider: HSlider = %StudentSlider
+@onready var speed_label: Label = %SpeedLabel
+@onready var speed_slider: HSlider = %SpeedSlider
+@onready var cheese_label: Label = %CheeseLabel
+@onready var cheese_slider: HSlider = %CheeseSlider
 
 
 func _ready() -> void:
-	PlayButton.position = Vector2i(
-		get_window().size.x / 3 - 100,
-		get_window().size.y / 2 - 50
-	)
+	play_button.position = Vector2i(get_window().size.x / 3 - 100, get_window().size.y / 2 - 50)
 
-	ExitButton.position = Vector2i(
-		get_window().size.x / 3 - 100,
-		get_window().size.y / 2 + 50
-	)
+	quit_button.position = Vector2i(get_window().size.x / 3 - 100, get_window().size.y / 2 + 50)
 
-	###### MENU ######
-	MenuBox.position = Vector2i(
-		menu_X,
-		menu_Y
-	)
-	
-	NbSlider.value = GM.number_of_students
-	CandySlider.value = GM.initial_cheese
-	SpeedSlider.value = GM.prof_speed / 1000
+	vbox.position = Vector2i(2 * get_window().size.x / 3 - vbox.size.x / 2,
+							get_window().size.y / 2 - vbox.size.y / 2)
+
+	student_slider.value = GM.number_of_students
+	cheese_slider.value = GM.initial_cheese
+	speed_slider.value = GM.prof_speed / 1000
 
 
 func _on_play_button_pressed() -> void:
-	GM.number_of_students = int(NbSlider.value)
-	GM.initial_cheese = int(CandySlider.value)
-	GM.prof_speed = int(SpeedSlider.value) * 1000
+	GM.number_of_students = int(student_slider.value)
+	GM.initial_cheese = int(cheese_slider.value)
+	GM.prof_speed = int(speed_slider.value) * 1000
 	get_tree().change_scene_to_file("res://src/main.tscn")
 
 
@@ -48,13 +36,13 @@ func _on_exit_button_pressed() -> void:
 	get_tree().quit()
 
 
-func _on_nb_slider_value_changed(value: float) -> void:
-	NbSliderLabel.text = "Nombre d'étudiants : %s" % value
+func _on_student_slider_value_changed(value: float) -> void:
+	student_label.text = "Nombre d'étudiants : %s" % value
 
 
 func _on_speed_slider_value_changed(value: float) -> void:
-	SpeedSliderLabel.text = "Vitesse de la maîtresse : %s" % value
+	speed_label.text = "Vitesse de la maîtresse : %s" % value
 
 
-func _on_candy_slider_value_changed(value: float) -> void:
-	CandySliderLabel.text = "Nombre de fromages : %s" % value
+func _on_cheese_slider_value_changed(value: float) -> void:
+	cheese_label.text = "Nombre de fromages : %s" % value

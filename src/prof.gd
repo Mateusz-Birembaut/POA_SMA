@@ -15,7 +15,6 @@ func _process(delta: float) -> void:
 			check_students()
 
 		States.CHASE:
-			#check_students() # a commenter si on ne veut pas changer de "cible"
 			if student_to_chase.state == States.COMEBACK:
 				check_students() 
 			

@@ -44,7 +44,6 @@ func update_score() -> void:
 	cheeses.get_node("Sprite2D").texture = new_texture
 	if remaining_cheese == 0:
 		get_tree().paused = true
-	print(remaining_cheese)
 	score.text = str(remaining_cheese)
 
 
