@@ -66,6 +66,14 @@ value = 10.0
 tick_count = 10
 ticks_on_borders = true
 
+[node name="Label" type="Label" parent="."]
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 564.0
+offset_bottom = 187.0
+theme_override_font_sizes/font_size = 100
+text = "Cat & Mice"
+
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="value_changed" from="VBoxContainer/StudentSlider" to="." method="_on_student_slider_value_changed"]
