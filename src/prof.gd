@@ -7,7 +7,6 @@ var student_to_chase : Agent
 func _ready() -> void:
 	super._ready()
 	speed = 7500
-	position = Vector2i(95, 573)
 
 
 func _process(delta: float) -> void:
