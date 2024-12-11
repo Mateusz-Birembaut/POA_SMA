@@ -26,8 +26,9 @@ func _ready() -> void:
 		print(name, " interval : ", interval)
 		print("is solitary : ",is_solitary)
 	if strategy == Strategies.NONE :
+		print("ici")
 		sprite.modulate = Color(0, 0, 1)
-	if strategy ==  Strategies.LURE:
+	elif strategy ==  Strategies.LURE:
 		sprite.modulate = Color(1, 0, 0)
 	else :
 		sprite.modulate = Color(0, 1, 0)
