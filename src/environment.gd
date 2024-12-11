@@ -46,6 +46,7 @@ func _ready() -> void:
 			if i * 5 + j < number_of_students:
 				var new_student : Agent = student_scene.instantiate()
 				new_student.initial_position = Vector2i(x, y)
+				new_student.scale = Vector2(0.6, 0.6)
 				add_child(new_student)
 				#new_student.agent.position = Vector2i(x, y)
 				#new_student.mini_agent.position = Vector2i(x, y)
