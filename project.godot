@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Bonbon"
-run/main_scene="res://src/Menu.tscn"
+run/main_scene="res://src/menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GM="*res://autoloads/game_manager.gd"
 
 [display]
 

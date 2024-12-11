@@ -3,9 +3,6 @@ class_name Env extends Node2D
 
 const DEBUG := false
 
-@export_range(1, 15)
-var number_of_students := 4
-
 @onready var cheeses = %Cheeses
 @onready var prof : Agent = %Prof
 @onready var score : Label = $Score
@@ -29,7 +26,7 @@ var time_elapsed = 0
 
 func update_score() -> void:
 	remaining_cheese -= 1
-	var remaining_cheese_ratio : float = remaining_cheese * 1.0 / initial_cheese
+	var remaining_cheese_ratio : float = remaining_cheese * 1.0 / GM.initial_cheese
 	var new_texture
 	if remaining_cheese_ratio == 0:
 		new_texture = cheese0
@@ -68,7 +65,7 @@ func _ready() -> void:
 			var new_desk : Sprite2D = desk_scene.instantiate()
 			new_desk.position = Vector2i(x, y)
 			add_child(new_desk)
-			if i * 5 + j < number_of_students:
+			if i * 5 + j < GM.number_of_students:
 				var new_student : Agent = student_scene.instantiate()
 				new_student.initial_position = Vector2i(x, y)
 				new_student.scale = Vector2(0.6, 0.6)
@@ -129,7 +126,7 @@ func lure_exists() -> bool:
 
 func add_lure_student() -> void :
 	while true:
-		var rand_index = randi_range(0, number_of_students-1)
+		var rand_index = randi_range(0, GM.number_of_students-1)
 		if students[rand_index].strategy != Student.Strategies.LURE :
 			students[rand_index].strategy = Student.Strategies.LURE
 			students[rand_index].sprite.modulate = Color(1, 0, 0)

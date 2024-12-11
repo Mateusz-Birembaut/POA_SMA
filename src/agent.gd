@@ -34,7 +34,7 @@ func _physics_process(delta):
 		var angle = velocity.angle() - PI/2
 		sprite.set_rotation(angle)
 	else:
-		sprite.set_rotation(0)
+		sprite.set_rotation(PI/2)
 	move_and_slide()
 
 
