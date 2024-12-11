@@ -5,4 +5,4 @@ Groupe :
 - Victor Onic
 - Mateusz Birembaut
 
-[Lien présentation](https://docs.google.com/presentation/d/1TjkfclhW89RGqdlhHzmCB4SWxXh8Bm73JpbFa4vaKqc/)
+[Lien présentation du 12 décembre 2024](https://docs.google.com/presentation/d/1oB1RKJpuHo3vsahEPc8jc_PHiPWN_VJjayazIfc6fzI/)
