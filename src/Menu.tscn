@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://k8jrtuoiient"]
+
+[ext_resource type="Script" path="res://src/menu.gd" id="1_hr3kk"]
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_hr3kk")
+
+[node name="PlayButton" type="Button" parent="."]
+unique_name_in_owner = true
+offset_right = 100.0
+offset_bottom = 50.0
+text = "Lancer"
+
+[node name="ExitButton" type="Button" parent="."]
+unique_name_in_owner = true
+offset_right = 100.0
+offset_bottom = 50.0
+text = "Quitter"
+
+[node name="MenuBox" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = 312.0
+offset_top = 37.0
+offset_right = 595.0
+offset_bottom = 280.0
+theme_override_constants/separation = 20
+
+[node name="NbSliderLabel" type="Label" parent="MenuBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Nombre d'étudiants: 5"
+
+[node name="NbSlider" type="HSlider" parent="MenuBox"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 15.0
+value = 5.0
+tick_count = 15
+ticks_on_borders = true
+
+[node name="SpeedSliderLabel" type="Label" parent="MenuBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Vitesse de la maîtresse: 10"
+
+[node name="SpeedSlider" type="HSlider" parent="MenuBox"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 10.0
+step = 10.0
+value = 10.0
+tick_count = 10
+ticks_on_borders = true
+
+[node name="CandySliderLabel" type="Label" parent="MenuBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Nombre de bonbons: 10"
+
+[node name="CandySlider" type="HSlider" parent="MenuBox"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 10.0
+step = 10.0
+value = 10.0
+tick_count = 10
+ticks_on_borders = true
