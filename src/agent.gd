@@ -30,6 +30,11 @@ func _ready() -> void:
 
 func _physics_process(delta):
 	velocity *= speed * delta
+	if velocity.length() >0:
+		var angle = velocity.angle() - 1.5708
+		sprite.set_rotation(angle)
+	else:
+		sprite.set_rotation(0)
 	move_and_slide()
 
 
