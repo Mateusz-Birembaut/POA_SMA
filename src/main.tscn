@@ -87,3 +87,9 @@ vertical_alignment = 1
 [node name="Timer" type="Label" parent="."]
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("7_bbyln")
+expand_mode = 1
