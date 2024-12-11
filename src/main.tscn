@@ -22,9 +22,9 @@ normal = Vector2(-1, 0)
 normal = Vector2(1, 0)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_vbv6l"]
-vertices = PackedVector2Array(1117, 35, 1117, 613, 620, 613, 620, 512, 35, 35, 529, 512, 35, 613, 529, 613)
+vertices = PackedVector2Array(1117, 35, 1117, 613, 614, 613, 614, 521, 35, 35, 538, 521, 35, 613, 538, 613)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(6, 4, 5, 7)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1152, 0, 1152, 648, 1152, 648, 585, 648, 585, 547, 564, 547, 564, 648, 0, 648)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 1152, 0, 1152, 648, 1152, 648, 579, 648, 579, 556, 573, 556, 573, 648, 0, 648)])
 agent_radius = 35.0
 
 [node name="Room" type="Node2D"]
