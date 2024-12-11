@@ -11,20 +11,45 @@ var number_of_students := 4
 @onready var score : Label = $Score
 @onready var timer : Label = $Timer
 
+var cheese0 := preload("res://assets/plate0.png")
+var cheese1 := preload("res://assets/plate1.png")
+var cheese2 := preload("res://assets/plate2.png")
+var cheese3 := preload("res://assets/plate3.png")
+var cheese4 := preload("res://assets/plate4.png")
+var cheese5 := preload("res://assets/plate5.png")
+var cheese6 := preload("res://assets/plate6.png")
 var student_scene := preload("res://src/student.tscn")
 var students : Array[Agent]
 var desk_scene := preload("res://src/desk.tscn")
 
-var total_candies = 10
-var time_elapsed = 0
+var initial_cheese := 10
+var remaining_cheese := initial_cheese
+var time_elapsed := 0
 
 
 func update_score() -> void:
-	total_candies -= 1
-	if total_candies == 0:
+	remaining_cheese -= 1
+	var remaining_cheese_ratio : float = remaining_cheese * 1.0 / initial_cheese
+	var new_texture
+	if remaining_cheese_ratio == 0:
+		new_texture = cheese0
+	elif remaining_cheese_ratio < 0.167:
+		new_texture = cheese1
+	elif remaining_cheese_ratio < 0.333:
+		new_texture = cheese2
+	elif remaining_cheese_ratio < 0.50:
+		new_texture = cheese3
+	elif remaining_cheese_ratio < 0.667:
+		new_texture = cheese4
+	elif remaining_cheese_ratio < 0.833:
+		new_texture = cheese5
+	else:
+		new_texture = cheese6
+	cheeses.get_node("Sprite2D").texture = new_texture
+	if remaining_cheese == 0:
 		get_tree().paused = true
-	print(total_candies)
-	score.text = str(total_candies)
+	print(remaining_cheese)
+	score.text = str(remaining_cheese)
 
 
 func _process(delta: float) -> void:
@@ -34,7 +59,7 @@ func _process(delta: float) -> void:
 
 func _ready() -> void:
 	timer.position.x = get_window().size.x/2 - 25
-	score.text = str(total_candies)
+	score.text = str(remaining_cheese)
 	var nb_student_lure = 0
 	var y := 100
 	for i in 3:
