@@ -23,8 +23,7 @@ func _ready() -> void:
 		print(name, " strategy : ", strategy)
 		print(name, " interval : ", interval)
 	if strategy == Strategies.NONE :
-		print("ici")
-		sprite.modulate = Color(0, 0, 1)
+		sprite.modulate = Color(0, 1, 1)
 	elif strategy ==  Strategies.LURE:
 		sprite.modulate = Color(1, 0, 0)
 	elif strategy ==  Strategies.GROUP:
@@ -35,7 +34,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if time_since_last_interval >= interval:
 		if strategy == Strategies.GROUP:
-			print(name, " passe à l'état READY")
+			env.debug_print(name, " passe à l'état READY")
 			state = States.READY
 			time_since_last_interval = 0
 			
@@ -53,7 +52,7 @@ func _process(delta: float) -> void:
 			time_since_last_interval = 0
 				
 		else :
-			print(name, " passe à l'état LEAVE")
+			env.debug_print(name, " passe à l'état LEAVE")
 			state = States.LEAVE
 			time_since_last_interval = 0
 
@@ -61,7 +60,7 @@ func _process(delta: float) -> void:
 		States.READY:
 			time_since_last_interval += delta
 			if(env.get_number_ready_student() >= prefered_group_size):
-				env.signal_go()
+				env.signal_friends_go(strategy)
 
 		States.WORK:
 			time_since_last_interval += delta
@@ -79,7 +78,7 @@ func _process(delta: float) -> void:
 			if (position - env.candies.position).length() <= 50:
 				nav.target_position = Vector2()
 				velocity = Vector2()
-				print(name, " passe à l'état COLLECT")
+				env.debug_print(name, " passe à l'état COLLECT")
 				state = States.COLLECT
 
 		States.COMEBACK:
@@ -91,18 +90,18 @@ func _process(delta: float) -> void:
 			if (position - initial_position).length() <= 5:
 				nav.target_position = Vector2()
 				velocity = Vector2()
-				print(name, " passe à l'état WORK")
+				env.debug_print(name," passe à l'état WORK")
 				state = States.WORK
 
 		States.COLLECT:
 			env.update_score()
-			print(" prend un bonbon")
+			env.debug_print(name," prend un bonbon")
 			state = States.COMEBACK
 
 
 func send_to_work() -> void:
 	lure = false
-	print(name, " passe à l'état COMEBACK")
+	env.debug_print(name," passe à l'état COMEBACK")
 	state = States.COMEBACK
 
 
@@ -143,7 +142,7 @@ func move_lure() -> void:
 			if distance_from_candies <= 100:
 				look_towards(env.candies.position) 
 			else:
-				env.signal_friends_go()
+				env.signal_friends_go(strategy)
 				var movement_position = position + direction_away_from_prof
 				look_towards(movement_position)
 		else:
@@ -154,22 +153,5 @@ func move_lure() -> void:
 			var direction = position + direction_to_candies*0.1
 			look_towards(direction)
 		else :
-			look_towards(env.candies.position) 	
+			look_towards(env.candies.position) 
 	
-
-func see() -> void:
-	## get la position de l'eleve le plus proche des bonbons qui soit parti 
-
-	## si position => déplacer vers l'eleve = CHASE
-	##if studentPosition != null :
-		## state = CHASE
-	##else:
-
-	## sinon =>
-		## si deja à la table STATE = WORK 
-		## sinon revenir vers la table  STATE = COMEBACK
-	pass
-
-
-func action() -> void:
-	pass

@@ -79,15 +79,10 @@ func get_number_ready_student() -> int:
 
 	return nb_ready
 
-
-func signal_go() -> void :
-	for student in students:
-		if student.state == Agent.States.READY and student.strategy == Student.Strategies.GROUP:
-			student.state = Agent.States.LEAVE
 			
-func signal_friends_go() -> void :
+func signal_friends_go(strategy :Student.Strategies) -> void :
 	for student in students:
-		if student.state == Agent.States.READY and student.strategy == Student.Strategies.LURE:
+		if student.state == Agent.States.READY and student.strategy == strategy:
 			student.state = Agent.States.LEAVE
 			
 			
@@ -112,3 +107,6 @@ func add_lure_student() -> void :
 			students[rand_index].sprite.modulate = Color(1, 0, 0)
 			return
 		
+func debug_print(name: StringName, text: String) -> void:
+	if DEBUG:
+		print(name, text)
