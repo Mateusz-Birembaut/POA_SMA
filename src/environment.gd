@@ -55,7 +55,6 @@ func update_score() -> void:
 func _process(delta: float) -> void:
 	time_elapsed += delta
 	timer.text = str(snapped(time_elapsed, 0.01))
-	print(timer)
 
 
 func _ready() -> void:
